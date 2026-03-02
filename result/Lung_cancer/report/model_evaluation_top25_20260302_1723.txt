@@ -1,0 +1,17 @@
+Model Comparing report 
+Date: 2026-03-02 17:23:59
+n_features: 25
+------------------------------------------------------------
+            Method                  Model      Acc
+          VARIANCE     LogisticRegression 0.928058
+          VARIANCE DecisionTreeClassifier 0.942446
+       CORRELATION     LogisticRegression 0.956835
+       CORRELATION DecisionTreeClassifier 0.928058
+       CHI_SQUARED     LogisticRegression 0.971223
+       CHI_SQUARED DecisionTreeClassifier 0.956835
+MUTUAL_INFORMATION     LogisticRegression 0.956835
+MUTUAL_INFORMATION DecisionTreeClassifier 0.906475
+      ANOVA_F_TEST     LogisticRegression 0.956835
+      ANOVA_F_TEST DecisionTreeClassifier 0.935252
+              None     LogisticRegression 0.964029
+              None DecisionTreeClassifier 0.956835
