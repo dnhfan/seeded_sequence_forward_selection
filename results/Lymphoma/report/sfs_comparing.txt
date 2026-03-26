@@ -1,0 +1,20 @@
+󰈙 SFS vs FS (sklearn) comparing report.
+------------------------------------------------------------
+  [Decision Tree]
+    - Hold-out Accuracy : 0.8462
+    - Cross-Val Accuracy: 0.9198
+
+  [Logistic Regression]
+    - Hold-out Accuracy : 1.0000
+    - Cross-Val Accuracy: 1.0000
+-----------------------------------
+
+    - Hold-out Accuracy : 1.0000
+    - Cross-Val Accuracy: 1.0000
+
+  [Logistic Regression]
+    - Hold-out Accuracy : 1.0000
+    - Cross-Val Accuracy: 0.9677
+-----------------------------------
+
+ Note: Hold-out là test trên 20% data chia ra. CV là test chéo 4 Folds.
