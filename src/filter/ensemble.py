@@ -75,7 +75,7 @@ class EnsembleFeatureSelector:
             feature_count, orient="index", columns=["Votes"]
         ).reset_index()
 
-        df_counts.rename(columns={"index": "Features"}, inplace=True)
+        df_counts.rename(columns={"index": "Feature"}, inplace=True)
         df_counts = df_counts.sort_values(by="Votes", ascending=False).reset_index(
             drop=True
         )
