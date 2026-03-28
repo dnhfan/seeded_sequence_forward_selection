@@ -18,9 +18,17 @@ def load_and_preprocess(filepath, target_index=0, save_path=None):
     x = df.drop(columns=df.columns[target_index])
 
     # 3. data balancing with SMOTE!
-    smote = SMOTE(random_state=42)
+    try:
+        smote = SMOTE(random_state=42)
+        x_resampled, y_resampled = smote.fit_resample(x, y)  # type: ignore
 
-    x_resampled, y_resampled = smote.fit_resample(x, y)  # type: ignore
+    except ValueError as e:
+        error_msg = str(e)
+        if "n_neighbors" in error_msg or "n_sample_fit" in error_msg:
+            print(" ValueError: n_sample_fit is > n_neighbors, cannot SMOTE!")
+        else:
+            print(f" ValueError: {e}")
+        raise
 
     x_final = pd.DataFrame(x_resampled, columns=x.columns)
 
