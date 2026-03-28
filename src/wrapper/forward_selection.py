@@ -9,8 +9,9 @@ from sklearn.feature_selection import SelectorMixin
 from sklearn.model_selection import cross_val_score
 from sklearn.utils.validation import check_is_fitted
 
+from src.utils import load_seed_from_csv, validate_features
+
 from .models import get_model
-from .utils import load_seed_from_csv, validate_features
 
 
 class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
