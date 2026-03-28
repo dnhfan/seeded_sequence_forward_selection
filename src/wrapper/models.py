@@ -34,7 +34,7 @@ def get_model(model_name: str, random_state: int = 42):
             n_jobs=-1,
             random_state=random_state,
         )
-    elif name == "dt":
+    elif name == "dt" or name == "decisiontree":
         return DecisionTreeClassifier(max_depth=5, random_state=random_state)
     else:
         raise ValueError(f" Model '{model_name}' is not supported.")
