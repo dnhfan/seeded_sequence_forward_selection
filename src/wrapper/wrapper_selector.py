@@ -100,6 +100,8 @@ class WrapperSelector:
         selector: SeededForwardSelection,
         file_suffix: str,
         n_seeds: int,
+        patience: int,
+        max_features: int,
     ) -> None:
         # 5. Save the final dataset to the wrapper directory
         save_path = f"{self.path.wrapper_dir}/{self.data_name}_SFS_{n_seeds}seed_{file_suffix}.csv"
@@ -108,7 +110,7 @@ class WrapperSelector:
         print(f" Saved Final data to: {save_path}")
 
         # 6. Save the SFS Execution history
-        history_path = f"{self.report_dir}/sfs_history_{n_seeds}seed_{file_suffix}.csv"
+        history_path = f"{self.report_dir}/sfs_history_{n_seeds}seed_{patience}patience_{max_features}max_{file_suffix}.csv"
         selector.save_history(history_path)
 
     def run_sfs(
@@ -157,6 +159,13 @@ class WrapperSelector:
         print(" Selected Features: ", selector.get_feature_names_out())
 
         # 3. Save the result
-        self._save_sfs_output(df_final, selector, file_suffix, n_seeds)
+        self._save_sfs_output(
+            df_final,
+            selector,
+            file_suffix,
+            n_seeds,
+            patience,
+            max_features,
+        )
 
         return df_final
