@@ -164,6 +164,10 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
     def _initialize_fit_state(
         self, X: pd.DataFrame, y: pd.Series
     ) -> tuple[ForwardSelectionState, Union[str, BaseEstimator]]:
+        """
+        Initialize the fit's state
+        """
+
         # 1. Build model instance
         if isinstance(self.model, str):
             self._model_instance = get_model(self.model, random_state=self.random_state)
@@ -210,6 +214,73 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         )
         return state, original_model
 
+    def _run_single_iteration(
+        self,
+        state: ForwardSelectionState,
+        X: pd.DataFrame,
+        y: pd.Series,
+    ) -> bool:
+        """
+        Run one forward-selection iteration
+        Return:
+            True -> continue loop
+            False -> stop loop (no candicates left)
+        """
+        state.iteration += 1
+        candidates = self._get_candidate_features(state.X_columns, state.selected)
+
+        # No more candidates -> stop
+        if not candidates:
+            if self.verbose >= 1:
+                print(" No more candidates. Stoping..")
+            return False
+
+        # Find best candidate this iteration
+        best_feature, best_score = self._select_best_candidate(
+            X, y, state.selected, candidates
+        )
+
+        # Always append the top 1 features
+        state.selected.append(best_feature)
+
+        step_improvement = best_score - state.current_score
+        is_new_peak = best_score > state.global_best_score
+
+        # Log iteration
+        state.history.append(
+            {
+                "iteration": state.iteration,
+                "best_candidate": best_feature,
+                "best_score": round(best_score, 6),
+                "improvement": round(step_improvement, 6),
+                "n_selected": len(state.selected),
+                "selected_features": list(state.selected),
+                "is_new_peak": is_new_peak,
+            }
+        )
+
+        state.current_score = best_score
+
+        if self.verbose >= 2:
+            print(
+                f"  Iter {state.iteration:>3}: + {best_feature}"
+                f"  score={best_score:.4f}"
+                f"  󰇂 = {step_improvement:+.4f} "
+            )
+
+        # Accept or reject
+        if is_new_peak:
+            state.global_best_score = best_score
+            state.global_best_features = list(state.selected)
+            state.patience_counter = 0
+        else:
+            state.patience_counter += 1
+            if self.verbose >= 2:
+                print(
+                    f"  No improvement. Patience{state.patience_counter}/{self.patience}"
+                )
+        return True
+
     def fit(self, X: pd.DataFrame, y: pd.Series):
         """
         Run SFS - Seeded Forward Selection
@@ -226,59 +297,9 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
 
         # 6. Forward selection loop
         while True:
-            state.iteration += 1
-            candidates = self._get_candidate_features(state.X_columns, state.selected)
-
-            # No more candidates -> stop
-            if not candidates:
-                if self.verbose >= 1:
-                    print(" No more candidates. Stoping..")
+            should_continue = self._run_single_iteration(state, X, y)
+            if not should_continue:
                 break
-
-            # Find best candidate this iteration
-            best_feature, best_score = self._select_best_candidate(
-                X, y, state.selected, candidates
-            )
-
-            # Always append the top 1 features
-            state.selected.append(best_feature)
-
-            step_improvement = best_score - state.current_score
-            is_new_peak = best_score > state.global_best_score
-
-            # Log iteration
-            state.history.append(
-                {
-                    "iteration": state.iteration,
-                    "best_candidate": best_feature,
-                    "best_score": round(best_score, 6),
-                    "improvement": round(step_improvement, 6),
-                    "n_selected": len(state.selected),
-                    "selected_features": list(state.selected),
-                    "is_new_peak": is_new_peak,
-                }
-            )
-
-            state.current_score = best_score
-
-            if self.verbose >= 2:
-                print(
-                    f"  Iter {state.iteration:>3}: + {best_feature}"
-                    f"  score={best_score:.4f}"
-                    f"  󰇂 = {step_improvement:+.4f} "
-                )
-
-            # Accept or reject
-            if is_new_peak:
-                state.global_best_score = best_score
-                state.global_best_features = list(state.selected)
-                state.patience_counter = 0
-            else:
-                state.patience_counter += 1
-                if self.verbose >= 2:
-                    print(
-                        f"  No improvement. Patience{state.patience_counter}/{self.patience}"
-                    )
 
             # Stoping criteria
             if (
