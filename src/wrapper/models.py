@@ -31,7 +31,7 @@ def get_model(model_name: str, random_state: int = 42):
             max_depth=6,
             learning_rate=0.1,
             eval_metric="logloss",
-            n_jobs=-1,
+            n_jobs=1,
             random_state=random_state,
         )
     elif name == "dt" or name == "decisiontree":
