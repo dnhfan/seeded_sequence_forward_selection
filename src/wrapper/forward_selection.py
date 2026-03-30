@@ -293,10 +293,10 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         is_new_peak = self._update_global_best_and_patience(state, best_score)
 
         # Log iteration
-        rows = self._build_history_row(
+        row = self._build_history_row(
             state, best_feature, best_score, step_improvement, is_new_peak
         )
-        state.history.append(rows)
+        state.history.append(row)
 
         state.current_score = best_score
 
@@ -328,6 +328,36 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             return True
         return False
 
+    def _finalize_fit(
+        self,
+        state: ForwardSelectionState,
+        X: pd.DataFrame,
+        original_model: Union[str, BaseEstimator],
+    ) -> None:
+        """
+        Finalize fit by persisting fitted attributes and restoring model config.
+
+        Parameters
+        ----------
+        state : ForwardSelectionState
+            Selection state containing best features, score tracking, and history.
+        X : pd.DataFrame
+            Input feature matrix used during fitting.
+        original_model : Union[str, BaseEstimator]
+            User-provided model configuration to restore after internal evaluation.
+        """
+        # 7. Store Results
+        self.selected_features_ = state.global_best_features
+        self.n_features_in_ = X.shape[1]
+        self._X_columns = state.X_columns
+        self.model = original_model
+        self.history_ = state.history
+
+        if self.verbose >= 1:
+            print(
+                f"\n Done: {len(state.global_best_features)} features selected. Final score={state.global_best_score:.4f}"
+            )
+
     def fit(self, X: pd.DataFrame, y: pd.Series):
         """
         Run SFS - Seeded Forward Selection
@@ -335,7 +365,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             - y: target Series
         """
         #
-        state, _original_model = self._initialize_fit_state(X=X, y=y)
+        state, original_model = self._initialize_fit_state(X=X, y=y)
 
         if self.verbose >= 1:
             print(
@@ -351,17 +381,8 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             if self._should_stop(state):
                 break
 
-        # 7. Store Results
-        self.selected_features_ = state.global_best_features
-        self.n_features_in_ = X.shape[1]
-        self._X_columns = state.X_columns
-        self.model = _original_model
-        self.history_ = state.history
+        self._finalize_fit(state, X, original_model)
 
-        if self.verbose >= 1:
-            print(
-                f"\n Done: {len(state.global_best_features)} features selected. Final score={state.global_best_score:.4f}"
-            )
         return self
 
     def _get_support_mask(self) -> np.ndarray:  # type: ignore[override]
