@@ -298,6 +298,25 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
 
         return True
 
+    def _should_stop(self, state: ForwardSelectionState):
+        """
+        Check stopping criteria for forward-selection loop
+        Returns:
+            True  -> stop
+            False -> continue
+        """
+        # Stoping criteria
+        if self.max_features is not None and len(state.selected) >= self.max_features:
+            if self.verbose >= 1:
+                print(f" Reached max_features={self.max_features}. Stoping...")
+            return True
+
+        if self.patience is not None and state.patience_counter >= self.patience:
+            if self.verbose >= 1:
+                print(f" Patience exhausted ({self.patience}). Stoping...")
+            return True
+        return False
+
     def fit(self, X: pd.DataFrame, y: pd.Series):
         """
         Run SFS - Seeded Forward Selection
@@ -318,18 +337,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             if not should_continue:
                 break
 
-            # Stoping criteria
-            if (
-                self.max_features is not None
-                and len(state.selected) >= self.max_features
-            ):
-                if self.verbose >= 1:
-                    print(f" Reached max_features={self.max_features}. Stoping...")
-                break
-
-            if self.patience is not None and state.patience_counter >= self.patience:
-                if self.verbose >= 1:
-                    print(f" Patience exhausted ({self.patience}). Stoping...")
+            if self._should_stop(state):
                 break
 
         # 7. Store Results
