@@ -242,6 +242,24 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
 
         return is_new_peak
 
+    def _build_history_row(
+        self,
+        state: ForwardSelectionState,
+        best_feature: str,
+        best_score: float,
+        step_improvement: float,
+        is_new_peak: bool,
+    ) -> dict[str, object]:
+        return {
+            "iteration": state.iteration,
+            "best_candidate": best_feature,
+            "best_score": round(best_score, 6),
+            "improvement": round(step_improvement, 6),
+            "n_selected": len(state.selected),
+            "selected_features": list(state.selected),
+            "is_new_peak": is_new_peak,
+        }
+
     def _run_single_iteration(
         self,
         state: ForwardSelectionState,
@@ -275,17 +293,10 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         is_new_peak = self._update_global_best_and_patience(state, best_score)
 
         # Log iteration
-        state.history.append(
-            {
-                "iteration": state.iteration,
-                "best_candidate": best_feature,
-                "best_score": round(best_score, 6),
-                "improvement": round(step_improvement, 6),
-                "n_selected": len(state.selected),
-                "selected_features": list(state.selected),
-                "is_new_peak": is_new_peak,
-            }
+        rows = self._build_history_row(
+            state, best_feature, best_score, step_improvement, is_new_peak
         )
+        state.history.append(rows)
 
         state.current_score = best_score
 
@@ -298,7 +309,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
 
         return True
 
-    def _should_stop(self, state: ForwardSelectionState):
+    def _should_stop(self, state: ForwardSelectionState) -> bool:
         """
         Check stopping criteria for forward-selection loop
         Returns:
