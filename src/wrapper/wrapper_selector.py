@@ -95,16 +95,20 @@ class WrapperSelector:
         return df_final, selector
 
     def _save_sfs_output(
-        self, df_final: pd.DataFrame, selector: SeededForwardSelection, file_suffix: str
+        self,
+        df_final: pd.DataFrame,
+        selector: SeededForwardSelection,
+        file_suffix: str,
+        n_seeds: int,
     ) -> None:
         # 5. Save the final dataset to the wrapper directory
-        save_path = f"{self.path.wrapper_dir}/{self.data_name}_SFS_{file_suffix}.csv"
+        save_path = f"{self.path.wrapper_dir}/{self.data_name}_SFS_{n_seeds}seed_{file_suffix}.csv"
         df_final.to_csv(save_path, index=False)
 
         print(f" Saved Final data to: {save_path}")
 
         # 6. Save the SFS Execution history
-        history_path = f"{self.report_dir}/sfs_history_{file_suffix}.csv"
+        history_path = f"{self.report_dir}/sfs_history_{n_seeds}seed_{file_suffix}.csv"
         selector.save_history(history_path)
 
     def run_sfs(
@@ -153,6 +157,6 @@ class WrapperSelector:
         print(" Selected Features: ", selector.get_feature_names_out())
 
         # 3. Save the result
-        self._save_sfs_output(df_final, selector, file_suffix)
+        self._save_sfs_output(df_final, selector, file_suffix, n_seeds)
 
         return df_final
