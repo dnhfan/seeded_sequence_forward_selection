@@ -69,7 +69,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         self.verbose = verbose
         self.n_jobs = n_jobs
 
-    def _initialize_seed_features(self, X_columns: list) -> list:
+    def _initialize_seed_features(self, X_columns: list[str]) -> list[str]:
         """
         init seed features
 
@@ -106,7 +106,12 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             random_state=self.random_state if self.cv_shuffle else None,
         )
 
-    def _evaluate_feature_set(self, X, y, features) -> float:
+    def _evaluate_feature_set(
+        self,
+        X: pd.DataFrame,
+        y: pd.Series,
+        features: list[str],
+    ) -> float:
         """
         evaluate features in each loop
         Returns
@@ -126,7 +131,11 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
 
         return float(score.mean())
 
-    def _get_candidate_features(self, X_columns: list, selected: list) -> list:
+    def _get_candidate_features(
+        self,
+        X_columns: list[str],
+        selected: list[str],
+    ) -> list[str]:
         """
         return get the untaken (candidate) features
         """
@@ -134,18 +143,34 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
 
         return [c for c in X_columns if c not in selected_set]
 
-    def _select_best_candidate(self, X, y, selected, candidates):
+    def _select_best_candidate(
+        self,
+        X: pd.DataFrame,
+        y: pd.Series,
+        selected: list[str],
+        candidates: list[str],
+    ) -> tuple[str, float]:
         """
-             Evaluate all candidate features in parallel, return the best one.
-                 - X: full feature DataFrame
-                 - y: target Series
-                 - selected: currently selected features (seed + previously
-        added)
-                 - candidates: remaining features to evaluate
-             Returns: (best_feature_name, best_score)
+        Evaluate all candidate features in parallel and return the best one.
+
+        Parameters
+        ----------
+        X : pd.DataFrame
+            Full feature matrix.
+        y : pd.Series
+            Target vector.
+        selected : list[str]
+            Currently selected features (seed + previously added).
+        candidates : list[str]
+            Remaining features to evaluate.
+
+        Returns
+        -------
+        tuple[str, float]
+            Best candidate feature and its score.
         """
 
-        # parallel (n) -> make a woker pool with n cpu core
+        # parallel (n) -> make a worker pool with n cpu core
         # parallel()(this) -> "this" is the work we need to do
         # delayed(function)(argm) -> delayed will put function to a tuple (task object)
         # evaluate return -> score, for candidate loop -> delay candidates time -> run candidate time -> return a list of score
@@ -250,6 +275,9 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         step_improvement: float,
         is_new_peak: bool,
     ) -> dict[str, object]:
+        """
+        Build one history row for the current iteration.
+        """
         return {
             "iteration": state.iteration,
             "best_candidate": best_feature,
@@ -270,7 +298,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         Run one forward-selection iteration
         Return:
             True -> continue loop
-            False -> stop loop (no candicates left)
+            False -> stop loop (no candidates left)
         """
         state.iteration += 1
         candidates = self._get_candidate_features(state.X_columns, state.selected)
@@ -278,7 +306,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         # No more candidates -> stop
         if not candidates:
             if self.verbose >= 1:
-                print(" No more candidates. Stoping..")
+                print(" No more candidates. Stopping...")
             return False
 
         # Find best candidate this iteration
@@ -316,15 +344,15 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             True  -> stop
             False -> continue
         """
-        # Stoping criteria
+        # Stopping criteria
         if self.max_features is not None and len(state.selected) >= self.max_features:
             if self.verbose >= 1:
-                print(f" Reached max_features={self.max_features}. Stoping...")
+                print(f" Reached max_features={self.max_features}. Stopping...")
             return True
 
         if self.patience is not None and state.patience_counter >= self.patience:
             if self.verbose >= 1:
-                print(f" Patience exhausted ({self.patience}). Stoping...")
+                print(f" Patience exhausted ({self.patience}). Stopping...")
             return True
         return False
 
@@ -358,7 +386,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
                 f"\n Done: {len(state.global_best_features)} features selected. Final score={state.global_best_score:.4f}"
             )
 
-    def fit(self, X: pd.DataFrame, y: pd.Series):
+    def fit(self, X: pd.DataFrame, y: pd.Series) -> "SeededForwardSelection":
         """
         Run SFS - Seeded Forward Selection
             - X: features df
@@ -412,12 +440,12 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         self.fit(X, y)
         return pd.DataFrame(X[self.selected_features_])
 
-    def save_history(self, file_path: str):
+    def save_history(self, file_path: str) -> None:
         """
         Saving history (data processed) (JSON / csv)
         """
         if not hasattr(self, "history_") or not self.history_:
-            raise RuntimeError(" Error: we dont have history_, do u run fit() ?")
+            raise RuntimeError(" Error: no history_ found. Did you run fit()?")
 
         parent_dir = os.path.dirname(file_path)
         if parent_dir:
@@ -432,7 +460,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
                 json.dump(self.history_, f, indent=2, ensure_ascii=False)
         else:
             raise ValueError(
-                f" Error: not support {ext} file, pls chosing .json or .csv"
+                f" Error: unsupported file extension {ext}. Choose .json or .csv"
             )
         if self.verbose >= 1:
             print(f" saved history in {file_path}.")
