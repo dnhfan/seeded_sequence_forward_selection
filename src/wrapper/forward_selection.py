@@ -214,6 +214,34 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         )
         return state, original_model
 
+    def _update_global_best_and_patience(
+        self,
+        state: ForwardSelectionState,
+        best_score: float,
+    ) -> bool:
+        """
+        Update global-best tracking and patience.
+        Returns:
+            True  -> new global peak
+            False -> no improvement
+        """
+
+        is_new_peak = best_score > state.global_best_score
+
+        # Accept or reject
+        if is_new_peak:
+            state.global_best_score = best_score
+            state.global_best_features = list(state.selected)
+            state.patience_counter = 0
+        else:
+            state.patience_counter += 1
+            if self.verbose >= 2:
+                print(
+                    f"  No improvement. Patience{state.patience_counter}/{self.patience}"
+                )
+
+        return is_new_peak
+
     def _run_single_iteration(
         self,
         state: ForwardSelectionState,
@@ -244,7 +272,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         state.selected.append(best_feature)
 
         step_improvement = best_score - state.current_score
-        is_new_peak = best_score > state.global_best_score
+        is_new_peak = self._update_global_best_and_patience(state, best_score)
 
         # Log iteration
         state.history.append(
@@ -268,17 +296,6 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
                 f"  󰇂 = {step_improvement:+.4f} "
             )
 
-        # Accept or reject
-        if is_new_peak:
-            state.global_best_score = best_score
-            state.global_best_features = list(state.selected)
-            state.patience_counter = 0
-        else:
-            state.patience_counter += 1
-            if self.verbose >= 2:
-                print(
-                    f"  No improvement. Patience{state.patience_counter}/{self.patience}"
-                )
         return True
 
     def fit(self, X: pd.DataFrame, y: pd.Series):
