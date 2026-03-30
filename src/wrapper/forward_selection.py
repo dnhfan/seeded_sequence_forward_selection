@@ -18,16 +18,16 @@ from .models import get_model
 
 @dataclass
 class ForwardSelectionState:
-    # for init seed
+    # Selection inputs
     X_columns: list[str]
     selected: list[str]
 
-    # for evaluate
+    # Score tracking
     current_score: float
     global_best_score: float
     global_best_features: list[str]
 
-    # for while loop
+    # Iteration tracking
     patience_counter: int = 0
     iteration: int = 0
     history: list[dict] = field(default_factory=list)
@@ -193,37 +193,33 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         Initialize the fit's state
         """
 
-        # 1. Build model instance
+        # Build model instance used during evaluation.
         if isinstance(self.model, str):
             self._model_instance = get_model(self.model, random_state=self.random_state)
         else:
             self._model_instance = self.model
 
-        # Swap self.model
+        # Keep user configuration and swap runtime model.
         original_model = self.model
         self.model = self._model_instance
 
-        # 2. Init Seed
+        # Initialize seed features.
         X_columns = X.columns.tolist()
         selected: list[str] = self._initialize_seed_features(X_columns)
 
-        # 3. Precompute and freeze CV splits (Fixed CV)
-
-        # Build
+        # Build and freeze CV splits to keep evaluation deterministic.
         self._cv_engine_ = self._build_cv()
-
-        # Freeze
         self._cv_splits_ = list(self._cv_engine_.split(X, y))
 
-        # 4. Evaluate seed baseline
+        # Evaluate baseline score from seed set.
         current_score: float = self._evaluate_feature_set(X, y, selected)
 
-        # 5. Init tracking
+        # Initialize tracking state.
         patience_counter = 0
         history: list[dict] = []
         iteration = 0
 
-        # Save the global best score + features
+        # Initialize global best from baseline.
         global_best_score = current_score
         global_best_features = list(selected)
 
@@ -253,7 +249,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
 
         is_new_peak = best_score > state.global_best_score
 
-        # Accept or reject
+        # Update global best and patience counter.
         if is_new_peak:
             state.global_best_score = best_score
             state.global_best_features = list(state.selected)
@@ -303,24 +299,24 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         state.iteration += 1
         candidates = self._get_candidate_features(state.X_columns, state.selected)
 
-        # No more candidates -> stop
+        # Stop when all features are already selected.
         if not candidates:
             if self.verbose >= 1:
                 print(" No more candidates. Stopping...")
             return False
 
-        # Find best candidate this iteration
+        # Find best candidate for this iteration.
         best_feature, best_score = self._select_best_candidate(
             X, y, state.selected, candidates
         )
 
-        # Always append the top 1 features
+        # Add the top candidate.
         state.selected.append(best_feature)
 
         step_improvement = best_score - state.current_score
         is_new_peak = self._update_global_best_and_patience(state, best_score)
 
-        # Log iteration
+        # Save iteration history.
         row = self._build_history_row(
             state, best_feature, best_score, step_improvement, is_new_peak
         )
@@ -344,12 +340,13 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             True  -> stop
             False -> continue
         """
-        # Stopping criteria
+        # Stop if max feature limit is reached.
         if self.max_features is not None and len(state.selected) >= self.max_features:
             if self.verbose >= 1:
                 print(f" Reached max_features={self.max_features}. Stopping...")
             return True
 
+        # Stop when no improvement happens for configured patience.
         if self.patience is not None and state.patience_counter >= self.patience:
             if self.verbose >= 1:
                 print(f" Patience exhausted ({self.patience}). Stopping...")
@@ -374,7 +371,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         original_model : Union[str, BaseEstimator]
             User-provided model configuration to restore after internal evaluation.
         """
-        # 7. Store Results
+        # Persist fitted attributes.
         self.selected_features_ = state.global_best_features
         self.n_features_in_ = X.shape[1]
         self._X_columns = state.X_columns
@@ -392,7 +389,6 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             - X: features df
             - y: target Series
         """
-        #
         state, original_model = self._initialize_fit_state(X=X, y=y)
 
         if self.verbose >= 1:
@@ -400,7 +396,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
                 f"  Start: seed={state.selected}, baseline score={state.current_score:.4f}"
             )
 
-        # 6. Forward selection loop
+        # Forward selection loop.
         while True:
             should_continue = self._run_single_iteration(state, X, y)
             if not should_continue:
