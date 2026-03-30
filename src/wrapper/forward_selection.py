@@ -1,5 +1,6 @@
 import json
 import os
+from dataclasses import dataclass, field
 from typing import List, Optional, Union
 
 import numpy as np
@@ -13,6 +14,23 @@ from sklearn.utils.validation import check_is_fitted
 from src.utils import load_seed_from_csv, validate_features
 
 from .models import get_model
+
+
+@dataclass
+class ForwardSelectionState:
+    # for init seed
+    X_columns: list[str]
+    selected: list[str]
+
+    # for evaluate
+    current_score: float
+    global_best_score: float
+    global_best_features: list[str]
+
+    # for while loop
+    patience_counter: int = 0
+    iteration: int = 0
+    history: list[dict] = field(default_factory=list)
 
 
 class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
@@ -143,13 +161,9 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
 
         return best_feature, best_score
 
-    def fit(self, X: pd.DataFrame, y: pd.Series):
-        """
-        Run SFS - Seeded Forward Selection
-            - X: features df
-            - y: target Series
-        """
-
+    def _initialize_fit_state(
+        self, X: pd.DataFrame, y: pd.Series
+    ) -> tuple[ForwardSelectionState, Union[str, BaseEstimator]]:
         # 1. Build model instance
         if isinstance(self.model, str):
             self._model_instance = get_model(self.model, random_state=self.random_state)
@@ -157,7 +171,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             self._model_instance = self.model
 
         # Swap self.model
-        _original_model = self.model
+        original_model = self.model
         self.model = self._model_instance
 
         # 2. Init Seed
@@ -175,22 +189,45 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         # 4. Evaluate seed baseline
         current_score: float = self._evaluate_feature_set(X, y, selected)
 
-        # 4. Init tracking
+        # 5. Init tracking
         patience_counter = 0
-        self._history: list[dict] = []
+        history: list[dict] = []
         iteration = 0
 
         # Save the global best score + features
         global_best_score = current_score
         global_best_features = list(selected)
 
-        if self.verbose >= 1:
-            print(f"  Start: seed={selected}, baseline score={current_score:.4f}")
+        state = ForwardSelectionState(
+            X_columns=X_columns,
+            selected=selected,
+            current_score=current_score,
+            global_best_score=global_best_score,
+            global_best_features=global_best_features,
+            patience_counter=patience_counter,
+            iteration=iteration,
+            history=history,
+        )
+        return state, original_model
 
-        # 5. Forward selection loop
+    def fit(self, X: pd.DataFrame, y: pd.Series):
+        """
+        Run SFS - Seeded Forward Selection
+            - X: features df
+            - y: target Series
+        """
+        #
+        state, _original_model = self._initialize_fit_state(X=X, y=y)
+
+        if self.verbose >= 1:
+            print(
+                f"  Start: seed={state.selected}, baseline score={state.current_score:.4f}"
+            )
+
+        # 6. Forward selection loop
         while True:
-            iteration += 1
-            candidates = self._get_candidate_features(X_columns, selected)
+            state.iteration += 1
+            candidates = self._get_candidate_features(state.X_columns, state.selected)
 
             # No more candidates -> stop
             if not candidates:
@@ -200,69 +237,73 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
 
             # Find best candidate this iteration
             best_feature, best_score = self._select_best_candidate(
-                X, y, selected, candidates
+                X, y, state.selected, candidates
             )
 
             # Always append the top 1 features
-            selected.append(best_feature)
+            state.selected.append(best_feature)
 
-            step_improvement = best_score - current_score
-            is_new_peak = best_score > global_best_score
+            step_improvement = best_score - state.current_score
+            is_new_peak = best_score > state.global_best_score
 
             # Log iteration
-            self._history.append(
+            state.history.append(
                 {
-                    "iteration": iteration,
+                    "iteration": state.iteration,
                     "best_candidate": best_feature,
                     "best_score": round(best_score, 6),
                     "improvement": round(step_improvement, 6),
-                    "n_selected": len(selected),
-                    "selected_features": list(selected),
+                    "n_selected": len(state.selected),
+                    "selected_features": list(state.selected),
                     "is_new_peak": is_new_peak,
                 }
             )
 
-            current_score = best_score
+            state.current_score = best_score
 
             if self.verbose >= 2:
                 print(
-                    f"  Iter {iteration:>3}: + {best_feature}"
+                    f"  Iter {state.iteration:>3}: + {best_feature}"
                     f"  score={best_score:.4f}"
                     f"  󰇂 = {step_improvement:+.4f} "
                 )
 
             # Accept or reject
             if is_new_peak:
-                global_best_score = best_score
-                global_best_features = list(selected)
-                patience_counter = 0
+                state.global_best_score = best_score
+                state.global_best_features = list(state.selected)
+                state.patience_counter = 0
             else:
-                patience_counter += 1
+                state.patience_counter += 1
                 if self.verbose >= 2:
                     print(
-                        f"  No improvement. Patience{patience_counter}/{self.patience}"
+                        f"  No improvement. Patience{state.patience_counter}/{self.patience}"
                     )
 
             # Stoping criteria
-            if self.max_features is not None and len(selected) >= self.max_features:
+            if (
+                self.max_features is not None
+                and len(state.selected) >= self.max_features
+            ):
                 if self.verbose >= 1:
                     print(f" Reached max_features={self.max_features}. Stoping...")
                 break
 
-            if self.patience is not None and patience_counter >= self.patience:
+            if self.patience is not None and state.patience_counter >= self.patience:
                 if self.verbose >= 1:
                     print(f" Patience exhausted ({self.patience}). Stoping...")
                 break
 
-        # 6. Store Results
-        self.selected_features_ = global_best_features
+        # 7. Store Results
+        self.selected_features_ = state.global_best_features
         self.n_features_in_ = X.shape[1]
-        self._X_columns = X_columns
+        self._X_columns = state.X_columns
         self.model = _original_model
+        self.history_ = state.history
 
         if self.verbose >= 1:
             print(
-                f"\n Done: {len(global_best_features)} features selected. Final score={global_best_score:.4f}"
+                f"\n Done: {len(state.global_best_features)} features selected. Final score={state.global_best_score:.4f}"
             )
         return self
 
@@ -297,8 +338,8 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         """
         Saving history (data processed) (JSON / csv)
         """
-        if not hasattr(self, "_history") or not self._history:
-            raise RuntimeError(" Error: we dont have _history, do u run fit() ?")
+        if not hasattr(self, "history_") or not self.history_:
+            raise RuntimeError(" Error: we dont have history_, do u run fit() ?")
 
         parent_dir = os.path.dirname(file_path)
         if parent_dir:
@@ -307,10 +348,10 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         ext = os.path.splitext(file_path)[1].lower()
 
         if ext == ".csv":
-            pd.DataFrame(self._history).to_csv(file_path, index=False)
+            pd.DataFrame(self.history_).to_csv(file_path, index=False)
         elif ext == ".json":
             with open(file_path, "w", encoding="utf-8") as f:
-                json.dump(self._history, f, indent=2, ensure_ascii=False)
+                json.dump(self.history_, f, indent=2, ensure_ascii=False)
         else:
             raise ValueError(
                 f" Error: not support {ext} file, pls chosing .json or .csv"
