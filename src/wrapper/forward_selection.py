@@ -1,12 +1,13 @@
 import json
 import os
+from typing import List, Optional, Union
 
 import numpy as np
 import pandas as pd
 from joblib import Parallel, delayed
 from sklearn.base import BaseEstimator, MetaEstimatorMixin
 from sklearn.feature_selection import SelectorMixin
-from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import KFold, StratifiedKFold, cross_val_score
 from sklearn.utils.validation import check_is_fitted
 
 from src.utils import load_seed_from_csv, validate_features
@@ -18,20 +19,23 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
     """
     Seeded Forward Selection: re write FS of wrapper method
     - add seed features
+    - Using K-fold 1 time then evaluate
     """
 
     def __init__(
         self,
-        seed_source,
-        n_seeds=1,
-        model="logistic",
-        scoring="accuracy",
-        cv=5,
-        max_features=100,
-        patience=5,
-        random_state=42,
-        verbose=2,
-        n_jobs=-1,
+        seed_source: Union[str, List[str]],
+        n_seeds: int = 1,
+        model: Union[str, BaseEstimator] = "logistic",
+        scoring: str = "accuracy",
+        cv: int = 5,
+        cv_shuffle: bool = True,
+        cv_stratified: bool = True,
+        max_features: Optional[int] = 100,
+        patience: Optional[int] = 5,
+        random_state: int = 42,
+        verbose: int = 2,
+        n_jobs: int = -1,
     ) -> None:
         super().__init__()
         self.seed_source = seed_source
@@ -39,6 +43,8 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         self.model = model
         self.scoring = scoring
         self.cv = cv
+        self.cv_shuffle = cv_shuffle
+        self.cv_stratified = cv_stratified
         self.max_features = max_features
         self.patience = patience
         self.random_state = random_state
@@ -64,6 +70,22 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
 
         return seeds
 
+    def _build_cv(self):
+        """
+        Build deterministic CV splitter from config.
+        """
+        if self.cv_stratified:
+            return StratifiedKFold(
+                n_splits=self.cv,
+                shuffle=self.cv_shuffle,
+                random_state=self.random_state if self.cv_shuffle else None,
+            )
+        return KFold(
+            n_splits=self.cv,
+            shuffle=self.cv_shuffle,
+            random_state=self.random_state if self.cv_shuffle else None,
+        )
+
     def _evaluate_feature_set(self, X, y, features) -> float:
         """
         evaluate features in each loop
@@ -72,7 +94,12 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         mean score
         """
         score: np.ndarray = cross_val_score(
-            self.model, X[features], y, cv=self.cv, scoring=self.scoring, n_jobs=1
+            self.model,
+            X[features],
+            y,
+            cv=self._cv_splits_,
+            scoring=self.scoring,
+            n_jobs=1,
         )
 
         return float(score.mean())
@@ -97,7 +124,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         """
 
         # parallel (n) -> make a woker pool with n cpu core
-        # parallel()(this) -> this is the work we need to do
+        # parallel()(this) -> "this" is the work we need to do
         # delayed(function)(argm) -> delayed will put function to a tuple (task object)
         # evaluate return -> score, for candidate loop -> delay candidates time -> run candidate time -> return a list of score
 
@@ -133,7 +160,15 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         X_columns = X.columns.tolist()
         selected: list[str] = self._initialize_seed_features(X_columns)
 
-        # 3. Evaluate seed baseline
+        # 3. Precompute and freeze CV splits (Fixed CV)
+
+        # Build
+        self._cv_engine_ = self._build_cv()
+
+        # Freeze
+        self._cv_splits_ = list(self._cv_engine_.split(X, y))
+
+        # 4. Evaluate seed baseline
         current_score: float = self._evaluate_feature_set(X, y, selected)
 
         # 4. Init tracking
@@ -223,7 +258,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
 
         if self.verbose >= 1:
             print(
-                f"\n Done: {len(selected)} features selected. Final score={current_score:.4f}"
+                f"\n Done: {len(global_best_features)} features selected. Final score={global_best_score:.4f}"
             )
         return self
 
