@@ -70,10 +70,12 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
 
         return seeds
 
-    def _build_cv(self):
+    def _build_cv(self) -> StratifiedKFold | KFold:
         """
         Build deterministic CV splitter from config.
         """
+        if self.cv < 2:
+            raise ValueError(" Error: cv val must be >= 2")
         if self.cv_stratified:
             return StratifiedKFold(
                 n_splits=self.cv,
@@ -93,6 +95,8 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         -------------
         mean score
         """
+        check_is_fitted(self, "_cv_splits_")
+
         score: np.ndarray = cross_val_score(
             self.model,
             X[features],
