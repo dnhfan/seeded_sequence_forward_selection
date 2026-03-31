@@ -233,6 +233,11 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             iteration=iteration,
             history=history,
         )
+        if self.verbose >= 1:
+            print(
+                f"  Start: seed={state.selected}, baseline score={state.current_score:.4f}"
+            )
+
         return state, original_model
 
     def _update_global_best_and_patience(
@@ -390,11 +395,6 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             - y: target Series
         """
         state, original_model = self._initialize_fit_state(X=X, y=y)
-
-        if self.verbose >= 1:
-            print(
-                f"  Start: seed={state.selected}, baseline score={state.current_score:.4f}"
-            )
 
         # Forward selection loop.
         while True:
