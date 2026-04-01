@@ -27,12 +27,16 @@ class WrapperSelector:
         valid_method: List[str],
         n_features: int,
         voting_csv_name: str,
+        using_timer: bool = True,
+        unit: str = "ms",
     ) -> None:
 
         self.data_name = data_name
         self.valid_method = valid_method
         self.n_features = n_features
         self.voting_csv_name = voting_csv_name
+        self.using_timer = using_timer
+        self.unit = unit
 
         # Dir path
         # self.filter_dir = f"data/processed/{self.data_name}/filter{n_features}"
@@ -79,7 +83,12 @@ class WrapperSelector:
         # 2. Config SFS
         voting_csv_path = f"{self.path.ensemble_dir}/{self.voting_csv_name}"
 
-        selector = SeededForwardSelection(seed_source=voting_csv_path, **sfs_params)
+        selector = SeededForwardSelection(
+            seed_source=voting_csv_path,
+            **sfs_params,
+            using_timer=self.using_timer,
+            unit=self.unit,
+        )
 
         # 3. Fit the model
         selector.fit(X_in, y_in)
@@ -104,7 +113,7 @@ class WrapperSelector:
         max_features: int,
     ) -> None:
         # 5. Save the final dataset to the wrapper directory
-        save_path = f"{self.path.wrapper_dir}/{self.data_name}_SFS_{n_seeds}seed_{file_suffix}.csv"
+        save_path = f"{self.path.wrapper_dir}/{self.data_name}_SFS_{n_seeds}seed_{patience}patience_{max_features}_max_{file_suffix}.csv"
         df_final.to_csv(save_path, index=False)
 
         print(f" Saved Final data to: {save_path}")

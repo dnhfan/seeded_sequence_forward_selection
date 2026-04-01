@@ -58,6 +58,8 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         random_state: int = 42,
         verbose: int = 2,
         n_jobs: int = -1,
+        using_timer: bool = True,
+        unit: str = "ms",
     ) -> None:
         super().__init__()
         self.seed_source = seed_source
@@ -72,6 +74,8 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         self.random_state = random_state
         self.verbose = verbose
         self.n_jobs = n_jobs
+        self.using_timer = using_timer
+        self.unit = unit
 
     def _initialize_seed_features(self, X_columns: list[str]) -> list[str]:
         """
@@ -308,7 +312,9 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             False -> stop loop (no candidates left)
         """
         with TimerContext(
-            name=f"SFS.iter_{state.iteration+1}", unit="ms"
+            name=f"SFS.iter_{state.iteration+1}",
+            unit=self.unit,
+            enabled=self.using_timer,
         ) as iter_timer:
 
             state.iteration += 1
@@ -413,7 +419,11 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             - X: features df
             - y: target Series
         """
-        with TimerContext(name="SFS.fit", unit="ms") as total_timer:
+        with TimerContext(
+            name="SFS.fit",
+            unit=self.unit,
+            enabled=self.using_timer,
+        ) as total_timer:
 
             state, original_model = self._initialize_fit_state(X=X, y=y)
 
