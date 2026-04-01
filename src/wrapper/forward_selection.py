@@ -400,6 +400,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         """
         # Persist fitted attributes.
         self.selected_features_ = state.global_best_features
+        self.global_best_score_ = state.global_best_score
         self.n_features_in_ = X.shape[1]
         self._X_columns = state.X_columns
         self.model = original_model
@@ -474,7 +475,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         """
         from datetime import datetime
 
-        final_score = self.history_[-1]["best_score"] if self.history_ else 0.0
+        final_score = self.global_best_score_
 
         lines = []
 
