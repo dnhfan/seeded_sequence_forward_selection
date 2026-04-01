@@ -12,6 +12,7 @@ from sklearn.model_selection import KFold, StratifiedKFold, cross_val_score
 from sklearn.utils.validation import check_is_fitted
 
 from src.utils import load_seed_from_csv, validate_features
+from src.utils.Timer import TimerContext
 
 from .models import get_model
 
@@ -31,6 +32,9 @@ class ForwardSelectionState:
     patience_counter: int = 0
     iteration: int = 0
     history: list[dict] = field(default_factory=list)
+
+    # Timing tracking
+    total_time_ms: float = 0
 
 
 class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
@@ -275,6 +279,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         best_score: float,
         step_improvement: float,
         is_new_peak: bool,
+        elapsed_ms: float = 0.0,
     ) -> dict[str, object]:
         """
         Build one history row for the current iteration.
@@ -287,6 +292,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             "n_selected": len(state.selected),
             "selected_features": list(state.selected),
             "is_new_peak": is_new_peak,
+            "elapsed_ms": round(elapsed_ms, 3),
         }
 
     def _run_single_iteration(
@@ -301,40 +307,51 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             True -> continue loop
             False -> stop loop (no candidates left)
         """
-        state.iteration += 1
-        candidates = self._get_candidate_features(state.X_columns, state.selected)
+        with TimerContext(
+            name=f"SFS.iter_{state.iteration+1}", unit="ms"
+        ) as iter_timer:
 
-        # Stop when all features are already selected.
-        if not candidates:
-            if self.verbose >= 1:
-                print(" No more candidates. Stopping...")
-            return False
+            state.iteration += 1
+            candidates = self._get_candidate_features(state.X_columns, state.selected)
 
-        # Find best candidate for this iteration.
-        best_feature, best_score = self._select_best_candidate(
-            X, y, state.selected, candidates
-        )
+            # Stop when all features are already selected.
+            if not candidates:
+                if self.verbose >= 1:
+                    print(" No more candidates. Stopping...")
+                return False
 
-        # Add the top candidate.
-        state.selected.append(best_feature)
-
-        step_improvement = best_score - state.current_score
-        is_new_peak = self._update_global_best_and_patience(state, best_score)
-
-        # Save iteration history.
-        row = self._build_history_row(
-            state, best_feature, best_score, step_improvement, is_new_peak
-        )
-        state.history.append(row)
-
-        state.current_score = best_score
-
-        if self.verbose >= 2:
-            print(
-                f"  Iter {state.iteration:>3}: + {best_feature}"
-                f"  score={best_score:.4f}"
-                f"  󰇂 = {step_improvement:+.4f} "
+            # Find best candidate for this iteration.
+            best_feature, best_score = self._select_best_candidate(
+                X, y, state.selected, candidates
             )
+
+            # Add the top candidate.
+            state.selected.append(best_feature)
+
+            step_improvement = best_score - state.current_score
+            is_new_peak = self._update_global_best_and_patience(state, best_score)
+
+            # Save iteration history.
+            row = self._build_history_row(
+                state,
+                best_feature,
+                best_score,
+                step_improvement,
+                is_new_peak,
+                elapsed_ms=iter_timer.elapsed,
+            )
+            state.history.append(row)
+
+            state.current_score = best_score
+
+            if self.verbose >= 2:
+                print(
+                    f"  Iter {state.iteration:>3}: + {best_feature}"
+                    f"  score={best_score:.4f}"
+                    f"  󰇂 = {step_improvement:+.4f} "
+                )
+
+        state.total_time_ms += iter_timer.elapsed
 
         return True
 
@@ -382,6 +399,8 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         self._X_columns = state.X_columns
         self.model = original_model
         self.history_ = state.history
+        self.total_iter_time_ms_ = state.total_time_ms
+        self.iteration_time_ms_ = [row["elapsed_ms"] for row in state.history]
 
         if self.verbose >= 1:
             print(
@@ -394,18 +413,21 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             - X: features df
             - y: target Series
         """
-        state, original_model = self._initialize_fit_state(X=X, y=y)
+        with TimerContext(name="SFS.fit", unit="ms") as total_timer:
 
-        # Forward selection loop.
-        while True:
-            should_continue = self._run_single_iteration(state, X, y)
-            if not should_continue:
-                break
+            state, original_model = self._initialize_fit_state(X=X, y=y)
 
-            if self._should_stop(state):
-                break
+            # Forward selection loop.
+            while True:
+                should_continue = self._run_single_iteration(state, X, y)
+                if not should_continue:
+                    break
 
-        self._finalize_fit(state, X, original_model)
+                if self._should_stop(state):
+                    break
+
+            self._finalize_fit(state, X, original_model)
+        self.total_fit_time_ms_ = total_timer.elapsed
 
         return self
 
