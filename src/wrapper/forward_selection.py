@@ -336,17 +336,6 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             step_improvement = best_score - state.current_score
             is_new_peak = self._update_global_best_and_patience(state, best_score)
 
-            # Save iteration history.
-            row = self._build_history_row(
-                state,
-                best_feature,
-                best_score,
-                step_improvement,
-                is_new_peak,
-                elapsed_ms=iter_timer.elapsed,
-            )
-            state.history.append(row)
-
             state.current_score = best_score
 
             if self.verbose >= 2:
@@ -355,6 +344,17 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
                     f"  score={best_score:.4f}"
                     f"  󰇂 = {step_improvement:+.4f} "
                 )
+
+        # Save iteration history.
+        row = self._build_history_row(
+            state,
+            best_feature,
+            best_score,
+            step_improvement,
+            is_new_peak,
+            elapsed_ms=iter_timer.elapsed,
+        )
+        state.history.append(row)
 
         state.total_time_ms += iter_timer.elapsed
 
