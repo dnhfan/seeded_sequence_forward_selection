@@ -119,7 +119,7 @@ class WrapperSelector:
         print(f" Saved Final data to: {save_path}")
 
         # 6. Save the SFS Execution history
-        history_path = f"{self.report_dir}/sfs_history_{n_seeds}seed_{patience}patience_{max_features}max_{file_suffix}.csv"
+        history_path = f"{self.report_dir}/sfs_history_{n_seeds}seed_{patience}patience_{max_features}max_{file_suffix}.txt"
         selector.save_history(history_path)
 
     def run_sfs(

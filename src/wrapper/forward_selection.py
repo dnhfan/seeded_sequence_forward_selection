@@ -312,11 +312,10 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             False -> stop loop (no candidates left)
         """
         with TimerContext(
-            name=f"SFS.iter_{state.iteration+1}",
+            name=f"SFS.iter_{state.iteration + 1}",
             unit=self.unit,
             enabled=self.using_timer,
         ) as iter_timer:
-
             state.iteration += 1
             candidates = self._get_candidate_features(state.X_columns, state.selected)
 
@@ -424,7 +423,6 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             unit=self.unit,
             enabled=self.using_timer,
         ) as total_timer:
-
             state, original_model = self._initialize_fit_state(X=X, y=y)
 
             # Forward selection loop.
@@ -468,9 +466,83 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         self.fit(X, y)
         return pd.DataFrame(X[self.selected_features_])
 
+    def _generate_txt_report(self) -> str:
+        """
+        Generate a human-readable TXT report of the SFS execution.
+        Returns:
+            str: Formatted report content
+        """
+        from datetime import datetime
+
+        final_score = self.history_[-1]["best_score"] if self.history_ else 0.0
+
+        lines = []
+
+        lines.append("=" * 60)
+        lines.append(" SEEDED FORWARD SELECTION (SFS) - EXECUTION REPORT")
+        lines.append(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        lines.append("=" * 60)
+        lines.append("")
+
+        lines.append("-" * 40)
+        lines.append(" CONFIGURATION")
+        lines.append("-" * 40)
+        lines.append(f"  {'Model:':<20} {self.model}")
+        lines.append(f"  {'Scoring:':<20} {self.scoring}")
+        lines.append(f"  {'CV Folds:':<20} {self.cv}")
+        lines.append(f"  {'CV Shuffle:':<20} {self.cv_shuffle}")
+        lines.append(f"  {'CV Stratified:':<20} {self.cv_stratified}")
+        lines.append(f"  {'Max Features:':<20} {self.max_features}")
+        lines.append(f"  {'Patience:':<20} {self.patience}")
+        lines.append(f"  {'N Seeds:':<20} {self.n_seeds}")
+        lines.append(f"  {'Random State:':<20} {self.random_state}")
+        lines.append(f"  {'N Jobs:':<20} {self.n_jobs}")
+        lines.append(f"  {'Timing Enabled:':<20} {self.using_timer}")
+        lines.append(f"  {'Time Unit:':<20} {self.unit}")
+        lines.append("")
+
+        lines.append("-" * 40)
+        lines.append("󰈙 SUMMARY")
+        lines.append("-" * 40)
+        lines.append(
+            f"  {'Total Fit Time:':<20} {self.total_fit_time_ms_:.3f} {self.unit}"
+        )
+        lines.append(f"  {'Final Best Score:':<20} {final_score:.6f}")
+        lines.append(f"  {'Total Selected:':<20} {len(self.selected_features_)}")
+        lines.append(
+            f"  {'Selected Features:':<20} {', '.join(self.selected_features_)}"
+        )
+        lines.append("")
+
+        lines.append("-" * 40)
+        lines.append(" ITERATION LOGS")
+        lines.append("-" * 40)
+
+        header = f"  {'Iter':<6} {'Candidate':<25} {'Score':<12} {'Improvement':<12} {'Time':<10}"
+        lines.append(header)
+        lines.append("  " + "-" * 60)
+
+        for row in self.history_:
+            iter_num = row.get("iteration", 0)
+            candidate = row.get("best_candidate", "N/A")
+            score = row.get("best_score", 0.0)
+            improvement = row.get("improvement", 0.0)
+            elapsed = row.get("elapsed_ms", 0.0)
+
+            lines.append(
+                f"  {iter_num:<6} {candidate[:22]:<25} {score:<12.6f} {improvement:<+12.6f} {elapsed:<10.3f}"
+            )
+
+        lines.append("")
+        lines.append("=" * 60)
+        lines.append(" END OF REPORT")
+        lines.append("=" * 60)
+
+        return "\n".join(lines)
+
     def save_history(self, file_path: str) -> None:
         """
-        Saving history (data processed) (JSON / csv)
+        Saving history (data processed) (JSON / csv / txt)
         """
         if not hasattr(self, "history_") or not self.history_:
             raise RuntimeError(" Error: no history_ found. Did you run fit()?")
@@ -486,9 +558,13 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         elif ext == ".json":
             with open(file_path, "w", encoding="utf-8") as f:
                 json.dump(self.history_, f, indent=2, ensure_ascii=False)
+        elif ext == ".txt":
+            report = self._generate_txt_report()
+            with open(file_path, "w", encoding="utf-8") as f:
+                f.write(report)
         else:
             raise ValueError(
-                f" Error: unsupported file extension {ext}. Choose .json or .csv"
+                f" Error: unsupported file extension {ext}. Choose .json, .csv, or .txt"
             )
         if self.verbose >= 1:
             print(f" saved history in {file_path}.")
