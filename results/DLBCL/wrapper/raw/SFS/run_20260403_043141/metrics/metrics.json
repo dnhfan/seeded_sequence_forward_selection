@@ -1,0 +1,15 @@
+{
+  "dataset": "DLBCL",
+  "dataset_variant": "raw",
+  "algorithm": "SFS",
+  "n_features_selected": 3,
+  "global_best_score": 0.9866666666666667,
+  "total_fit_time_ms": 104.11033299799965,
+  "n_seeds": 1,
+  "patience": 3,
+  "max_features": 20,
+  "cv": 5,
+  "scoring": "accuracy",
+  "model": "log",
+  "run_root": "results/DLBCL/wrapper/raw/SFS/run_20260403_043141"
+}
