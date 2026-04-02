@@ -1,0 +1,17 @@
+Model Comparison Report - Dataset: adenocarcinoma
+Date: 2026-04-03 03:34:09
+Number of Features: 50
+------------------------------------------------------------
+            Method                  Model      Acc
+          VARIANCE     LogisticRegression 0.884615
+          VARIANCE DecisionTreeClassifier 0.846154
+       CORRELATION     LogisticRegression 0.961538
+       CORRELATION DecisionTreeClassifier 0.884615
+       CHI_SQUARED     LogisticRegression 0.884615
+       CHI_SQUARED DecisionTreeClassifier 0.846154
+MUTUAL_INFORMATION     LogisticRegression 0.961538
+MUTUAL_INFORMATION DecisionTreeClassifier 0.923077
+      ANOVA_F_TEST     LogisticRegression 0.923077
+      ANOVA_F_TEST DecisionTreeClassifier 0.923077
+              None     LogisticRegression 0.812500
+              None DecisionTreeClassifier 0.750000
