@@ -12,7 +12,7 @@ def get_model(model_name: str, random_state: int = 42):
 
     name = model_name.lower().strip()
 
-    if name == "logistic":
+    if name == "logistic" or name == "log":
         return LogisticRegression(max_iter=5000, random_state=random_state)
 
     elif name == "rf":

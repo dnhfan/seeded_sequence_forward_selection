@@ -1,0 +1,15 @@
+{
+  "dataset": "colon1",
+  "dataset_variant": "union",
+  "algorithm": "SFS",
+  "n_features_selected": 7,
+  "global_best_score": 0.9358974358974358,
+  "total_fit_time_ms": 3407.6215519999096,
+  "n_seeds": 1,
+  "patience": 3,
+  "max_features": 20,
+  "cv": 5,
+  "scoring": "accuracy",
+  "model": "dt",
+  "run_root": "results/colon1/wrapper/union/SFS/run_20260403_024220"
+}

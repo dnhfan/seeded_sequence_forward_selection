@@ -10,11 +10,12 @@ This document provides essential information for AI coding agents working in thi
 **Environment:** Uses `.venv` with `uv` package manager
 
 **Directory Structure:**
+
 ```
 wrapper-w-filter/
 ├── data/
 │   ├── raw/          # 16 cancer genomics CSV datasets (target in first column)
-│   └── process/      # For processed/intermediate data
+│   └── processed/      # For processed/intermediate data
 ├── notebook/         # Jupyter notebooks for exploratory analysis
 │   └── 01_eda.ipynb
 ├── result/           # Output directory for results (models, reports, plots)
@@ -99,6 +100,7 @@ python src/preprocessing.py
 ### Import Organization
 
 Order imports in three groups with blank lines between:
+
 1. Standard library imports
 2. Third-party imports (numpy, pandas, sklearn, etc.)
 3. Local application imports
@@ -164,6 +166,7 @@ For more complex functions, consider NumPy-style docstrings with Parameters/Retu
 ### Error Handling
 
 - Use explicit exception handling for I/O operations:
+
   ```python
   try:
       df = pd.read_csv(filepath)
@@ -204,19 +207,23 @@ if __name__ == "__main__":
 ## Data Workflow
 
 ### Input Data
+
 - Location: `data/raw/*.csv`
 - Format: CSV with target variable in first column (default: `target_index=0`)
 - 16 cancer genomics datasets available
 - High dimensionality (thousands of gene expression features)
 
 ### Processing Pipeline
+
 1. Load raw CSV data
 2. Split features (X) and target (y)
 3. Apply SMOTE for class balancing (random_state=42)
 4. Return balanced DataFrames
 
 ### Output Structure
+
 Store results in `result/` directory:
+
 - Models: `*.pkl` files
 - Reports: `*.txt` files with metrics
 - Visualizations: `*.png` files
@@ -245,12 +252,14 @@ Store results in `result/` directory:
 ## Common Tasks
 
 ### Adding a New Feature Selection Method
+
 1. Create function/class in appropriate module (`src/filter_selection.py` or new module)
 2. Follow naming conventions and docstring format
 3. Add manual test in `if __name__ == "__main__"` block
 4. Test with small dataset first (e.g., `colon1.csv` is smallest)
 
 ### Creating Output Files
+
 ```python
 import os
 
@@ -263,6 +272,7 @@ output_path = "result/model_name.pkl"
 ```
 
 ### Working with Datasets
+
 ```python
 # Load and preprocess
 from src.preprocessing import load_and_preprocess
