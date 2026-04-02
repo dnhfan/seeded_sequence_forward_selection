@@ -1,0 +1,17 @@
+Model Comparison Report - Dataset: CNS1
+Date: 2026-04-03 03:03:32
+Number of Features: 50
+------------------------------------------------------------
+            Method                  Model      Acc
+          VARIANCE     LogisticRegression 0.687500
+          VARIANCE DecisionTreeClassifier 0.562500
+       CORRELATION     LogisticRegression 0.875000
+       CORRELATION DecisionTreeClassifier 0.875000
+       CHI_SQUARED     LogisticRegression 0.812500
+       CHI_SQUARED DecisionTreeClassifier 0.625000
+MUTUAL_INFORMATION     LogisticRegression 0.750000
+MUTUAL_INFORMATION DecisionTreeClassifier 0.812500
+      ANOVA_F_TEST     LogisticRegression 0.875000
+      ANOVA_F_TEST DecisionTreeClassifier 0.875000
+              None     LogisticRegression 0.750000
+              None DecisionTreeClassifier 0.583333
