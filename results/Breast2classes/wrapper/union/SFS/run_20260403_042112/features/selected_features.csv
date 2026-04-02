@@ -1,0 +1,6 @@
+feature,feature_index,dataset,dataset_variant,algorithm
+V2221,0,Breast2classes,union,SFS
+V1792,1,Breast2classes,union,SFS
+V704,2,Breast2classes,union,SFS
+V2692,3,Breast2classes,union,SFS
+V3637,4,Breast2classes,union,SFS
