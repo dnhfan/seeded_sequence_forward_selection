@@ -1,0 +1,15 @@
+{
+  "dataset": "Breast3classes",
+  "dataset_variant": "raw",
+  "algorithm": "SFS",
+  "n_features_selected": 6,
+  "global_best_score": 0.8526315789473685,
+  "total_fit_time_ms": 43.39773513199907,
+  "n_seeds": 1,
+  "patience": 3,
+  "max_features": 20,
+  "cv": 5,
+  "scoring": "accuracy",
+  "model": "dt",
+  "run_root": "results/Breast3classes/wrapper/raw/SFS/run_20260403_042604"
+}

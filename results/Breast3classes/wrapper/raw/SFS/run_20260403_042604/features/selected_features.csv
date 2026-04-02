@@ -1,0 +1,7 @@
+feature,feature_index,dataset,dataset_variant,algorithm
+V3780,0,Breast3classes,raw,SFS
+V3048,1,Breast3classes,raw,SFS
+V4632,2,Breast3classes,raw,SFS
+V1946,3,Breast3classes,raw,SFS
+V2401,4,Breast3classes,raw,SFS
+V732,5,Breast3classes,raw,SFS
