@@ -213,10 +213,11 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
 
         # Initialize seed features.
         self._X_columns = X_columns
+        self._name_to_idx = {name: i for i, name in enumerate(X_columns)}
         X_indices = list(range(X_np.shape[1]))
 
         seed_strings: list[str] = self._initialize_seed_features(X_columns)
-        selected_indices: list[int] = [X_columns.index(s) for s in seed_strings]
+        selected_indices: list[int] = [self._name_to_idx[s] for s in seed_strings]
 
         # Build and freeze CV splits to keep evaluation deterministic.
         self._cv_engine_ = self._build_cv()
