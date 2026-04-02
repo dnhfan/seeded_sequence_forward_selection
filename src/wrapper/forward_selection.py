@@ -115,7 +115,10 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         )
 
     def _evaluate_feature_set(
-        self, X_np: np.ndarray, y_np: np.ndarray, selected_indices: list[int]
+        self,
+        X_np: np.ndarray,
+        y_np: np.ndarray,
+        selected_indices: list[int],
     ) -> float:
         """
         evaluate features in each loop
