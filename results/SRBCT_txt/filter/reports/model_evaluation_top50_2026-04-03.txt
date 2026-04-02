@@ -1,0 +1,17 @@
+Model Comparison Report - Dataset: SRBCT_txt
+Date: 2026-04-03 02:51:05
+Number of Features: 50
+------------------------------------------------------------
+            Method                  Model      Acc
+          VARIANCE     LogisticRegression 1.000000
+          VARIANCE DecisionTreeClassifier 0.947368
+       CORRELATION     LogisticRegression 1.000000
+       CORRELATION DecisionTreeClassifier 0.842105
+       CHI_SQUARED     LogisticRegression 1.000000
+       CHI_SQUARED DecisionTreeClassifier 1.000000
+MUTUAL_INFORMATION     LogisticRegression 1.000000
+MUTUAL_INFORMATION DecisionTreeClassifier 0.894737
+      ANOVA_F_TEST     LogisticRegression 1.000000
+      ANOVA_F_TEST DecisionTreeClassifier 0.789474
+              None     LogisticRegression 1.000000
+              None DecisionTreeClassifier 0.769231

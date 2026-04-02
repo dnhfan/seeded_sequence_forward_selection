@@ -1,0 +1,2 @@
+dataset,dataset_variant,algorithm,n_features_selected,global_best_score,total_fit_time_ms,n_seeds,patience,max_features,cv,scoring,model,run_root
+SRBCT_txt,raw,SFS,4,1.0,39.32085197699962,1,3,10,5,accuracy,log,results/SRBCT_txt/wrapper/raw/SFS/run_20260403_025511

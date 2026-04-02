@@ -1,0 +1,15 @@
+{
+  "dataset": "SRBCT_txt",
+  "dataset_variant": "raw",
+  "algorithm": "SFS",
+  "n_features_selected": 6,
+  "global_best_score": 0.9525641025641025,
+  "total_fit_time_ms": 21.08308440700057,
+  "n_seeds": 1,
+  "patience": 3,
+  "max_features": 10,
+  "cv": 5,
+  "scoring": "accuracy",
+  "model": "dt",
+  "run_root": "results/SRBCT_txt/wrapper/raw/SFS/run_20260403_025320"
+}
