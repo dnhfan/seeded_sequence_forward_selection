@@ -92,6 +92,8 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         else:
             raise ValueError(f" Error: seed_source should be 'str' or 'list'.")
 
+        seeds = [str(s).strip() for s in seeds]
+
         validate_features(seeds, X_columns)
 
         return seeds
