@@ -1,6 +1,5 @@
-import os
-from datetime import datetime
-from typing import List
+from pathlib import Path
+from typing import List, Optional
 
 import pandas as pd
 
@@ -14,11 +13,8 @@ class WrapperSelector:
     It first creates a Union of features from various filter methods,
     then runs Seeded Forward Selection to find the optimal subset.
 
-    Attributes:
-        data_name (str): The name of the dataset (e.g., 'NCI', 'Lymphoma').
-        valid_methods (List[str]): List of filtering methods used previously.
-        n_features (int): The number of top features selected from each method.
-        voting_csv_name (str): The filename of the voting results (used as seed).
+    Rule A: Machine-readable outputs (CSVs) go to data/processed/<dataset>/04_wrapper/
+    Rule B: Human-readable outputs (history.csv, report.txt, plots) go to results/<dataset>/run_YYYYMMDD_HHMM_ExperimentName/
     """
 
     def __init__(
@@ -27,6 +23,8 @@ class WrapperSelector:
         valid_method: List[str],
         n_features: int,
         voting_csv_name: str,
+        experiment_name: str = "SFS",
+        run_folder: Optional[Path] = None,
         using_timer: bool = True,
         unit: str = "ms",
     ) -> None:
@@ -35,22 +33,20 @@ class WrapperSelector:
         self.valid_method = valid_method
         self.n_features = n_features
         self.voting_csv_name = voting_csv_name
+        self.experiment_name = experiment_name
         self.using_timer = using_timer
         self.unit = unit
 
-        # Dir path
-        # self.filter_dir = f"data/processed/{self.data_name}/filter{n_features}"
-        # self.ensemble_dir = f"data/processed/{self.data_name}/ensemble{n_features}"
-        # self.wrapper_dir = f"data/processed/{self.data_name}/wrapper{n_features}"
-        # self.raw_path = f"data/raw/{self.data_name}.csv"
-
         self.path = ProjectPath(data_name=data_name, n_features=n_features)
 
-        self.timestamp = datetime.now().strftime("%Y-%m-%d")
+        self.path.wrapper_dir().mkdir(parents=True, exist_ok=True)
 
-        os.makedirs(self.path.wrapper_dir, exist_ok=True)
+        if run_folder is None:
+            self.run_folder = self.path.ensure_results_dir(experiment_name)
+        else:
+            self.run_folder = run_folder
 
-        self.report_dir = f"results/{self.data_name}/{self.timestamp}/report"
+        self.history_csv_path = self.run_folder / "sfs_history.csv"
 
     # def _create_union_features(self) -> pd.DataFrame:
     #     """
@@ -74,14 +70,13 @@ class WrapperSelector:
         self, X_in: pd.DataFrame, y_in: pd.Series, sfs_params: dict
     ) -> tuple[pd.DataFrame, SeededForwardSelection]:
         """
-        [Private] Execute the core SFS aglorithsm
+        [Private] Execute the core SFS algorithm
 
         Returns:
             df_final: DataFrame which restore the results of sfs
             selector: Instance of SFS
         """
-        # 2. Config SFS
-        voting_csv_path = f"{self.path.ensemble_dir}/{self.voting_csv_name}"
+        voting_csv_path = str(self.path.ensemble_dir() / self.voting_csv_name)
 
         selector = SeededForwardSelection(
             seed_source=voting_csv_path,
@@ -90,10 +85,8 @@ class WrapperSelector:
             unit=self.unit,
         )
 
-        # 3. Fit the model
         selector.fit(X_in, y_in)
 
-        # 4. Transformdata and package the final dataset
         X_selected = selector.transform(X_in)
         X_selected_df = pd.DataFrame(
             X_selected, columns=selector.get_feature_names_out()
@@ -112,15 +105,18 @@ class WrapperSelector:
         patience: int,
         max_features: int,
     ) -> None:
-        # 5. Save the final dataset to the wrapper directory
-        save_path = f"{self.path.wrapper_dir}/{self.data_name}_SFS_{n_seeds}seed_{patience}patience_{max_features}_max_{file_suffix}.csv"
+        # Save machine-readable output to 04_wrapper (Rule A)
+        save_path = self.path.wrapper_file(
+            suffix=f"_{n_seeds}seed_{patience}p_{max_features}max_{file_suffix}"
+        )
         df_final.to_csv(save_path, index=False)
 
-        print(f" Saved Final data to: {save_path}")
+        print(f" Saved Final data to: {save_path}")
 
-        # 6. Save the SFS Execution history
-        history_path = f"{self.report_dir}/sfs_history_{n_seeds}seed_{patience}patience_{max_features}max_{file_suffix}.txt"
-        selector.save_history(history_path)
+        # Save human-readable logs to run_folder (Rule B)
+        # Use .txt extension to get the detailed report from _generate_txt_report()
+        report_path = self.run_folder / "sfs_report.txt"
+        selector.save_history(str(report_path))
 
     def run_sfs(
         self,

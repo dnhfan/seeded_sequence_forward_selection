@@ -1,45 +1,84 @@
-import os
-from dataclasses import dataclass
 from datetime import datetime
+from pathlib import Path
+from dataclasses import dataclass
 
 
 @dataclass
 class ProjectPath:
-    """
-    Initialize all the path of the Project
+    """Centralized path management using pathlib.
+
+    Rule A: data/processed/ is ONLY for machine-readable pipeline data.
+    Rule B: results/ is strictly for human-readable experiment tracking.
     """
 
     data_name: str
-    n_features: int
+    n_features: int = 50
+    base_dir: Path = Path(".")
 
     @property
-    def raw_path(self) -> str:
-        return f"data/raw/{self.data_name}.csv"
+    def raw_path(self) -> Path:
+        return self.base_dir / "data" / "raw" / f"{self.data_name}.csv"
 
     @property
-    def filter_dir(self) -> str:
-        return f"data/processed/{self.data_name}/filter{self.n_features}"
+    def processed_dir(self) -> Path:
+        return self.base_dir / "data" / "processed" / self.data_name
+
+    def clean_dir(self) -> Path:
+        return self.processed_dir / "01_clean"
+
+    def filter_dir(self) -> Path:
+        return self.processed_dir / "02_filter"
+
+    def ensemble_dir(self) -> Path:
+        return self.processed_dir / "03_ensemble"
+
+    def wrapper_dir(self) -> Path:
+        return self.processed_dir / "04_wrapper"
+
+    def clean_file(self, suffix: str = "") -> Path:
+        name = f"{self.data_name}_preprocessed{suffix}.csv"
+        return self.clean_dir() / name
+
+    def filter_file(self, method: str, suffix: str = "") -> Path:
+        name = f"{self.data_name}_{method}_{self.n_features}features{suffix}.csv"
+        return self.filter_dir() / name
+
+    def ensemble_file(self, file_type: str = "union", suffix: str = "") -> Path:
+        if file_type == "union":
+            name = f"{self.data_name}_Union_{self.n_features}features{suffix}.csv"
+        elif file_type == "seeds":
+            name = f"{self.data_name}_SFS_top{self.n_features}.csv"
+        else:
+            name = f"{self.data_name}_{file_type}_{self.n_features}{suffix}.csv"
+        return self.ensemble_dir() / name
+
+    def wrapper_file(self, suffix: str = "") -> Path:
+        name = f"{self.data_name}_SFS_selected{suffix}.csv"
+        return self.wrapper_dir() / name
 
     @property
-    def ensemble_dir(self) -> str:
-        return f"data/processed/{self.data_name}/ensemble{self.n_features}"
+    def results_base_dir(self) -> Path:
+        return self.base_dir / "results" / self.data_name
 
-    @property
-    def wrapper_dir(self) -> str:
-        return f"data/processed/{self.data_name}/wrapper{self.n_features}"
+    @staticmethod
+    def create_run_folder(base_path: Path, experiment_name: str) -> Path:
+        """Create timestamped run folder: run_YYYYMMDD_HHMM_ExperimentName"""
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M")
+        folder_name = f"run_{timestamp}_{experiment_name}"
+        run_path = base_path / folder_name
+        run_path.mkdir(parents=True, exist_ok=True)
+        return run_path
 
-    @property
-    def report_dir(self) -> str:
-        timestamp = datetime.now().strftime("%Y-%m-%d")
-        return f"results/{self.data_name}/{timestamp}/report"
+    def ensure_dirs(self) -> None:
+        """Create all required directories for the pipeline."""
+        for d in [
+            self.clean_dir(),
+            self.filter_dir(),
+            self.ensemble_dir(),
+            self.wrapper_dir(),
+        ]:
+            d.mkdir(parents=True, exist_ok=True)
 
-    def create_all_dirs(self) -> None:
-        directories = [
-            self.filter_dir,
-            self.ensemble_dir,
-            self.wrapper_dir,
-            self.report_dir,
-        ]
-        for d in directories:
-            os.makedirs(d, exist_ok=True)
-        print(" setuped all the dirs")
+    def ensure_results_dir(self, experiment_name: str) -> Path:
+        """Create timestamped results folder for an experiment."""
+        return self.create_run_folder(self.results_base_dir, experiment_name)
