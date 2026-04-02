@@ -1,0 +1,15 @@
+{
+  "dataset": "Leukemia_3c1",
+  "dataset_variant": "union",
+  "algorithm": "SFS",
+  "n_features_selected": 3,
+  "global_best_score": 0.9583333333333334,
+  "total_fit_time_ms": 2901.983919000486,
+  "n_seeds": 1,
+  "patience": 3,
+  "max_features": 20,
+  "cv": 4,
+  "scoring": "accuracy",
+  "model": "dt",
+  "run_root": "results/Leukemia_3c1/wrapper/union/SFS/run_20260403_041158"
+}

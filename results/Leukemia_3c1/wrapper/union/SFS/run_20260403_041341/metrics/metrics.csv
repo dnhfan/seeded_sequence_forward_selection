@@ -1,0 +1,2 @@
+dataset,dataset_variant,algorithm,n_features_selected,global_best_score,total_fit_time_ms,n_seeds,patience,max_features,cv,scoring,model,run_root
+Leukemia_3c1,union,SFS,3,0.9583333333333334,2998.237854000763,1,5,20,4,accuracy,dt,results/Leukemia_3c1/wrapper/union/SFS/run_20260403_041341

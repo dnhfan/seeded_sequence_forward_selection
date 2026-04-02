@@ -1,0 +1,17 @@
+Model Comparison Report - Dataset: Leukemia_3c1
+Date: 2026-04-03 04:10:42
+Number of Features: 50
+------------------------------------------------------------
+            Method                  Model      Acc
+          VARIANCE     LogisticRegression 0.866667
+          VARIANCE DecisionTreeClassifier 0.933333
+       CORRELATION     LogisticRegression 0.800000
+       CORRELATION DecisionTreeClassifier 0.800000
+       CHI_SQUARED     LogisticRegression 0.866667
+       CHI_SQUARED DecisionTreeClassifier 0.866667
+MUTUAL_INFORMATION     LogisticRegression 0.866667
+MUTUAL_INFORMATION DecisionTreeClassifier 0.800000
+      ANOVA_F_TEST     LogisticRegression 1.000000
+      ANOVA_F_TEST DecisionTreeClassifier 0.933333
+              None     LogisticRegression 0.866667
+              None DecisionTreeClassifier 0.800000
