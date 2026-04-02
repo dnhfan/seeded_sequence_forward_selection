@@ -1,0 +1,12 @@
+feature,feature_index,dataset,dataset_variant,algorithm
+V1664,0,Tumors9,raw,SFS
+V905,1,Tumors9,raw,SFS
+V2628,2,Tumors9,raw,SFS
+V3663,3,Tumors9,raw,SFS
+V2591,4,Tumors9,raw,SFS
+V3861,5,Tumors9,raw,SFS
+V81,6,Tumors9,raw,SFS
+V1184,7,Tumors9,raw,SFS
+V1526,8,Tumors9,raw,SFS
+V2064,9,Tumors9,raw,SFS
+V1817,10,Tumors9,raw,SFS

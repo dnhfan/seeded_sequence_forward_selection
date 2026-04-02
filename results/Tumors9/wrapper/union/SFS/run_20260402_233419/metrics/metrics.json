@@ -1,0 +1,15 @@
+{
+  "dataset": "Tumors9",
+  "dataset_variant": "union",
+  "algorithm": "SFS",
+  "n_features_selected": 11,
+  "global_best_score": 0.6499999999999999,
+  "total_fit_time_ms": 3708.174584999597,
+  "n_seeds": 1,
+  "patience": 3,
+  "max_features": 20,
+  "cv": 2,
+  "scoring": "accuracy",
+  "model": "dt",
+  "run_root": "results/Tumors9/wrapper/union/SFS/run_20260402_233419"
+}
