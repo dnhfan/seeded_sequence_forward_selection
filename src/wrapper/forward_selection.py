@@ -9,7 +9,7 @@ from joblib import Parallel, delayed
 from sklearn.base import BaseEstimator, MetaEstimatorMixin
 from sklearn.feature_selection import SelectorMixin
 from sklearn.model_selection import KFold, StratifiedKFold, cross_val_score
-from sklearn.utils.validation import check_is_fitted
+from sklearn.utils.validation import _check_feature_names, check_is_fitted
 
 from src.utils import load_seed_from_csv, validate_features
 from src.utils.Timer import TimerContext
@@ -436,12 +436,15 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             - X: features df
             - y: target Series
         """
+        if hasattr(X, "columns"):
+            self.feature_names_in_ = np.array(X.columns)
+
         with TimerContext(
             name="SFS.fit",
             unit=self.unit,
             enabled=self.using_timer,
         ) as total_timer:
-            X_np = X.to_numpy()
+            X_np = X.to_numpy(dtype=np.float32)
             y_np = y.to_numpy()
             X_columns = X.columns.tolist()
             state, original_model = self._initialize_fit_state(
