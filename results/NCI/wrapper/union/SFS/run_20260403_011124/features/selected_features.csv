@@ -1,0 +1,7 @@
+feature,feature_index,dataset,dataset_variant,algorithm
+V4529,0,NCI,union,SFS
+V3321,1,NCI,union,SFS
+V202,2,NCI,union,SFS
+V4506,3,NCI,union,SFS
+V3725,4,NCI,union,SFS
+V3225,5,NCI,union,SFS

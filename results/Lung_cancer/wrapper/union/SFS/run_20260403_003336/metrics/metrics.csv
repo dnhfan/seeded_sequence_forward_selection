@@ -1,0 +1,2 @@
+dataset,dataset_variant,algorithm,n_features_selected,global_best_score,total_fit_time_ms,n_seeds,patience,max_features,cv,scoring,model,run_root
+Lung_cancer,union,SFS,7,0.955609756097561,3425.2157869996154,1,3,20,5,accuracy,dt,results/Lung_cancer/wrapper/union/SFS/run_20260403_003336

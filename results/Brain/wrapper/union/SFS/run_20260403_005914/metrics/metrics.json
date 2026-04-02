@@ -1,0 +1,15 @@
+{
+  "dataset": "Brain",
+  "dataset_variant": "union",
+  "algorithm": "SFS",
+  "n_features_selected": 4,
+  "global_best_score": 0.8333333333333334,
+  "total_fit_time_ms": 2913.479921000544,
+  "n_seeds": 1,
+  "patience": 3,
+  "max_features": 20,
+  "cv": 3,
+  "scoring": "accuracy",
+  "model": "dt",
+  "run_root": "results/Brain/wrapper/union/SFS/run_20260403_005914"
+}

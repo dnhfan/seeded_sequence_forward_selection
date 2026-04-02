@@ -1,0 +1,8 @@
+feature,feature_index,dataset,dataset_variant,algorithm
+V9950,0,Lung_cancer,union,SFS
+V4453,1,Lung_cancer,union,SFS
+V2479,2,Lung_cancer,union,SFS
+V4526,3,Lung_cancer,union,SFS
+V3846,4,Lung_cancer,union,SFS
+V10176,5,Lung_cancer,union,SFS
+V7200,6,Lung_cancer,union,SFS

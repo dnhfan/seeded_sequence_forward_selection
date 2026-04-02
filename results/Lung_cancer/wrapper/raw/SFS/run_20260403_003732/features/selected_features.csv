@@ -1,0 +1,11 @@
+feature,feature_index,dataset,dataset_variant,algorithm
+V9950,0,Lung_cancer,raw,SFS
+V4985,1,Lung_cancer,raw,SFS
+V7569,2,Lung_cancer,raw,SFS
+V2479,3,Lung_cancer,raw,SFS
+V3920,4,Lung_cancer,raw,SFS
+V1217,5,Lung_cancer,raw,SFS
+V3677,6,Lung_cancer,raw,SFS
+V4661,7,Lung_cancer,raw,SFS
+V11842,8,Lung_cancer,raw,SFS
+V872,9,Lung_cancer,raw,SFS

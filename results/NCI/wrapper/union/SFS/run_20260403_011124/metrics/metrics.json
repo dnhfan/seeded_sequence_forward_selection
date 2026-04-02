@@ -1,0 +1,15 @@
+{
+  "dataset": "NCI",
+  "dataset_variant": "union",
+  "algorithm": "SFS",
+  "n_features_selected": 6,
+  "global_best_score": 0.7051282051282051,
+  "total_fit_time_ms": 4056.095784999343,
+  "n_seeds": 1,
+  "patience": 3,
+  "max_features": 20,
+  "cv": 5,
+  "scoring": "accuracy",
+  "model": "dt",
+  "run_root": "results/NCI/wrapper/union/SFS/run_20260403_011124"
+}

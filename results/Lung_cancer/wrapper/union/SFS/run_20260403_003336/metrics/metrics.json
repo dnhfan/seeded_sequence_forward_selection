@@ -1,0 +1,15 @@
+{
+  "dataset": "Lung_cancer",
+  "dataset_variant": "union",
+  "algorithm": "SFS",
+  "n_features_selected": 7,
+  "global_best_score": 0.955609756097561,
+  "total_fit_time_ms": 3425.2157869996154,
+  "n_seeds": 1,
+  "patience": 3,
+  "max_features": 20,
+  "cv": 5,
+  "scoring": "accuracy",
+  "model": "dt",
+  "run_root": "results/Lung_cancer/wrapper/union/SFS/run_20260403_003336"
+}
