@@ -1,0 +1,2 @@
+dataset,dataset_variant,algorithm,n_features_selected,global_best_score,total_fit_time_ms,n_seeds,patience,max_features,cv,scoring,model,run_root
+Leukemia_4c1,raw,SFS,6,0.9861111111111112,53.899274726998556,1,3,20,4,accuracy,dt,results/Leukemia_4c1/wrapper/raw/SFS/run_20260403_040346

@@ -1,0 +1,15 @@
+{
+  "dataset": "Leukemia_4c1",
+  "dataset_variant": "raw",
+  "algorithm": "SFS",
+  "n_features_selected": 6,
+  "global_best_score": 0.9861111111111112,
+  "total_fit_time_ms": 53.899274726998556,
+  "n_seeds": 1,
+  "patience": 3,
+  "max_features": 20,
+  "cv": 4,
+  "scoring": "accuracy",
+  "model": "dt",
+  "run_root": "results/Leukemia_4c1/wrapper/raw/SFS/run_20260403_040346"
+}

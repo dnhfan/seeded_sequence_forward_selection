@@ -1,0 +1,7 @@
+feature,feature_index,dataset,dataset_variant,algorithm
+1881,0,Leukemia_4c1,raw,SFS
+4341,1,Leukemia_4c1,raw,SFS
+815,2,Leukemia_4c1,raw,SFS
+2590,3,Leukemia_4c1,raw,SFS
+4,4,Leukemia_4c1,raw,SFS
+975,5,Leukemia_4c1,raw,SFS
