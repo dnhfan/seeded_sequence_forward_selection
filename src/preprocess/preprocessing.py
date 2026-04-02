@@ -2,7 +2,7 @@ import pandas as pd
 from imblearn.over_sampling import SMOTE
 
 
-def load_and_preprocess(filepath, target_index=0, save_path=None):
+def load_and_preprocess(filepath, k_neighbors=5, target_index=0, save_path=None):
     """
     Pipeline for clean and balances the dataset:
         - filepath: data filepath
@@ -19,7 +19,7 @@ def load_and_preprocess(filepath, target_index=0, save_path=None):
 
     # 3. data balancing with SMOTE!
     try:
-        smote = SMOTE(random_state=42)
+        smote = SMOTE(k_neighbors=k_neighbors, random_state=42)
         x_resampled, y_resampled = smote.fit_resample(x, y)  # type: ignore
 
     except ValueError as e:
