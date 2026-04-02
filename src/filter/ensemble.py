@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 
+from src.config import ProjectPath
+
 
 class EnsembleFeatureSelector:
     """
@@ -28,14 +30,15 @@ class EnsembleFeatureSelector:
         self.valid_methods = valid_methods
         self.n_features = n_features
         self.data_dir = data_dir
+        self.path = ProjectPath(data_name, n_features)
 
         self.df_counts: Optional[pd.DataFrame] = None
         self.timestamp: str = datetime.now().strftime("%Y-%m-%d")
 
         # setup paths
-        self.report_dir: str = f"results/{self.data_name}/{self.timestamp}/report"
-        self.plot_dir: str = f"results/{self.data_name}/{self.timestamp}/plot"
-        self.csv_dir: str = f"data/processed/{self.data_name}/ensemble{n_features}"
+        self.report_dir: str = str(self.path.ensemble_result_dir() / "reports")
+        self.plot_dir: str = str(self.path.ensemble_result_dir() / "plots")
+        self.csv_dir: str = str(self.path.ensemble_dir())
 
         os.makedirs(self.report_dir, exist_ok=True)
         os.makedirs(self.plot_dir, exist_ok=True)
@@ -116,8 +119,8 @@ class EnsembleFeatureSelector:
         sns.barplot(
             data=df_top_n,
             x="Votes",
-            y="Features",
-            hue="Features",
+            y="Feature",
+            hue="Feature",
             palette="magma",
             legend=False,
         )

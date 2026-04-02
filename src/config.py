@@ -35,6 +35,25 @@ class ProjectPath:
     def wrapper_dir(self) -> Path:
         return self.processed_dir / "04_wrapper"
 
+    def result_dir(self) -> Path:
+        return self.base_dir / "results"
+
+    def eda_result_dir(self) -> Path:
+        """Thư mục lưu kết quả phân tích dữ liệu (Exploratory Data Analysis)"""
+        return self.result_dir() / self.data_name / "eda"
+
+    def filter_result_dir(self) -> Path:
+        """Thư mục lưu kết quả chạy Filter Methods"""
+        return self.result_dir() / self.data_name / "filter"
+
+    def wrapper_result_dir(self) -> Path:
+        """Thư mục lưu kết quả chạy Wrapper Methods (như con SFS của bồ)"""
+        return self.result_dir() / self.data_name / "wrapper"
+
+    def ensemble_result_dir(self) -> Path:
+        """Thư mục lưu kết quả chạy Ensemble Methods"""
+        return self.result_dir() / self.data_name / "ensemble"
+
     def clean_file(self, suffix: str = "") -> Path:
         name = f"{self.data_name}_preprocessed{suffix}.csv"
         return self.clean_dir() / name

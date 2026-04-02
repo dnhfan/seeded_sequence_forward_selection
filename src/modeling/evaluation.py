@@ -10,6 +10,8 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 
+from src.config import ProjectPath
+
 
 class ModelEvaluator:
     """
@@ -36,13 +38,14 @@ class ModelEvaluator:
         self.valid_method = valid_method
         self.n_features = n_features
         self.max_iter = max_iter
+        self.path = ProjectPath(data_name, n_features)
 
         self.results: List[Dict[str, Any]] = []
         self.timestamp: str = datetime.now().strftime("%Y-%m-%d")
 
         # path
-        self.report_dir: str = f"results/{self.data_name}/{self.timestamp}/report"
-        self.plot_dir: str = f"results/{self.data_name}/{self.timestamp}/plot"
+        self.report_dir: str = str(self.path.filter_result_dir() / "reports")
+        self.plot_dir: str = str(self.path.filter_result_dir() / "plots")
 
         os.makedirs(self.report_dir, exist_ok=True)
         os.makedirs(self.plot_dir, exist_ok=True)
