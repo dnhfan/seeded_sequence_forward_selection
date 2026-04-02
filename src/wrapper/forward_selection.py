@@ -146,7 +146,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         """
         selected_set = set(selected_indices)
 
-        return [c for c in X_indices if c not in selected_set]
+        return [i for i in X_indices if i not in selected_set]
 
     def _select_best_candidate(
         self,
