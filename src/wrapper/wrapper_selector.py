@@ -1,9 +1,11 @@
+import json
 from pathlib import Path
 from typing import List, Optional
 
 import pandas as pd
 
 from src.config import ProjectPath
+from src.utils.experiment_paths import RunPaths, build_run_paths
 from src.wrapper import SeededForwardSelection
 
 
@@ -24,6 +26,10 @@ class WrapperSelector:
         n_features: int,
         voting_csv_name: str,
         experiment_name: str = "SFS",
+        dataset_variant: str = "raw",
+        pipeline_stage: str = "wrapper",
+        algorithm_name: str = "SFS",
+        run_tag: Optional[str] = None,
         run_folder: Optional[Path] = None,
         using_timer: bool = True,
         unit: str = "ms",
@@ -36,17 +42,39 @@ class WrapperSelector:
         self.experiment_name = experiment_name
         self.using_timer = using_timer
         self.unit = unit
+        self.dataset_variant = dataset_variant
+        self.pipeline_stage = pipeline_stage
+        self.algorithm_name = algorithm_name
+        self.run_tag = run_tag
 
         self.path = ProjectPath(data_name=data_name, n_features=n_features)
 
         self.path.wrapper_dir().mkdir(parents=True, exist_ok=True)
 
         if run_folder is None:
-            self.run_folder = self.path.ensure_results_dir(experiment_name)
+            self.run_paths = build_run_paths(
+                base_results_dir=self.path.results_base_dir,
+                dataset_name=self.data_name,
+                pipeline_stage=self.pipeline_stage,
+                dataset_variant=self.dataset_variant,
+                algorithm_name=self.algorithm_name,
+                run_tag=self.run_tag,
+            )
         else:
-            self.run_folder = run_folder
-
-        self.history_csv_path = self.run_folder / "sfs_history.csv"
+            run_root = run_folder
+            self.run_paths = RunPaths(
+                run_root=run_root,
+                history_dir=run_root / "history",
+                features_dir=run_root / "features",
+                metrics_dir=run_root / "metrics",
+                artifacts_dir=run_root / "artifacts",
+                history_json=run_root / "history" / "history.json",
+                history_txt=run_root / "history" / "history.txt",
+                selected_features_csv=run_root / "features" / "selected_features.csv",
+                metrics_json=run_root / "metrics" / "metrics.json",
+                metrics_csv=run_root / "metrics" / "metrics.csv",
+            )
+        self.run_paths.ensure_dirs()
 
     # def _create_union_features(self) -> pd.DataFrame:
     #     """
@@ -68,7 +96,7 @@ class WrapperSelector:
 
     def _execute_sfs_core(
         self, X_in: pd.DataFrame, y_in: pd.Series, sfs_params: dict
-    ) -> tuple[pd.DataFrame, SeededForwardSelection]:
+    ) -> tuple[pd.DataFrame, SeededForwardSelection, float]:
         """
         [Private] Execute the core SFS algorithm
 
@@ -94,12 +122,14 @@ class WrapperSelector:
 
         df_final = pd.concat([y_in.reset_index(drop=True), X_selected_df], axis=1)
 
-        return df_final, selector
+        return df_final, selector, selector.total_fit_time_ms_
 
     def _save_sfs_output(
         self,
         df_final: pd.DataFrame,
         selector: SeededForwardSelection,
+        total_fit_time_ms: float,
+        sfs_params: dict,
         file_suffix: str,
         n_seeds: int,
         patience: int,
@@ -115,8 +145,38 @@ class WrapperSelector:
 
         # Save human-readable logs to run_folder (Rule B)
         # Use .txt extension to get the detailed report from _generate_txt_report()
-        report_path = self.run_folder / "sfs_report.txt"
-        selector.save_history(str(report_path))
+        selector.save_history(str(self.run_paths.history_txt))
+
+        selected_features = list(selector.get_feature_names_out())
+        selected_features_df = pd.DataFrame(
+            {
+                "feature": selected_features,
+                "feature_index": list(range(len(selected_features))),
+                "dataset": [self.data_name] * len(selected_features),
+                "dataset_variant": [self.dataset_variant] * len(selected_features),
+                "algorithm": [self.algorithm_name] * len(selected_features),
+            }
+        )
+        selected_features_df.to_csv(self.run_paths.selected_features_csv, index=False)
+
+        metrics = {
+            "dataset": self.data_name,
+            "dataset_variant": self.dataset_variant,
+            "algorithm": self.algorithm_name,
+            "n_features_selected": len(selector.get_feature_names_out()),
+            "global_best_score": selector.global_best_score_,
+            "total_fit_time_ms": total_fit_time_ms,
+            "n_seeds": n_seeds,
+            "patience": patience,
+            "max_features": max_features,
+            "cv": sfs_params.get("cv"),
+            "scoring": sfs_params.get("scoring"),
+            "model": sfs_params.get("model"),
+            "run_root": str(self.run_paths.run_root),
+        }
+        with open(self.run_paths.metrics_json, "w", encoding="utf-8") as f:
+            json.dump(metrics, f, indent=2, ensure_ascii=False)
+        pd.DataFrame([metrics]).to_csv(self.run_paths.metrics_csv, index=False)
 
     def run_sfs(
         self,
@@ -158,7 +218,9 @@ class WrapperSelector:
             "verbose": verbose,
         }
 
-        df_final, selector = self._execute_sfs_core(X_in, y_in, sfs_params)
+        df_final, selector, total_fit_time_ms = self._execute_sfs_core(
+            X_in, y_in, sfs_params
+        )
 
         print(f"\n SFS completed! Final dataset shape: {df_final.shape}")
         print(" Selected Features: ", selector.get_feature_names_out())
@@ -167,6 +229,8 @@ class WrapperSelector:
         self._save_sfs_output(
             df_final,
             selector,
+            total_fit_time_ms,
+            sfs_params,
             file_suffix,
             n_seeds,
             patience,
