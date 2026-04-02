@@ -1,0 +1,6 @@
+feature,feature_index,dataset,dataset_variant,algorithm
+V1840,0,Prostate,raw,SFS
+V2620,1,Prostate,raw,SFS
+V1806,2,Prostate,raw,SFS
+V24,3,Prostate,raw,SFS
+V4590,4,Prostate,raw,SFS

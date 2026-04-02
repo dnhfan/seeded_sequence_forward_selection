@@ -1,0 +1,15 @@
+{
+  "dataset": "Prostate",
+  "dataset_variant": "union",
+  "algorithm": "SFS",
+  "n_features_selected": 6,
+  "global_best_score": 0.9411764705882353,
+  "total_fit_time_ms": 2929.609867000181,
+  "n_seeds": 1,
+  "patience": 3,
+  "max_features": 20,
+  "cv": 2,
+  "scoring": "accuracy",
+  "model": "dt",
+  "run_root": "results/Prostate/wrapper/union/SFS/run_20260403_022133"
+}

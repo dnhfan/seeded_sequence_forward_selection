@@ -1,0 +1,15 @@
+{
+  "dataset": "Prostate",
+  "dataset_variant": "raw",
+  "algorithm": "SFS",
+  "n_features_selected": 5,
+  "global_best_score": 0.9705882352941176,
+  "total_fit_time_ms": 23.80026813800032,
+  "n_seeds": 1,
+  "patience": 3,
+  "max_features": 10,
+  "cv": 2,
+  "scoring": "accuracy",
+  "model": "dt",
+  "run_root": "results/Prostate/wrapper/raw/SFS/run_20260403_021803"
+}
