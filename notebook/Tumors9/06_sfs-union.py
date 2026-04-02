@@ -34,15 +34,16 @@ def main():
         valid_method=valid_methods,
         n_features=n_features,
         voting_csv_name=voting_csv_name,
+        dataset_variant="union",
     )
 
     df = create_union_features(
         data_name=data_name,
         valid_method=valid_methods,
         n_features=n_features,
-        filter_dir=path.filter_dir,
-        raw_path=path.raw_path,
-        ensemble_dir=path.ensemble_dir,
+        filter_dir=str(path.filter_dir()),
+        raw_path=str(path.raw_path),
+        ensemble_dir=str(path.ensemble_dir()),
     )
 
     df_final = wrapper.run_sfs(

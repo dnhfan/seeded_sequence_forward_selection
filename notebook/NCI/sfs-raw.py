@@ -14,8 +14,8 @@ def main():
     print("󰜎 Running Wrapper Features Slection..")
 
     # 1. setup conf
-    data_name = "Tumors9"
-    n_features = 50
+    data_name = "NCI"
+    n_features = 60
 
     valid_methods = [
         "variance",
@@ -27,7 +27,7 @@ def main():
 
     path = ProjectPath(data_name=data_name, n_features=n_features)
 
-    voting_csv_name = f"top{n_features}_features_voting_2026-03-27.csv"
+    voting_csv_name = f"top60_features_voting_20260304_0950.csv"
 
     # 2. Init WrapperSelector
     wrapper = WrapperSelector(
@@ -43,13 +43,13 @@ def main():
 
     df_final = wrapper.run_sfs(
         df=df,
-        file_suffix="Union",
-        max_features=10,
+        file_suffix="Raw",
+        max_features=20,
         patience=3,
         n_seeds=1,
         model="dt",
         scoring="accuracy",
-        cv=2,
+        cv=5,
     )
 
     # View data
