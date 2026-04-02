@@ -20,13 +20,13 @@ from .models import get_model
 @dataclass
 class ForwardSelectionState:
     # Selection inputs
-    X_columns: list[str]
-    selected: list[str]
+    X_indices: list[int]
+    selected_indices: list[int]
 
     # Score tracking
     current_score: float
     global_best_score: float
-    global_best_features: list[str]
+    global_best_indices: list[int]
 
     # Iteration tracking
     patience_counter: int = 0
@@ -115,10 +115,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         )
 
     def _evaluate_feature_set(
-        self,
-        X: pd.DataFrame,
-        y: pd.Series,
-        features: list[str],
+        self, X_np: np.ndarray, y_np: np.ndarray, selected_indices: list[int]
     ) -> float:
         """
         evaluate features in each loop
@@ -130,8 +127,8 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
 
         score: np.ndarray = cross_val_score(
             self.model,
-            X[features],
-            y,
+            X_np[:, selected_indices],
+            y_np,
             cv=self._cv_splits_,
             scoring=self.scoring,
             n_jobs=1,
@@ -141,41 +138,41 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
 
     def _get_candidate_features(
         self,
-        X_columns: list[str],
-        selected: list[str],
-    ) -> list[str]:
+        X_indices: list[int],
+        selected_indices: list[int],
+    ) -> list[int]:
         """
         return get the untaken (candidate) features
         """
-        selected_set = set(selected)
+        selected_set = set(selected_indices)
 
-        return [c for c in X_columns if c not in selected_set]
+        return [c for c in X_indices if c not in selected_set]
 
     def _select_best_candidate(
         self,
-        X: pd.DataFrame,
-        y: pd.Series,
-        selected: list[str],
-        candidates: list[str],
-    ) -> tuple[str, float]:
+        X_np: np.ndarray,
+        y_np: np.ndarray,
+        selected_indices: list[int],
+        candidates: list[int],
+    ) -> tuple[int, float]:
         """
         Evaluate all candidate features in parallel and return the best one.
 
         Parameters
         ----------
-        X : pd.DataFrame
+        X_np : np.ndarray
             Full feature matrix.
-        y : pd.Series
+        y_np : np.ndarray
             Target vector.
-        selected : list[str]
-            Currently selected features (seed + previously added).
-        candidates : list[str]
-            Remaining features to evaluate.
+        selected_indices : list[int]
+            Currently selected feature indices (seed + previously added).
+        candidates : list[int]
+            Remaining feature indices to evaluate.
 
         Returns
         -------
-        tuple[str, float]
-            Best candidate feature and its score.
+        tuple[int, float]
+            Best candidate feature index and its score.
         """
 
         # parallel (n) -> make a worker pool with n cpu core
@@ -184,7 +181,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         # evaluate return -> score, for candidate loop -> delay candidates time -> run candidate time -> return a list of score
 
         scores: list[float] = Parallel(n_jobs=self.n_jobs)(
-            delayed(self._evaluate_feature_set)(X, y, selected + [c])
+            delayed(self._evaluate_feature_set)(X_np, y_np, selected_indices + [c])
             for c in candidates
         )  # type: ignore[assignment]
 
@@ -195,7 +192,10 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         return best_feature, best_score
 
     def _initialize_fit_state(
-        self, X: pd.DataFrame, y: pd.Series
+        self,
+        X_np: np.ndarray,
+        y_np: np.ndarray,
+        X_columns: list[str],
     ) -> tuple[ForwardSelectionState, Union[str, BaseEstimator]]:
         """
         Initialize the fit's state
@@ -212,15 +212,18 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         self.model = self._model_instance
 
         # Initialize seed features.
-        X_columns = X.columns.tolist()
-        selected: list[str] = self._initialize_seed_features(X_columns)
+        self._X_columns = X_columns
+        X_indices = list(range(X_np.shape[1]))
+
+        seed_strings: list[str] = self._initialize_seed_features(X_columns)
+        selected_indices: list[int] = [X_columns.index(s) for s in seed_strings]
 
         # Build and freeze CV splits to keep evaluation deterministic.
         self._cv_engine_ = self._build_cv()
-        self._cv_splits_ = list(self._cv_engine_.split(X, y))
+        self._cv_splits_ = list(self._cv_engine_.split(X_np, y_np))
 
         # Evaluate baseline score from seed set.
-        current_score: float = self._evaluate_feature_set(X, y, selected)
+        current_score: float = self._evaluate_feature_set(X_np, y_np, selected_indices)
 
         # Initialize tracking state.
         patience_counter = 0
@@ -229,21 +232,22 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
 
         # Initialize global best from baseline.
         global_best_score = current_score
-        global_best_features = list(selected)
+        global_best_indices = list(selected_indices)
 
         state = ForwardSelectionState(
-            X_columns=X_columns,
-            selected=selected,
+            X_indices=X_indices,
+            selected_indices=selected_indices,
             current_score=current_score,
             global_best_score=global_best_score,
-            global_best_features=global_best_features,
+            global_best_indices=global_best_indices,
             patience_counter=patience_counter,
             iteration=iteration,
             history=history,
         )
         if self.verbose >= 1:
+            seed_names = [X_columns[i] for i in selected_indices]
             print(
-                f"  Start: seed={state.selected}, baseline score={state.current_score:.4f}"
+                f"  Start: seed={seed_names}, baseline score={state.current_score:.4f}"
             )
 
         return state, original_model
@@ -265,7 +269,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         # Update global best and patience counter.
         if is_new_peak:
             state.global_best_score = best_score
-            state.global_best_features = list(state.selected)
+            state.global_best_indices = list(state.selected_indices)
             state.patience_counter = 0
         else:
             state.patience_counter += 1
@@ -279,7 +283,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
     def _build_history_row(
         self,
         state: ForwardSelectionState,
-        best_feature: str,
+        best_feature_index: int,
         best_score: float,
         step_improvement: float,
         is_new_peak: bool,
@@ -288,13 +292,16 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         """
         Build one history row for the current iteration.
         """
+        best_feature_name = self._X_columns[best_feature_index]
+        selected_names = [self._X_columns[i] for i in state.selected_indices]
+
         return {
             "iteration": state.iteration,
-            "best_candidate": best_feature,
+            "best_candidate": best_feature_name,
             "best_score": round(best_score, 6),
             "improvement": round(step_improvement, 6),
-            "n_selected": len(state.selected),
-            "selected_features": list(state.selected),
+            "n_selected": len(state.selected_indices),
+            "selected_features": selected_names,
             "is_new_peak": is_new_peak,
             "elapsed_ms": round(elapsed_ms, 3),
         }
@@ -302,8 +309,8 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
     def _run_single_iteration(
         self,
         state: ForwardSelectionState,
-        X: pd.DataFrame,
-        y: pd.Series,
+        X_np: np.ndarray,
+        y_np: np.ndarray,
     ) -> bool:
         """
         Run one forward-selection iteration
@@ -317,7 +324,9 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             enabled=self.using_timer,
         ) as iter_timer:
             state.iteration += 1
-            candidates = self._get_candidate_features(state.X_columns, state.selected)
+            candidates = self._get_candidate_features(
+                state.X_indices, state.selected_indices
+            )
 
             # Stop when all features are already selected.
             if not candidates:
@@ -326,12 +335,12 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
                 return False
 
             # Find best candidate for this iteration.
-            best_feature, best_score = self._select_best_candidate(
-                X, y, state.selected, candidates
+            best_feature_index, best_score = self._select_best_candidate(
+                X_np, y_np, state.selected_indices, candidates
             )
 
             # Add the top candidate.
-            state.selected.append(best_feature)
+            state.selected_indices.append(best_feature_index)
 
             step_improvement = best_score - state.current_score
             is_new_peak = self._update_global_best_and_patience(state, best_score)
@@ -340,7 +349,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
 
             if self.verbose >= 2:
                 print(
-                    f"  Iter {state.iteration:>3}: + {best_feature}"
+                    f"  Iter {state.iteration:>3}: + {self._X_columns[best_feature_index]}"
                     f"  score={best_score:.4f}"
                     f"  󰇂 = {step_improvement:+.4f} "
                 )
@@ -348,7 +357,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         # Save iteration history.
         row = self._build_history_row(
             state,
-            best_feature,
+            best_feature_index,
             best_score,
             step_improvement,
             is_new_peak,
@@ -368,7 +377,10 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             False -> continue
         """
         # Stop if max feature limit is reached.
-        if self.max_features is not None and len(state.selected) >= self.max_features:
+        if (
+            self.max_features is not None
+            and len(state.selected_indices) >= self.max_features
+        ):
             if self.verbose >= 1:
                 print(f" Reached max_features={self.max_features}. Stopping...")
             return True
@@ -399,10 +411,11 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             User-provided model configuration to restore after internal evaluation.
         """
         # Persist fitted attributes.
-        self.selected_features_ = state.global_best_features
+        self.selected_features_ = [
+            self._X_columns[i] for i in state.global_best_indices
+        ]
         self.global_best_score_ = state.global_best_score
         self.n_features_in_ = X.shape[1]
-        self._X_columns = state.X_columns
         self.model = original_model
         self.history_ = state.history
         self.total_iter_time_ms_ = state.total_time_ms
@@ -410,7 +423,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
 
         if self.verbose >= 1:
             print(
-                f"\n Done: {len(state.global_best_features)} features selected. Final score={state.global_best_score:.4f}"
+                f"\n Done: {len(state.global_best_indices)} features selected. Final score={state.global_best_score:.4f}"
             )
 
     def fit(self, X: pd.DataFrame, y: pd.Series) -> "SeededForwardSelection":
@@ -424,11 +437,16 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             unit=self.unit,
             enabled=self.using_timer,
         ) as total_timer:
-            state, original_model = self._initialize_fit_state(X=X, y=y)
+            X_np = X.to_numpy()
+            y_np = y.to_numpy()
+            X_columns = X.columns.tolist()
+            state, original_model = self._initialize_fit_state(
+                X_np=X_np, y_np=y_np, X_columns=X_columns
+            )
 
             # Forward selection loop.
             while True:
-                should_continue = self._run_single_iteration(state, X, y)
+                should_continue = self._run_single_iteration(state, X_np, y_np)
                 if not should_continue:
                     break
 
