@@ -71,8 +71,8 @@ class ProjectPath:
             name = f"{self.data_name}_{file_type}_{self.n_features}{suffix}.csv"
         return self.ensemble_dir() / name
 
-    def wrapper_file(self, suffix: str = "") -> Path:
-        name = f"{self.data_name}_SFS_selected{suffix}.csv"
+    def wrapper_file(self, suffix: str = "", algorithsm_name: str = "SFS") -> Path:
+        name = f"{self.data_name}_{algorithsm_name}_{suffix}.csv"
         return self.wrapper_dir() / name
 
     @property
