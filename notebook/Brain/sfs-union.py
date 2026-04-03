@@ -41,14 +41,13 @@ def main():
         data_name=data_name,
         valid_method=valid_methods,
         n_features=n_features,
-        filter_dir=str(path.filter_dir()),
+        filter_dir=str(path.filter_dir),
         raw_path=str(path.raw_path),
-        ensemble_dir=str(path.ensemble_dir()),
+        ensemble_dir=str(path.ensemble_dir),
     )
 
     df_final = wrapper.run_sfs(
         df=df,
-        file_suffix="Union",
         max_features=20,
         patience=5,
         n_seeds=3,

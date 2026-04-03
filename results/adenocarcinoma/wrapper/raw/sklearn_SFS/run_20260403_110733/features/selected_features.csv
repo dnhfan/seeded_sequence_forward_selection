@@ -1,0 +1,5 @@
+feature,feature_index,dataset,dataset_variant,algorithm
+V7,0,adenocarcinoma,raw,sklearn_SFS
+V4236,1,adenocarcinoma,raw,sklearn_SFS
+V5575,2,adenocarcinoma,raw,sklearn_SFS
+V8200,3,adenocarcinoma,raw,sklearn_SFS

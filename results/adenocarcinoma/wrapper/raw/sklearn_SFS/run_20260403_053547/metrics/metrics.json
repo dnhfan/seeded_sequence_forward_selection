@@ -1,0 +1,17 @@
+{
+  "dataset": "adenocarcinoma",
+  "dataset_variant": "raw",
+  "algorithm": "sklearn_SFS",
+  "n_features_selected": 4,
+  "global_best_score": 0.9733333333333334,
+  "total_fit_time_ms": 517531.1359959997,
+  "n_seeds": 1,
+  "patience": 3,
+  "max_features": 4,
+  "cv": 5,
+  "scoring": "accuracy",
+  "model": "LogisticRegression",
+  "engine": "sklearn",
+  "direction": "forward",
+  "run_root": "results/adenocarcinoma/wrapper/raw/sklearn_SFS/run_20260403_053547"
+}

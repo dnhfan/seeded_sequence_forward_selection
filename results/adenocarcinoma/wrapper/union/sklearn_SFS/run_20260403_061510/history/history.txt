@@ -1,0 +1,8 @@
+Sklearn SequentialFeatureSelector report
+direction: forward
+max_features: auto
+cv: 5
+scoring: accuracy
+total_fit_time_ms: 12398.80
+n_features_selected: 3
+selected_features: ['V5575', 'V8494', 'V8623']

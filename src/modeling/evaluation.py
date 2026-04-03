@@ -44,8 +44,8 @@ class ModelEvaluator:
         self.timestamp: str = datetime.now().strftime("%Y-%m-%d")
 
         # path
-        self.report_dir: str = str(self.path.filter_result_dir() / "reports")
-        self.plot_dir: str = str(self.path.filter_result_dir() / "plots")
+        self.report_dir: str = str(self.path.filter_result_dir / "reports")
+        self.plot_dir: str = str(self.path.filter_result_dir / "plots")
 
         os.makedirs(self.report_dir, exist_ok=True)
         os.makedirs(self.plot_dir, exist_ok=True)
@@ -171,3 +171,18 @@ class ModelEvaluator:
         print(f"󰎞 Report saved at: {report_path}")
 
         return result_df
+
+    def evaluate_custom_file(self, file_path: str, method_label: str) -> None:
+        """
+        Hàm vạn năng để đánh giá bất kỳ file CSV nào (SFS, Sklearn, PCA, v.v.)
+
+        Args:
+            file_path (str): Đường dẫn trực tiếp tới file CSV cần test.
+            method_label (str): Tên bồ muốn hiển thị trên biểu đồ (VD: "Custom_SFS_Union", "Sklearn_SFS_Raw")
+        """
+        print(f"\n[*] Training models with custom data ({method_label})...")
+        try:
+            X, y = self._load_data(file_path)
+            self._train_and_evaluate(X, y, method_name=method_label)
+        except FileNotFoundError:
+            print(f" Lỗi: Không tìm thấy file tại {file_path}")

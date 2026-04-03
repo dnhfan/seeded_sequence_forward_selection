@@ -52,7 +52,7 @@ class WrapperSelector:
 
         self.path = ProjectPath(data_name=data_name, n_features=n_features)
 
-        self.path.wrapper_dir().mkdir(parents=True, exist_ok=True)
+        self.path.wrapper_dir.mkdir(parents=True, exist_ok=True)
 
         if run_folder is None:
             self.run_paths = build_run_paths(
@@ -89,7 +89,7 @@ class WrapperSelector:
             df_final: DataFrame which restore the results of sfs
             selector: Instance of SFS
         """
-        voting_csv_path = str(self.path.ensemble_dir() / self.voting_csv_name)
+        voting_csv_path = str(self.path.ensemble_dir / self.voting_csv_name)
 
         sfs_kwargs = sfs_params.copy()
         sfs_kwargs.pop("engine", None)

@@ -1,0 +1,17 @@
+{
+  "dataset": "Breast2classes",
+  "dataset_variant": "union",
+  "algorithm": "sklearn_SFS",
+  "n_features_selected": 3,
+  "global_best_score": 0.8183333333333334,
+  "total_fit_time_ms": 11541.823972002021,
+  "n_seeds": 1,
+  "patience": 3,
+  "max_features": "auto",
+  "cv": 5,
+  "scoring": "accuracy",
+  "model": "LogisticRegression",
+  "engine": "sklearn",
+  "direction": "forward",
+  "run_root": "results/Breast2classes/wrapper/union/sklearn_SFS/run_20260403_121805"
+}

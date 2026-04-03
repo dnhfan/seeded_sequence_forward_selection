@@ -36,9 +36,9 @@ class EnsembleFeatureSelector:
         self.timestamp: str = datetime.now().strftime("%Y-%m-%d")
 
         # setup paths
-        self.report_dir: str = str(self.path.ensemble_result_dir() / "reports")
-        self.plot_dir: str = str(self.path.ensemble_result_dir() / "plots")
-        self.csv_dir: str = str(self.path.ensemble_dir())
+        self.report_dir: str = str(self.path.ensemble_result_dir / "reports")
+        self.plot_dir: str = str(self.path.ensemble_result_dir / "plots")
+        self.csv_dir: str = str(self.path.ensemble_dir)
 
         os.makedirs(self.report_dir, exist_ok=True)
         os.makedirs(self.plot_dir, exist_ok=True)

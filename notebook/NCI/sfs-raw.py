@@ -43,7 +43,6 @@ def main():
 
     df_final = wrapper.run_sfs(
         df=df,
-        file_suffix="Raw",
         max_features=20,
         patience=3,
         n_seeds=1,

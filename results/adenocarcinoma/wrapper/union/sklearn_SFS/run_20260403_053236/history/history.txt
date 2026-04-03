@@ -1,0 +1,8 @@
+Sklearn SequentialFeatureSelector report
+direction: forward
+max_features: 20
+cv: 5
+scoring: accuracy
+total_fit_time_ms: 44856.89
+n_features_selected: 20
+selected_features: ['V1374', 'V1465', 'V2019', 'V2020', 'V2234', 'V2811', 'V3175', 'V3693', 'V5545', 'V5551', 'V5575', 'V57', 'V6418', 'V7705', 'V7964', 'V8494', 'V8623', 'V877', 'V8928', 'V9691']
