@@ -63,6 +63,10 @@ class ProjectPath:
         """Thư mục lưu kết quả chạy Ensemble Methods"""
         return self.result_dir / self.data_name / "ensemble"
 
+    @property
+    def evaluation_dir(self) -> Path:
+        return self.result_dir / self.data_name / "evaluation"
+
     def clean_file(self, suffix: str = "") -> Path:
         name = f"{self.data_name}_preprocessed{suffix}.csv"
         return self.clean_dir / name
