@@ -74,6 +74,7 @@ class BaseWrapperSelector(ABC):
         X_in: pandas.DataFrame,
         y_in: pandas.Series,
         sfs_params: dict,
+        direction: str = "forward",
     ) -> SFSResult:
         raise NotImplementedError(" Subclasses must implement _execute_core")
 
@@ -86,12 +87,10 @@ class BaseWrapperSelector(ABC):
         cv: int,
         **kwargs,
     ) -> None:
-        n_seed = sfs_params.get("n_seed", "NA")
+        n_seeds = sfs_params.get("n_seeds", "NA")
         patience = sfs_params.get("patience", "NA")
 
-        suffix_str = (
-            f"{n_seed}n_seed_{patience}patience_{max_features}max_{cv}cv_{file_suffix}"
-        )
+        suffix_str = f"{n_seeds}n_seeds_{patience}patience_{max_features}max_{cv}cv_{file_suffix}"
 
         save_path = self.path.wrapper_file(suffix_str, self.algorithm_name)
 
@@ -106,7 +105,7 @@ class BaseWrapperSelector(ABC):
         # Selected features handled
         selected_features_df = pandas.DataFrame(
             {
-                "features": result.selected_features,
+                "feature": result.selected_features,
                 "dataset": self.data_name,
                 "dataset_variant": self.dataset_variant,
                 "algorithm": self.algorithm_name,
