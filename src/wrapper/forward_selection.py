@@ -494,7 +494,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         self.fit(X, y)
         return pd.DataFrame(X[self.selected_features_])
 
-    def _generate_txt_report(self) -> str:
+    def generate_txt_report(self) -> str:
         """
         Generate a human-readable TXT report of the SFS execution.
         Returns:
