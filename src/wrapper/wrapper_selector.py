@@ -191,10 +191,11 @@ class WrapperSelector:
         selected_features: List[str],
         global_best_score: Optional[float],
         direction: str,
+        cv: int,
     ) -> None:
         # Save machine-readable output to 04_wrapper (Rule A)
         save_path = self.path.wrapper_file(
-            suffix=f"_{n_seeds}seed_{patience}p_{max_features}max_{file_suffix}",
+            suffix=f"_{n_seeds}seed_{patience}p_{max_features}max_{cv}cv_{file_suffix}",
             algorithsm_name=self.algorithm_name,
         )
         df_final.to_csv(save_path, index=False)
@@ -332,6 +333,7 @@ class WrapperSelector:
             selected_features,
             global_best_score,
             direction,
+            cv,
         )
 
         return df_final
