@@ -1,2 +1,0 @@
-dataset,dataset_variant,algorithm,n_features_selected,global_best_score,total_fit_time_ms,n_seeds,patience,max_features,cv,scoring,model,run_root
-Breast3classes,union,SFS,11,0.8210526315789473,5142.065210999135,1,5,20,5,accuracy,dt,results/Breast3classes/wrapper/union/SFS/run_20260403_042548

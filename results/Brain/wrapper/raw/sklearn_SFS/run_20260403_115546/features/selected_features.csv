@@ -1,6 +1,0 @@
-feature,feature_index,dataset,dataset_variant,algorithm
-V298,0,Brain,raw,sklearn_SFS
-V1389,1,Brain,raw,sklearn_SFS
-V1893,2,Brain,raw,sklearn_SFS
-V2849,3,Brain,raw,sklearn_SFS
-V5260,4,Brain,raw,sklearn_SFS

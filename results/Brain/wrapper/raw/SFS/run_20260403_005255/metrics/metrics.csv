@@ -1,2 +1,0 @@
-dataset,dataset_variant,algorithm,n_features_selected,global_best_score,total_fit_time_ms,n_seeds,patience,max_features,cv,scoring,model,run_root
-Brain,raw,SFS,5,0.9047619047619048,41.449062190000404,1,5,20,3,accuracy,dt,results/Brain/wrapper/raw/SFS/run_20260403_005255

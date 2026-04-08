@@ -1,2 +1,0 @@
-dataset,dataset_variant,algorithm,n_features_selected,global_best_score,total_fit_time_ms,n_seeds,patience,max_features,cv,scoring,model,engine,direction,run_root
-Brain,raw,sklearn_SFS,5,0.975,459741.35740700515,1,3,auto,4,accuracy,LogisticRegression,sklearn,forward,results/Brain/wrapper/raw/sklearn_SFS/run_20260403_115546

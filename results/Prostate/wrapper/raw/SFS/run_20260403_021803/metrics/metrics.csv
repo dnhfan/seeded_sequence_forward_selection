@@ -1,2 +1,0 @@
-dataset,dataset_variant,algorithm,n_features_selected,global_best_score,total_fit_time_ms,n_seeds,patience,max_features,cv,scoring,model,run_root
-Prostate,raw,SFS,5,0.9705882352941176,23.80026813800032,1,3,10,2,accuracy,dt,results/Prostate/wrapper/raw/SFS/run_20260403_021803

@@ -1,8 +1,0 @@
-Sklearn SequentialFeatureSelector report
-direction: forward
-max_features: auto
-cv: 5
-scoring: accuracy
-total_fit_time_ms: 11541.82
-n_features_selected: 3
-selected_features: ['V2273', 'V2883', 'V3818']

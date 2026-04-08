@@ -1,2 +1,0 @@
-dataset,dataset_variant,algorithm,n_features_selected,global_best_score,total_fit_time_ms,n_seeds,patience,max_features,cv,scoring,model,run_root
-adenocarcinoma,union,SFS,4,0.9866666666666667,7372.518832002243,1,3,20,5,accuracy,log,results/adenocarcinoma/wrapper/union/SFS/run_20260403_034204

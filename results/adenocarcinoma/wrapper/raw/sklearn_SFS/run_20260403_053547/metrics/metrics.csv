@@ -1,2 +1,0 @@
-dataset,dataset_variant,algorithm,n_features_selected,global_best_score,total_fit_time_ms,n_seeds,patience,max_features,cv,scoring,model,engine,direction,run_root
-adenocarcinoma,raw,sklearn_SFS,4,0.9733333333333334,517531.1359959997,1,3,4,5,accuracy,LogisticRegression,sklearn,forward,results/adenocarcinoma/wrapper/raw/sklearn_SFS/run_20260403_053547

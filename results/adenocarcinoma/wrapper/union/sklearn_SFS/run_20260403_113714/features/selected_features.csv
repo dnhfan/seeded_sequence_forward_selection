@@ -1,3 +1,0 @@
-feature,feature_index,dataset,dataset_variant,algorithm
-V5575,0,adenocarcinoma,union,sklearn_SFS
-V8623,1,adenocarcinoma,union,sklearn_SFS

@@ -1,2 +1,0 @@
-dataset,dataset_variant,algorithm,n_features_selected,global_best_score,total_fit_time_ms,n_seeds,patience,max_features,cv,scoring,model,engine,direction,run_root
-DLBCL,union,SFS,3,0.9741666666666667,7033.860616000311,1,5,20,5,accuracy,log,custom,forward,results/DLBCL/wrapper/union/SFS/run_20260403_050419
