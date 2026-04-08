@@ -587,7 +587,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             with open(file_path, "w", encoding="utf-8") as f:
                 json.dump(self.history_, f, indent=2, ensure_ascii=False)
         elif ext == ".txt":
-            report = self._generate_txt_report()
+            report = self.generate_txt_report()
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(report)
         else:
