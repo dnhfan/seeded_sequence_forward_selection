@@ -138,6 +138,7 @@ class BaseWrapperSelector(ABC):
         verbose: int = 2,
         model: str = "logistic",
         scoring: str = "accuracy",
+        direction: str = "forward",
         **kwargs,  # Key word arguments -> arguments with key-value
     ) -> pandas.DataFrame:
         print(f" Starting {self.algorithm_name}")
@@ -155,7 +156,7 @@ class BaseWrapperSelector(ABC):
         }
 
         # 1. run the algorithm
-        result = self._execute_core(X_in, y_in, sfs_params)
+        result = self._execute_core(X_in, y_in, sfs_params, direction=direction)
 
         print(
             f"\n {self.algorithm_name} completed! Final dataset shape: {result.df_final.shape}"
