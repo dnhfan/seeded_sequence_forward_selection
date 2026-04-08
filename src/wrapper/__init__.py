@@ -4,5 +4,6 @@ SFS - seeded forward selection.
 """
 
 from .forward_selection import SeededForwardSelection
+from .sfs_result import SFSResult
 
-__all__ = ["SeededForwardSelection"]
+__all__ = ["SeededForwardSelection", "SFSResult"]
