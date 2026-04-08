@@ -1,9 +1,14 @@
-"""
-SFS - seeded forward selection.
-     a hybird feature selection method using wrapper (forward selection) and filter (ensemble method to voting)
-"""
+from .base import BaseWrapperSelector
+from .seeded import SeededSFSSelector
 
-from .forward_selection import SeededForwardSelection
+# Cấu trúc import: từ file (module) -> lôi cái class ra
 from .sfs_result import SFSResult
+from .sklearn_sfs import SklearnSFSSelector
 
-__all__ = ["SeededForwardSelection", "SFSResult"]
+# Khai báo __all__ để linter và Python biết đây là những "món hàng" Public
+__all__ = [
+    "SFSResult",
+    "BaseWrapperSelector",
+    "SeededSFSSelector",
+    "SklearnSFSSelector",
+]
