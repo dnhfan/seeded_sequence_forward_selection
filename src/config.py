@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
+from typing import Literal
 
 
 @dataclass
@@ -75,13 +76,30 @@ class ProjectPath:
         name = f"{self.data_name}_{method}_{self.n_features}features{suffix}.csv"
         return self.filter_dir / name
 
-    def ensemble_file(self, file_type: str = "union", suffix: str = "") -> Path:
+    def ensemble_file(
+        self, file_type: Literal["union", "seeds"] = "union", suffix: str = ""
+    ) -> Path:
+        """
+        Generates the standardized file path for Ensemble stage outputs (03_ensemble).
+
+                This method enforces a consistent naming convention based on the file's purpose,
+                preventing messy hardcoded paths and ensuring pipeline I/O reliability.
+
+                Args:
+                    file_type (Literal["union", "seeds"], optional): The specific type of ensemble file.
+                        - "union": The pooled feature set from all filter methods (used as the train/test pool).
+                        - "seeds": The top voted features (used as the starting seeds for Wrapper SFS).
+                        Defaults to "union".
+                    suffix (str, optional): An optional string to append to the filename
+                        (e.g., "_v2", "_cleaned"). Defaults to an empty string "".
+
+                Returns:
+                    Path: The Path object pointing to the specific CSV file within the 03_ensemble directory.
+        """
         if file_type == "union":
             name = f"{self.data_name}_Union_{self.n_features}features{suffix}.csv"
         elif file_type == "seeds":
             name = f"{self.data_name}_SFS_top{self.n_features}.csv"
-        else:
-            name = f"{self.data_name}_{file_type}_{self.n_features}{suffix}.csv"
         return self.ensemble_dir / name
 
     def wrapper_file(self, suffix: str = "", algorithsm_name: str = "SFS") -> Path:
