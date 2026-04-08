@@ -36,14 +36,13 @@ def main():
         n_features=n_features,
         voting_csv_name=voting_csv_name,
         using_timer=True,
-        unit="s",
+        unit="ms",
     )
 
     df = pd.read_csv(path.raw_path)
 
     df_final = wrapper.run_sfs(
         df=df,
-        file_suffix="Union",
         max_features=10,
         patience=3,
         n_seeds=1,

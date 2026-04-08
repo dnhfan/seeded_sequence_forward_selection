@@ -36,7 +36,7 @@ def main():
         n_features=n_features,
         voting_csv_name=voting_csv_name,
         using_timer=True,
-        unit="s",
+        unit="ms",
     )
 
     df = pd.read_csv(path.raw_path)
@@ -46,9 +46,9 @@ def main():
         max_features=20,
         patience=5,
         n_seeds=1,
-        model="dt",
+        model="log",
         scoring="accuracy",
-        cv=4,
+        cv=3,
     )
 
     # View data

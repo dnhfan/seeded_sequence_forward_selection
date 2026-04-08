@@ -36,7 +36,7 @@ def main():
         n_features=n_features,
         voting_csv_name=voting_csv_name,
         using_timer=True,
-        unit="s",
+        unit="ms",
         algorithm_name="sklearn_SFS",
         dataset_variant="raw",
     )

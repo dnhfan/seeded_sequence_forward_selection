@@ -14,7 +14,7 @@ def main():
     print("󰜎 Running Wrapper Features Slection..")
 
     # 1. setup conf
-    data_name = "Brain"
+    data_name = "Tumors9"
     n_features = 50
 
     valid_methods = [
@@ -36,7 +36,7 @@ def main():
         n_features=n_features,
         voting_csv_name=voting_csv_name,
         using_timer=True,
-        unit="s",
+        unit="ms",
         algorithm_name="sklearn_SFS",
         dataset_variant="raw",
     )
@@ -48,9 +48,9 @@ def main():
         max_features="auto",
         patience=3,
         n_seeds=1,
-        model="logistic",
+        model="dt",
         scoring="accuracy",
-        cv=5,
+        cv=2,
         engine="sklearn",
     )
 

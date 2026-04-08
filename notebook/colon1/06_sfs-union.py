@@ -48,11 +48,10 @@ def main():
 
     df_final = wrapper.run_sfs(
         df=df,
-        file_suffix="Union",
         max_features=20,
         patience=3,
         n_seeds=1,
-        model="dt",
+        model="log",
         scoring="accuracy",
         cv=5,
     )

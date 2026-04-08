@@ -27,7 +27,7 @@ def main():
 
     path = ProjectPath(data_name=data_name, n_features=n_features)
 
-    voting_csv_name = f"top50_features_voting_2026-04-03.csv"
+    voting_csv_name = f"top{n_features}_features_voting_20260304_0337.csv"
 
     # 2. Init WrapperSelector
     wrapper = WrapperSelector(
@@ -36,7 +36,7 @@ def main():
         n_features=n_features,
         voting_csv_name=voting_csv_name,
         using_timer=True,
-        unit="s",
+        unit="ms",
         algorithm_name="sklearn_SFS",
         dataset_variant="raw",
     )
@@ -50,7 +50,7 @@ def main():
         n_seeds=1,
         model="logistic",
         scoring="accuracy",
-        cv=4,
+        cv=3,
         engine="sklearn",
     )
 
