@@ -1,2 +1,0 @@
-dataset,dataset_variant,n_features_selected,global_best_score,total_fit_time_ms,run_root
-Brain,union,4,0.8795454545454546,13252.570374999777,results/Brain/wrapper/union/sklearnsfsselector/run_20260409_144110_3st_test
