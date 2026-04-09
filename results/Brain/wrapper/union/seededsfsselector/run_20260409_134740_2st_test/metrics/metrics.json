@@ -1,0 +1,10 @@
+{
+  "dataset": "Brain",
+  "dataset_variant": "union",
+  "n_features_selected": 6,
+  "global_best_score": 0.8999999999999999,
+  "total_fit_time_ms": 4171.391119998589,
+  "run_root": "results/Brain/wrapper/union/seededsfsselector/run_20260409_134740_1st_test",
+  "patience": 5,
+  "n_seeds": 3
+}
