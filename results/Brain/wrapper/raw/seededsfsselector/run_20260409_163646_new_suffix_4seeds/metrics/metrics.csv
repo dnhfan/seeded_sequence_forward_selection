@@ -1,0 +1,2 @@
+dataset,dataset_variant,n_features_selected,global_best_score,total_fit_time_ms,run_root,patience,n_seeds
+Brain,raw,11,0.9295454545454546,66952.17203200082,results/Brain/wrapper/raw/seededsfsselector/run_20260409_163646_new_suffix_4seeds,5,4
