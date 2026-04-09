@@ -1,0 +1,8 @@
+{
+  "dataset": "Brain",
+  "dataset_variant": "raw",
+  "n_features_selected": 6,
+  "global_best_score": 0.9523809523809524,
+  "total_fit_time_ms": 523839.95844400127,
+  "run_root": "results/Brain/wrapper/raw/sklearnsfsselector/run_20260409_162209"
+}
