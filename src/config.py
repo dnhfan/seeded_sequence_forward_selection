@@ -12,6 +12,10 @@ class ProjectPath:
     Rule B: results/ is strictly for human-readable experiment tracking.
     """
 
+    def __post_init__(self):
+        """Auto-run right after dataclass initialization"""
+        self.ensure_dirs()
+
     data_name: str
     n_features: int = 50
     base_dir: Path = Path(".")
