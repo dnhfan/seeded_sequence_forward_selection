@@ -85,10 +85,18 @@ class BaseWrapperSelector(ABC):
         cv: int,
         **kwargs,
     ) -> None:
-        n_seeds = sfs_params.get("n_seeds", "NA")
-        patience = sfs_params.get("patience", "NA")
+        suffix_parts = []
 
-        suffix_str = f"{n_seeds}n_seeds_{patience}patience_{max_features}max_{cv}cv_{file_suffix}"
+        if "n_seeds" in sfs_params:
+            suffix_parts.append(f"{sfs_params['n_seeds']}seeds")
+        if "patience" in sfs_params:
+            suffix_parts.append(f"{sfs_params['patience']}pat")
+
+        suffix_parts.append(f"{file_suffix}")
+        suffix_parts.append(f"{max_features}max")
+        suffix_parts.append(f"{cv}cv")
+
+        suffix_str = "_".join(suffix_parts)
 
         save_path = self.path.wrapper_file(suffix_str, self.algorithm_name)
 
