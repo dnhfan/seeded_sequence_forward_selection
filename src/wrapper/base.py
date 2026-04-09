@@ -1,7 +1,7 @@
 import json
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import List, Optional
+from typing import Optional
 
 import pandas
 
@@ -19,7 +19,6 @@ class BaseWrapperSelector(ABC):
     def __init__(
         self,
         data_name: str,
-        valid_method: List[str],
         n_features: int,
         voting_csv_name: str,
         dataset_variant: str = "raw",
@@ -31,7 +30,6 @@ class BaseWrapperSelector(ABC):
     ) -> None:
 
         self.data_name = data_name
-        self.valid_method = valid_method
         self.n_features = n_features
         self.voting_csv_name = voting_csv_name
         self.using_timer = using_timer
