@@ -515,7 +515,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         lines.append("-" * 40)
         lines.append(" CONFIGURATION")
         lines.append("-" * 40)
-        lines.append(f"  {'Model:':<20} {self.model}")
+        lines.append(f"  {'Model:':<20} {get_model(model_name=self.model).__class__.__name__}")  # type: ignore
         lines.append(f"  {'Scoring:':<20} {self.scoring}")
         lines.append(f"  {'CV Folds:':<20} {self.cv}")
         lines.append(f"  {'CV Shuffle:':<20} {self.cv_shuffle}")
