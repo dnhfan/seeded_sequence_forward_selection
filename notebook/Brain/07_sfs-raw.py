@@ -37,7 +37,7 @@ def main():
         max_features=20,
         patience=5,
         n_seeds=1,
-        model="log",
+        model="dt",
         scoring="accuracy",
         cv=4,
     )
