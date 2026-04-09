@@ -87,17 +87,34 @@ class BaseWrapperSelector(ABC):
     ) -> None:
         suffix_parts = []
 
+        # 1. Cấu hình lõi: Model đánh giá
+        if "model" in sfs_params:
+            model_name = str(sfs_params["model"]).lower()
+            suffix_parts.append(model_name)
+
+        # 2. Cấu hình lõi: Tiêu chí tối ưu (Scoring)
+        if "scoring" in sfs_params:
+            scoring_name = str(sfs_params["scoring"]).lower()
+            suffix_parts.append(scoring_name)
+
+        # 3. Ràng buộc chính: Số lượng feature tối đa
+        suffix_parts.append(f"{max_features}max")
+
+        # 4. Tham số đặc thù của Seeded SFS
         if "n_seeds" in sfs_params:
             suffix_parts.append(f"{sfs_params['n_seeds']}seeds")
         if "patience" in sfs_params:
             suffix_parts.append(f"{sfs_params['patience']}pat")
 
-        suffix_parts.append(f"{file_suffix}")
-        suffix_parts.append(f"{max_features}max")
+        # 5. Chiến lược Validation
         suffix_parts.append(f"{cv}cv")
 
-        suffix_str = "_".join(suffix_parts)
+        # 6. Phiên bản dữ liệu đầu vào
+        if file_suffix:
+            suffix_parts.append(file_suffix)
 
+        # Nối lại
+        suffix_str = "_".join(suffix_parts)
         save_path = self.path.wrapper_file(suffix_str, self.algorithm_name)
 
         result.df_final.to_csv(save_path, index=False)
