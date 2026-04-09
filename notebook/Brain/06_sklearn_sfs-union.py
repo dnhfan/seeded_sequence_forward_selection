@@ -27,7 +27,7 @@ def main():
         n_features=n_features,
         voting_csv_name=voting_csv_name,
         dataset_variant="union",
-        run_tag="3st_test",
+        run_tag="new_suffix",
     )
 
     union_path = path.ensemble_file("union")

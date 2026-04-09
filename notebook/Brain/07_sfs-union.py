@@ -27,7 +27,7 @@ def main():
         n_features=n_features,
         voting_csv_name=voting_csv_name,
         dataset_variant="union",
-        run_tag="3st_test",
+        run_tag="new_suffix_3seeds",
     )
 
     union_df = pandas.read_csv(path.ensemble_file("union"))
@@ -36,7 +36,7 @@ def main():
         df=union_df,
         max_features=20,
         patience=5,
-        n_seeds=1,
+        n_seeds=3,
         model="dt",
         scoring="accuracy",
         cv=4,
