@@ -106,9 +106,21 @@ class ProjectPath:
             name = f"{self.data_name}_SFS_top{self.n_features}.csv"
         return self.ensemble_dir / name
 
-    def wrapper_file(self, suffix: str = "", algorithsm_name: str = "SFS") -> Path:
-        name = f"{self.data_name}_{algorithsm_name}_{suffix}.csv"
-        return self.wrapper_dir / name
+    def wrapper_file(
+        self,
+        suffix: str = "",
+        algorithm_name: str = "SFS",
+        data_variant: str = "custom",
+    ) -> Path:
+        name = f"{self.data_name}_{algorithm_name}_{suffix}.csv"
+
+        algo_folder = algorithm_name.lower()
+        variant_folder = data_variant.lower()
+
+        target_dir = self.wrapper_dir / variant_folder / algo_folder
+        target_dir.mkdir(parents=True, exist_ok=True)
+
+        return target_dir / name
 
     @property
     def results_base_dir(self) -> Path:
