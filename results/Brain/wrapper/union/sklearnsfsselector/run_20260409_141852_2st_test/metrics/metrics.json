@@ -1,0 +1,11 @@
+{
+  "dataset": "Brain",
+  "dataset_variant": "union",
+  "n_features_selected": 4,
+  "global_best_score": 0.8795454545454546,
+  "total_fit_time_ms": 13187.570712998422,
+  "run_root": "results/Brain/wrapper/union/sklearnsfsselector/run_20260409_141852_2st_test",
+  "patience": 3,
+  "n_seeds": 1,
+  "engine": "sklearn"
+}
