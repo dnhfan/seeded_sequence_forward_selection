@@ -115,7 +115,11 @@ class BaseWrapperSelector(ABC):
 
         # Nối lại
         suffix_str = "_".join(suffix_parts)
-        save_path = self.path.wrapper_file(suffix_str, self.algorithm_name)
+        save_path = self.path.wrapper_file(
+            suffix_str,
+            self.algorithm_name,
+            data_variant=self.dataset_variant,
+        )
 
         result.df_final.to_csv(save_path, index=False)
         print(f"\n Saved final data to: {save_path}")  # csv file handled

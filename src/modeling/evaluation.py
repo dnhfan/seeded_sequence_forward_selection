@@ -1,13 +1,16 @@
 import os
+import platform
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Tuple
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple, cast
 
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+import sklearn
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import StratifiedKFold, cross_validate, train_test_split
 from sklearn.tree import DecisionTreeClassifier
 
 from src.config import ProjectPath
@@ -30,9 +33,16 @@ class ModelEvaluator:
     def __init__(
         self,
         data_name: str,
-        valid_method: List[str],
+        valid_method: List[str] = [
+            "variance",
+            "correlation",
+            "chi_squared",
+            "mutual_information",
+            "anova_f_test",
+        ],
         n_features: int = 50,
         max_iter: int = 4000,
+        custom_base_dir: Optional[str | Path] = None,
     ) -> None:
         self.data_name = data_name
         self.valid_method = valid_method
@@ -44,8 +54,13 @@ class ModelEvaluator:
         self.timestamp: str = datetime.now().strftime("%Y-%m-%d")
 
         # path
-        self.report_dir: str = str(self.path.filter_result_dir / "reports")
-        self.plot_dir: str = str(self.path.filter_result_dir / "plots")
+        if custom_base_dir:
+            base_dir = Path(custom_base_dir)
+        else:
+            base_dir = self.path.filter_result_dir
+
+        self.report_dir: str = str(base_dir / "reports")
+        self.plot_dir: str = str(base_dir / "plots")
 
         os.makedirs(self.report_dir, exist_ok=True)
         os.makedirs(self.plot_dir, exist_ok=True)
@@ -63,34 +78,48 @@ class ModelEvaluator:
         return X, y
 
     def _train_and_evaluate(
-        self, X: pd.DataFrame, y: pd.Series, method_name: str
+        self,
+        X: pd.DataFrame,
+        y: pd.Series,
+        method_name: str,
+        n_splits: int = 5,
     ) -> None:
         """
-        [Private] Splits the data, trains Logistic Regression and Decision Tree models,
+        [Private] Splits the data using Cross-Validation, trains Logistic Regression and Decision Tree models,
         evaluates their accuracy, and stores the results.
         """
-        X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=0.2, random_state=42, stratify=y
-        )
-        # 1. Train Logistic Regression
-        log_model = LogisticRegression(max_iter=self.max_iter, random_state=42)
-        log_model.fit(X_train, y_train)
-        log_acc: float = accuracy_score(y_test, log_model.predict(X_test))
+        # 1. Init the CV
+        cv = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=42)
 
-        # 2. Train Decision Tree
-        tree_model = DecisionTreeClassifier(max_depth=5, random_state=42)
-        tree_model.fit(X_train, y_train)
-        tree_acc: float = accuracy_score(y_test, tree_model.predict(X_test))
+        # scoring
+        scoring = ["accuracy"]
 
-        # 3. Log the results
-        self.results.append(
-            {"Method": method_name, "Model": "LogisticRegression", "Acc": log_acc}
-        )
-        self.results.append(
-            {"Method": method_name, "Model": "DecisionTreeClassifier", "Acc": tree_acc}
-        )
+        # 2. Init model in a dict -> easy to add new one
+        models = {
+            "LogReg": LogisticRegression(max_iter=self.max_iter, random_state=42),
+            "Tree": DecisionTreeClassifier(max_depth=5, random_state=42),
+        }
 
-        print(f"󰄭  {method_name:<12}: LogReg = {log_acc:.4f} | Tree = {tree_acc:.4f}")
+        # 3. Runing each model
+        for model_name, model in models.items():
+            # cross_validate will auto fit and predict
+            scores = cross_validate(model, X, y, cv=cv, scoring=scoring, n_jobs=-1)
+
+            # 4. Store the result of each fold
+            for i in range(cv.get_n_splits()):
+                self.results.append(
+                    {
+                        "Method": method_name,
+                        "Model": model_name,
+                        "Fold": i + 1,
+                        "Acc": scores["test_accuracy"][i],
+                    }
+                )
+
+            mean_acc = scores["test_accuracy"].mean()
+            self.results.append({"Mean Acc": mean_acc})
+
+            print(f"󰄭  [{method_name:<12}] {model_name:<8} | Acc: {mean_acc:.4f} ")
 
     def evaluate_filtered_features(self, data_dir: str) -> None:
         """
@@ -125,7 +154,12 @@ class ModelEvaluator:
         except FileNotFoundError:
             print(f" Raw file not found: {raw_path}")
 
-    def generate_report_and_plot(self) -> Optional[pd.DataFrame]:
+    def generate_report_and_plot(
+        self,
+        experiment_prefix: str = "evaluation",
+        chart_title: str = "Model Performance Comparison",
+        report_metadata: Optional[Dict[str, Any]] = None,
+    ) -> Optional[pd.DataFrame]:
         """
         Compiles the evaluation results into a DataFrame, generates a comparison bar chart,
         and exports a text report.
@@ -137,42 +171,133 @@ class ModelEvaluator:
         if not self.results:
             print(" NO results. Aborting report generation.")
             return None
+
         result_df = pd.DataFrame(self.results)
+        fold_level_df = cast(
+            pd.DataFrame, result_df[["Method", "Model", "Fold", "Acc"]].dropna()
+        )
+
+        if fold_level_df.empty:
+            print(" No fold-level results found. Aborting report generation.")
+            return None
+
+        save_prefix = str(experiment_prefix).replace(" ", "_").lower()
+
+        plot_name = f"{save_prefix}_{self.data_name}_{self.timestamp}"
+        report_name = f"{save_prefix}_{self.data_name}_{self.timestamp}"
+
+        plot_path = Path(self.plot_dir) / f"{plot_name}.png"
+        report_path = Path(self.report_dir) / f"{report_name}.txt"
 
         # --- Generates Chart ---
         sns.set_theme(style="whitegrid")
         plt.figure(figsize=(10, 7))
-        sns.barplot(data=result_df, x="Method", y="Acc", hue="Model", palette="pastel")
-
-        plt.title(
-            f"Comparison: Top {self.n_features} Features vs All Features, ({self.data_name})"
+        sns.barplot(
+            data=fold_level_df, x="Method", y="Acc", hue="Model", palette="pastel"
         )
+
+        plt.title(f"{chart_title} ({self.data_name})")
         plt.ylim(0.1, 1.05)
-        plt.ylabel("Accuracy")
+        plt.ylabel("Accuracy Score")
         plt.xlabel("Feature Selection Method")
         plt.xticks(rotation=45, ha="right", fontweight="bold")
         plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
         plt.tight_layout()
 
-        plot_path = f"{self.plot_dir}/model_comparison_top{self.n_features}_{self.timestamp}.png"
         plt.savefig(plot_path, dpi=300, bbox_inches="tight")
         plt.close()
         print(f" Chart saved at: {plot_path}")
 
+        summary_df = fold_level_df.groupby(["Method", "Model"], as_index=False).agg(
+            mean_accuracy=("Acc", "mean"),
+            std_accuracy=("Acc", "std"),
+            min_accuracy=("Acc", "min"),
+            max_accuracy=("Acc", "max"),
+            median_accuracy=("Acc", "median"),
+            n_folds=("Acc", "count"),
+        )
+        summary_df = cast(pd.DataFrame, summary_df)
+        summary_df = summary_df.sort_values(by="std_accuracy", ascending=True)
+        summary_df = summary_df.sort_values(
+            by="mean_accuracy", ascending=False
+        ).reset_index(drop=True)
+
+        summary_df["std_accuracy"] = summary_df["std_accuracy"].fillna(0.0)
+        summary_df["cv_stability"] = 1.0 - summary_df["std_accuracy"]
+        summary_df["rank"] = (
+            summary_df["mean_accuracy"]
+            .rank(method="dense", ascending=False)
+            .astype(int)
+        )
+
+        best_row = summary_df.iloc[0]
+
         # --- Generates Report ---
-        report_path = f"{self.report_dir}/model_evaluation_top{self.n_features}_{self.timestamp}.txt"
         with open(report_path, "w", encoding="utf-8") as f:
-            f.write(f"Model Comparison Report - Dataset: {self.data_name}\n")
-            f.write(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-            f.write(f"Number of Features: {self.n_features}\n")
-            f.write("-" * 60 + "\n")
-            f.write(result_df.to_string(index=False))
+            f.write("MODEL EVALUATION REPORT\n")
+            f.write(f"generated_at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+            f.write(
+                f"experiment_id: {save_prefix}_{self.data_name}_{self.timestamp.replace('-', '')}\n"
+            )
+            f.write(f"dataset: {self.data_name}\n")
+            f.write(f"experiment_prefix: {experiment_prefix}\n")
+            f.write(f"feature_count: {self.n_features}\n")
+            f.write(f"logreg_max_iter: {self.max_iter}\n")
+            f.write(f"python_version: {platform.python_version()}\n")
+            f.write(f"pandas_version: {pd.__version__}\n")
+            f.write(f"sklearn_version: {sklearn.__version__}\n")
+            if report_metadata:
+                for key, value in report_metadata.items():
+                    f.write(f"{key}: {value}\n")
+
+            f.write("\nARTIFACTS\n")
+            f.write(f"plot_path: {plot_path}\n")
+            f.write(f"report_path: {report_path}\n")
+
+            f.write("\nEXECUTIVE SUMMARY\n")
+            f.write(
+                f"best_configuration: method={best_row['Method']}, model={best_row['Model']}, "
+                f"mean_accuracy={best_row['mean_accuracy']:.4f}, std={best_row['std_accuracy']:.4f}, "
+                f"folds={int(best_row['n_folds'])}\n"
+            )
+            f.write(
+                f"total_configurations: {len(summary_df)} | total_fold_evaluations: {len(fold_level_df)}\n"
+            )
+
+            f.write("\nCROSS-VALIDATION SUMMARY (ranked)\n")
+            f.write("-" * 120 + "\n")
+            summary_report_df = summary_df[
+                [
+                    "rank",
+                    "Method",
+                    "Model",
+                    "mean_accuracy",
+                    "std_accuracy",
+                    "median_accuracy",
+                    "min_accuracy",
+                    "max_accuracy",
+                    "n_folds",
+                    "cv_stability",
+                ]
+            ].round(4)
+            f.write(summary_report_df.to_string(index=False))
+            f.write("\n")
+
+            f.write("\nFOLD-LEVEL RESULTS (for auditability)\n")
+            f.write("-" * 120 + "\n")
+            fold_report_df = fold_level_df.sort_values(
+                by=["Method", "Model", "Fold"]
+            ).round(4)
+            f.write(fold_report_df.to_string(index=False))
+            f.write("\n" + "-" * 120 + "\n")
 
         print(f"󰎞 Report saved at: {report_path}")
 
         return result_df
 
-    def evaluate_custom_file(self, file_path: str, method_label: str) -> None:
+    def evaluate_custom_file(
+        self, file_path: str, method_label: str, n_splits: int = 5
+    ) -> None:
         """
         Hàm vạn năng để đánh giá bất kỳ file CSV nào (SFS, Sklearn, PCA, v.v.)
 
@@ -183,6 +308,16 @@ class ModelEvaluator:
         print(f"\n[*] Training models with custom data ({method_label})...")
         try:
             X, y = self._load_data(file_path)
-            self._train_and_evaluate(X, y, method_name=method_label)
+            self._train_and_evaluate(X, y, method_name=method_label, n_splits=n_splits)
         except FileNotFoundError:
             print(f" Lỗi: Không tìm thấy file tại {file_path}")
+
+    def clear_results(self) -> None:
+        """
+        Dọn sạch danh sách kết quả cũ trong bộ nhớ (RAM).
+        Dùng khi muốn dùng lại class này cho một thí nghiệm hoàn toàn mới.
+        """
+        self.results = []
+        # Cập nhật lại timestamp để tên file mới không đè lên file cũ
+        self.timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        print("\n Cleaned result. Ready for new experiment!")
