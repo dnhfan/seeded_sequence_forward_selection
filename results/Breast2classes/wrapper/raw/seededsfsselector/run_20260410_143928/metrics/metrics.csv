@@ -1,0 +1,2 @@
+dataset,dataset_variant,n_features_selected,global_best_score,total_fit_time_ms,run_root,patience,n_seeds
+Breast2classes,raw,11,0.9350000000000002,102179.42576701171,results/Breast2classes/wrapper/raw/seededsfsselector/run_20260410_143928,3,1

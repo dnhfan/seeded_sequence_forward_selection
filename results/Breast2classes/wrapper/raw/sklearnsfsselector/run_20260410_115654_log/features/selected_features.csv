@@ -1,0 +1,8 @@
+feature,dataset,dataset_variant,algorithm
+V431,Breast2classes,raw,sklearnsfsselector
+V1499,Breast2classes,raw,sklearnsfsselector
+V2500,Breast2classes,raw,sklearnsfsselector
+V3461,Breast2classes,raw,sklearnsfsselector
+V4065,Breast2classes,raw,sklearnsfsselector
+V4448,Breast2classes,raw,sklearnsfsselector
+V4534,Breast2classes,raw,sklearnsfsselector

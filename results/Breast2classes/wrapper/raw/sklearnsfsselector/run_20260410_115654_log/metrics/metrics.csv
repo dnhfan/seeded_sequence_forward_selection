@@ -1,0 +1,2 @@
+dataset,dataset_variant,n_features_selected,global_best_score,total_fit_time_ms,run_root
+Breast2classes,raw,7,0.9225000000000001,733129.1263809981,results/Breast2classes/wrapper/raw/sklearnsfsselector/run_20260410_115654
