@@ -33,7 +33,6 @@ class EnsembleFeatureSelector:
         self.path = ProjectPath(data_name, n_features)
 
         self.df_counts: Optional[pd.DataFrame] = None
-        self.timestamp: str = datetime.now().strftime("%Y-%m-%d")
 
         # setup paths
         self.report_dir: str = str(self.path.ensemble_result_dir / "reports")
@@ -105,13 +104,9 @@ class EnsembleFeatureSelector:
         df_top_n = self.df_counts.head(top_n_plot)
 
         # File path
-        plot_path = (
-            f"{self.plot_dir}/top{self.n_features}_features_voting_{self.timestamp}.png"
-        )
-        report_path = f"{self.report_dir}/top{self.n_features}_features_voting_{self.timestamp}.txt"
-        csv_path = (
-            f"{self.csv_dir}/top{self.n_features}_features_voting_{self.timestamp}.csv"
-        )
+        plot_path = f"{self.plot_dir}/top{self.n_features}_features_voting.png"
+        report_path = f"{self.report_dir}/top{self.n_features}_features_voting.txt"
+        csv_path = f"{self.csv_dir}/top{self.n_features}_features_voting.csv"
 
         # --- 1. Plotting ---
         sns.set_theme(style="whitegrid")
