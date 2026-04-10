@@ -1,0 +1,10 @@
+{
+  "dataset": "Brain",
+  "dataset_variant": "raw",
+  "n_features_selected": 8,
+  "global_best_score": 0.9090909090909092,
+  "total_fit_time_ms": 67354.20615399926,
+  "run_root": "results/Brain/wrapper/raw/seededsfsselector/run_20260410_001112_new_suffix_2seeds",
+  "patience": 5,
+  "n_seeds": 2
+}

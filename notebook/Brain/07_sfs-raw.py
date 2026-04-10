@@ -28,7 +28,7 @@ def main():
         voting_csv_name=voting_csv_name,
         using_timer=True,
         unit="ms",
-        run_tag="new_suffix_4seeds",
+        run_tag="new_suffix_2seeds",
     )
 
     df = pd.read_csv(path.raw_path)
@@ -37,10 +37,10 @@ def main():
         df=df,
         max_features=20,
         patience=5,
-        n_seeds=4,
+        n_seeds=3,
         model="dt",
         scoring="accuracy",
-        cv=4,
+        cv=3,
     )
 
     # View data
