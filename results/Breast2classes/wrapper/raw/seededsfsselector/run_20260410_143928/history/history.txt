@@ -22,7 +22,7 @@ Generated: 2026-04-10 14:41:10
 ----------------------------------------
 󰈙 SUMMARY
 ----------------------------------------
-  Total Fit Time:      102179.426 ms
+  Total Fit Time:      102179.426 ms -> 102 s
   Final Best Score:    0.935000
   Total Selected:      11
   Selected Features:   V2221, V2273, V220, V2429, V2595, V1081, V3818, V258, V3989, V46, V2213

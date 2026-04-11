@@ -1,0 +1,117 @@
+MODEL EVALUATION REPORT
+generated_at: 2026-04-11 17:10:53
+experiment_id: filter_compare_50features_Breast3classes_20260411
+dataset: Breast3classes
+experiment_prefix: filter_compare_50features
+feature_count: 50
+logreg_max_iter: 4000
+python_version: 3.12.12
+pandas_version: 3.0.1
+sklearn_version: 1.8.0
+
+ARTIFACTS
+plot_path: results/Breast3classes/filter/plots/filter_compare_50features_Breast3classes.png
+report_path: results/Breast3classes/filter/reports/filter_compare_50features_Breast3classes.txt
+
+EXECUTIVE SUMMARY
+best_configuration: method=MUTUAL_INFORMATION, model=LogReg, mean_accuracy=0.6632, std=0.1422, folds=5
+total_configurations: 12 | total_fold_evaluations: 60
+
+CROSS-VALIDATION SUMMARY (ranked)
+------------------------------------------------------------------------------------------------------------------------
+ rank             Method  Model  mean_accuracy  std_accuracy  median_accuracy  min_accuracy  max_accuracy  n_folds  cv_stability
+    1 MUTUAL_INFORMATION LogReg         0.6632        0.1422           0.5789        0.5263        0.8421        5        0.8578
+    2 MUTUAL_INFORMATION   Tree         0.6421        0.0686           0.6316        0.5789        0.7368        5        0.9314
+    3               None LogReg         0.6211        0.1257           0.6316        0.4737        0.7895        5        0.8743
+    4       ANOVA_F_TEST LogReg         0.6105        0.1268           0.5789        0.4737        0.7895        5        0.8732
+    4        CORRELATION LogReg         0.6105        0.1268           0.5789        0.4737        0.7895        5        0.8732
+    5        CHI_SQUARED LogReg         0.6000        0.0798           0.5789        0.5263        0.7368        5        0.9202
+    5        CHI_SQUARED   Tree         0.6000        0.0956           0.5789        0.4737        0.7368        5        0.9044
+    6       ANOVA_F_TEST   Tree         0.5474        0.0288           0.5263        0.5263        0.5789        5        0.9712
+    7           VARIANCE   Tree         0.5368        0.1948           0.5789        0.2105        0.6842        5        0.8052
+    8        CORRELATION   Tree         0.4842        0.1012           0.4737        0.3684        0.6316        5        0.8988
+    9               None   Tree         0.4737        0.1289           0.4737        0.2632        0.5789        5        0.8711
+   10           VARIANCE LogReg         0.4316        0.1412           0.3684        0.3158        0.6316        5        0.8588
+
+FOLD-LEVEL RESULTS (for auditability)
+------------------------------------------------------------------------------------------------------------------------
+ Method: ANOVA_F_TEST 
+ Model  Fold    Acc
+LogReg   1.0 0.7895
+LogReg   2.0 0.6842
+LogReg   3.0 0.5789
+LogReg   4.0 0.5263
+LogReg   5.0 0.4737
+  Tree   1.0 0.5263
+  Tree   2.0 0.5789
+  Tree   3.0 0.5789
+  Tree   4.0 0.5263
+  Tree   5.0 0.5263
+
+ Method: CHI_SQUARED 
+ Model  Fold    Acc
+LogReg   1.0 0.7368
+LogReg   2.0 0.5789
+LogReg   3.0 0.5789
+LogReg   4.0 0.5789
+LogReg   5.0 0.5263
+  Tree   1.0 0.7368
+  Tree   2.0 0.6316
+  Tree   3.0 0.4737
+  Tree   4.0 0.5789
+  Tree   5.0 0.5789
+
+ Method: CORRELATION 
+ Model  Fold    Acc
+LogReg   1.0 0.7895
+LogReg   2.0 0.6842
+LogReg   3.0 0.5789
+LogReg   4.0 0.5263
+LogReg   5.0 0.4737
+  Tree   1.0 0.3684
+  Tree   2.0 0.5263
+  Tree   3.0 0.6316
+  Tree   4.0 0.4737
+  Tree   5.0 0.4211
+
+ Method: MUTUAL_INFORMATION 
+ Model  Fold    Acc
+LogReg   1.0 0.8421
+LogReg   2.0 0.5789
+LogReg   3.0 0.7895
+LogReg   4.0 0.5789
+LogReg   5.0 0.5263
+  Tree   1.0 0.6842
+  Tree   2.0 0.5789
+  Tree   3.0 0.7368
+  Tree   4.0 0.5789
+  Tree   5.0 0.6316
+
+ Method: None 
+ Model  Fold    Acc
+LogReg   1.0 0.7895
+LogReg   2.0 0.6316
+LogReg   3.0 0.4737
+LogReg   4.0 0.5263
+LogReg   5.0 0.6842
+  Tree   1.0 0.5789
+  Tree   2.0 0.2632
+  Tree   3.0 0.5789
+  Tree   4.0 0.4737
+  Tree   5.0 0.4737
+
+ Method: VARIANCE 
+ Model  Fold    Acc
+LogReg   1.0 0.6316
+LogReg   2.0 0.3158
+LogReg   3.0 0.3158
+LogReg   4.0 0.5263
+LogReg   5.0 0.3684
+  Tree   1.0 0.5789
+  Tree   2.0 0.5263
+  Tree   3.0 0.2105
+  Tree   4.0 0.6842
+  Tree   5.0 0.6842
+
+
+------------------------------------------------------------------------------------------------------------------------

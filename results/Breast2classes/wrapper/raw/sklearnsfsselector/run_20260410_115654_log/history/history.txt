@@ -15,7 +15,7 @@ Generated: 2026-04-10 13:28:01
 ----------------------------------------
   SUMMARY
 ----------------------------------------
-  Total Fit Time:      733129.126 ms
+  Total Fit Time:      733129.126 ms -> 733 s
   Final Best Score:    0.922500
   Total Selected:      7
   Selected Features:   V431, V1499, V2500, V3461, V4065, V4448, V4534

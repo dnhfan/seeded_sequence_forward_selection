@@ -36,20 +36,13 @@ FOLD-LEVEL RESULTS (for auditability)
  seeded   Tree   2.0 0.5263
  seeded   Tree   3.0 0.6316
  seeded   Tree   4.0 0.6316
-sklearn LogReg   1.0 0.8000
+
 sklearn LogReg   1.0 0.8000
 sklearn LogReg   2.0 0.8421
-sklearn LogReg   2.0 0.8421
-sklearn LogReg   3.0 0.8947
 sklearn LogReg   3.0 0.8947
 sklearn LogReg   4.0 0.8421
-sklearn LogReg   4.0 0.8421
-sklearn   Tree   1.0 0.7500
 sklearn   Tree   1.0 0.7500
 sklearn   Tree   2.0 0.6316
-sklearn   Tree   2.0 0.6316
 sklearn   Tree   3.0 0.7368
-sklearn   Tree   3.0 0.7368
-sklearn   Tree   4.0 0.7895
 sklearn   Tree   4.0 0.7895
 ------------------------------------------------------------------------------------------------------------------------
