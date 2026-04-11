@@ -1,0 +1,2 @@
+dataset,dataset_variant,n_features_selected,global_best_score,total_fit_time_ms,run_root
+Breast3classes,union,6,0.8,17882.509495000704,results/Breast3classes/wrapper/union/sklearnsfsselector/run_20260411_225920

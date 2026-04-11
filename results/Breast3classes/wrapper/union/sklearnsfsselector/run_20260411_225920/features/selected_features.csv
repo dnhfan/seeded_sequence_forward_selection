@@ -1,0 +1,7 @@
+feature,dataset,dataset_variant,algorithm
+V217,Breast3classes,union,sklearnsfsselector
+V2273,Breast3classes,union,sklearnsfsselector
+V2329,Breast3classes,union,sklearnsfsselector
+V3178,Breast3classes,union,sklearnsfsselector
+V4786,Breast3classes,union,sklearnsfsselector
+V621,Breast3classes,union,sklearnsfsselector

@@ -1,0 +1,9 @@
+feature,dataset,dataset_variant,algorithm
+V3780,Breast3classes,union,seededsfsselector
+V2273,Breast3classes,union,seededsfsselector
+V2889,Breast3classes,union,seededsfsselector
+V1459,Breast3classes,union,seededsfsselector
+V1228,Breast3classes,union,seededsfsselector
+V2983,Breast3classes,union,seededsfsselector
+V2028,Breast3classes,union,seededsfsselector
+V389,Breast3classes,union,seededsfsselector

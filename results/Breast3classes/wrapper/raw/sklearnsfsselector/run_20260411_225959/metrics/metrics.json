@@ -1,0 +1,8 @@
+{
+  "dataset": "Breast3classes",
+  "dataset_variant": "raw",
+  "n_features_selected": 5,
+  "global_best_score": 0.8,
+  "total_fit_time_ms": 370924.04191100015,
+  "run_root": "results/Breast3classes/wrapper/raw/sklearnsfsselector/run_20260411_225959"
+}
