@@ -9,8 +9,7 @@ import pandas as pd
 import seaborn as sns
 import sklearn
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score
-from sklearn.model_selection import StratifiedKFold, cross_validate, train_test_split
+from sklearn.model_selection import StratifiedKFold, cross_validate
 from sklearn.tree import DecisionTreeClassifier
 
 from src.config import ProjectPath
@@ -121,7 +120,7 @@ class ModelEvaluator:
 
             print(f"󰄭  [{method_name:<12}] {model_name:<8} | Acc: {mean_acc:.4f} ")
 
-    def evaluate_filtered_features(self, data_dir: str) -> None:
+    def evaluate_filtered_features(self, data_dir: str, n_splits: int = 5) -> None:
         """
         Evaluates models on datasets that have undergone Feature Selection.
 
@@ -134,13 +133,13 @@ class ModelEvaluator:
             data_path = f"{data_dir}/{self.data_name}_{m}_{self.n_features}features.csv"
             try:
                 X, y = self._load_data(data_path)
-                self._train_and_evaluate(X, y, m.upper())
+                self._train_and_evaluate(X, y, m.upper(), n_splits=n_splits)
             except FileNotFoundError:
                 print(f" File not found: {data_path}")
 
         pass
 
-    def evaluate_baseline(self, raw_path: str) -> None:
+    def evaluate_baseline(self, raw_path: str, n_splits=3) -> None:
         """
         Evaluates models on the original (unfiltered) dataset to establish a baseline.
 
@@ -150,7 +149,7 @@ class ModelEvaluator:
         print("\n[2] Training models with baseline data (All features)...")
         try:
             X, y = self._load_data(raw_path)
-            self._train_and_evaluate(X, y, method_name="None")
+            self._train_and_evaluate(X, y, method_name="None", n_splits=n_splits)
         except FileNotFoundError:
             print(f" Raw file not found: {raw_path}")
 
@@ -183,8 +182,8 @@ class ModelEvaluator:
 
         save_prefix = str(experiment_prefix).replace(" ", "_").lower()
 
-        plot_name = f"{save_prefix}_{self.data_name}_{self.timestamp}"
-        report_name = f"{save_prefix}_{self.data_name}_{self.timestamp}"
+        plot_name = f"{save_prefix}_{self.data_name}"
+        report_name = f"{save_prefix}_{self.data_name}"
 
         plot_path = Path(self.plot_dir) / f"{plot_name}.png"
         report_path = Path(self.report_dir) / f"{report_name}.txt"
@@ -288,9 +287,16 @@ class ModelEvaluator:
             fold_report_df = fold_level_df.sort_values(
                 by=["Method", "Model", "Fold"]
             ).round(4)
-            f.write(fold_report_df.to_string(index=False))
-            f.write("\n" + "-" * 120 + "\n")
 
+            for method_name, group_df in fold_report_df.groupby("Method", sort=False):
+                f.write(f" Method: {method_name} \n")
+
+                clean_df = group_df.drop(columns=["Method"])
+                f.write(clean_df.to_string(index=False))
+
+                f.write("\n\n")
+
+            f.write("\n" + "-" * 120 + "\n")
         print(f"󰎞 Report saved at: {report_path}")
 
         return result_df
