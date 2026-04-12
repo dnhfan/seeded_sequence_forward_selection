@@ -1,55 +1,40 @@
 import os
 import sys
 
+import pandas as pd
+
 # Tính toán lùi về 2 cấp thư mục: sfs.py -> Tumors9 -> notebook -> wrapper-w-filter (Gốc)
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
 from src.config import ProjectPath
-from src.utils import create_union_features
-from src.wrapper import SeededSFSSelector
-
+from src.wrapper import SklearnSFSSelector
 
 def main():
-    print("󰜎 Running Wrapper Features Slection using Union data set..")
+    print("󰜎 Running Wrapper Features Slection..")
 
     # 1. setup conf
     data_name = "Lung_cancer"
     n_features = 17
-
-    valid_methods = [
-        "variance",
-        "correlation",
-        "chi_squared",
-        "mutual_information",
-        "anova_f_test",
-    ]
 
     path = ProjectPath(data_name=data_name, n_features=n_features)
 
     voting_csv_name = f"top{n_features}_features_voting.csv"
 
     # 2. Init WrapperSelector
-    wrapper = SeededSFSSelector(
+    wrapper = SklearnSFSSelector(
         data_name=data_name,
         n_features=n_features,
         voting_csv_name=voting_csv_name,
-        dataset_variant="union",
+        using_timer=True,
+        unit="ms",
+        dataset_variant="raw",
     )
 
-    df = create_union_features(
-        data_name=data_name,
-        valid_method=valid_methods,
-        n_features=n_features,
-        filter_dir=str(path.filter_dir),
-        raw_path=str(path.raw_path),
-        ensemble_dir=str(path.ensemble_dir),
-    )
+    df = pd.read_csv(path.raw_path)
 
     df_final = wrapper.run_sfs(
         df=df,
-        max_features=20,
-        patience=3,
-        n_seeds=1,
+        max_features="auto",
         model="dt",
         scoring="accuracy",
         cv=5,
@@ -58,7 +43,6 @@ def main():
     # View data
     print("\n󰔂  Preview head of FINAL DATASET:")
     print(df_final.head())
-
 
 if __name__ == "__main__":
     main()

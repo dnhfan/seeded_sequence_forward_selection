@@ -8,7 +8,6 @@ from src.config import ProjectPath
 from src.utils import create_union_features
 from src.wrapper import SklearnSFSSelector
 
-
 def main():
     print("󰜎 Running Wrapper Features Slection using Union data set..")
 
@@ -33,6 +32,8 @@ def main():
         data_name=data_name,
         n_features=n_features,
         voting_csv_name=voting_csv_name,
+        using_timer=True,
+        unit="ms",
         dataset_variant="union",
     )
 
@@ -56,7 +57,6 @@ def main():
     # View data
     print("\n󰔂  Preview head of FINAL DATASET:")
     print(df_final.head())
-
 
 if __name__ == "__main__":
     main()
