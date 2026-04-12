@@ -1,0 +1,10 @@
+{
+  "dataset": "Lung_cancer",
+  "dataset_variant": "union",
+  "n_features_selected": 7,
+  "global_best_score": 0.9458536585365854,
+  "total_fit_time_ms": 3018.6154680013715,
+  "run_root": "results/Lung_cancer/wrapper/union/seededsfsselector/run_20260412_213252",
+  "patience": 3,
+  "n_seeds": 1
+}

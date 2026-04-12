@@ -7,7 +7,7 @@ import pandas as pd
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
 from src.config import ProjectPath
-from src.wrapper.wrapper_selector import WrapperSelector
+from src.wrapper import SklearnSFSSelector
 
 
 def main():
@@ -15,37 +15,27 @@ def main():
 
     # 1. setup conf
     data_name = "Lung_cancer"
-    n_features = 25
-
-    valid_methods = [
-        "variance",
-        "correlation",
-        "chi_squared",
-        "mutual_information",
-        "anova_f_test",
-    ]
+    n_features = 17
 
     path = ProjectPath(data_name=data_name, n_features=n_features)
 
-    voting_csv_name = f"top{n_features}_features_voting_20260304_0411.csv"
+    voting_csv_name = f"top50_features_voting.csv"
 
     # 2. Init WrapperSelector
-    wrapper = WrapperSelector(
+    wrapper = SklearnSFSSelector(
         data_name=data_name,
-        valid_method=valid_methods,
         n_features=n_features,
         voting_csv_name=voting_csv_name,
         using_timer=True,
-        unit="s",
+        unit="ms",
+        dataset_variant="raw",
     )
 
     df = pd.read_csv(path.raw_path)
 
     df_final = wrapper.run_sfs(
         df=df,
-        max_features=20,
-        patience=3,
-        n_seeds=1,
+        max_features="auto",
         model="dt",
         scoring="accuracy",
         cv=5,

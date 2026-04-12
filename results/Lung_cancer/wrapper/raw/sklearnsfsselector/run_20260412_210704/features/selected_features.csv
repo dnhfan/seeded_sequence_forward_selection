@@ -1,0 +1,7 @@
+feature,dataset,dataset_variant,algorithm
+V7217,Lung_cancer,raw,sklearnsfsselector
+V7906,Lung_cancer,raw,sklearnsfsselector
+V8088,Lung_cancer,raw,sklearnsfsselector
+V8818,Lung_cancer,raw,sklearnsfsselector
+V9255,Lung_cancer,raw,sklearnsfsselector
+V10176,Lung_cancer,raw,sklearnsfsselector

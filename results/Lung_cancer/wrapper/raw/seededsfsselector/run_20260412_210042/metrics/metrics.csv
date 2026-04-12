@@ -1,0 +1,2 @@
+dataset,dataset_variant,n_features_selected,global_best_score,total_fit_time_ms,run_root,patience,n_seeds
+Lung_cancer,raw,10,0.9803658536585365,216746.59681399862,results/Lung_cancer/wrapper/raw/seededsfsselector/run_20260412_210042,3,1

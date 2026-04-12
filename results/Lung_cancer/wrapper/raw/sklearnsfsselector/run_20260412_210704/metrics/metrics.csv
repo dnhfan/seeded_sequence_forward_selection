@@ -1,0 +1,2 @@
+dataset,dataset_variant,n_features_selected,global_best_score,total_fit_time_ms,run_root
+Lung_cancer,raw,6,0.9607317073170731,1226250.23238,results/Lung_cancer/wrapper/raw/sklearnsfsselector/run_20260412_210704

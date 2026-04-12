@@ -1,0 +1,2 @@
+dataset,dataset_variant,n_features_selected,global_best_score,total_fit_time_ms,run_root
+Lung_cancer,union,4,0.9063414634146341,7452.1517749999475,results/Lung_cancer/wrapper/union/sklearnsfsselector/run_20260412_213135

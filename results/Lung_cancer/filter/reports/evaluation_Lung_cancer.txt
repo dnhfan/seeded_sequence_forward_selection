@@ -1,0 +1,113 @@
+MODEL EVALUATION REPORT
+generated_at: 2026-04-12 16:34:57
+experiment_id: evaluation_Lung_cancer_20260412
+dataset: Lung_cancer
+experiment_prefix: evaluation
+feature_count: 17
+logreg_max_iter: 4000
+python_version: 3.12.12
+pandas_version: 3.0.1
+sklearn_version: 1.8.0
+
+ARTIFACTS
+plot_path: results/Lung_cancer/filter/plots/evaluation_Lung_cancer.png
+report_path: results/Lung_cancer/filter/reports/evaluation_Lung_cancer.txt
+
+EXECUTIVE SUMMARY
+best_configuration: method=CHI_SQUARED, model=LogReg, mean_accuracy=0.9856, std=0.0114, folds=5
+total_configurations: 12 | total_fold_evaluations: 56
+
+CROSS-VALIDATION SUMMARY (ranked)
+------------------------------------------------------------------------------------------------------------------------
+ rank             Method  Model  mean_accuracy  std_accuracy  median_accuracy  min_accuracy  max_accuracy  n_folds  cv_stability
+    1        CHI_SQUARED LogReg         0.9856        0.0114           0.9856        0.9712        1.0000        5        0.9886
+    2        CHI_SQUARED   Tree         0.9842        0.0060           0.9856        0.9784        0.9928        5        0.9940
+    3        CORRELATION LogReg         0.9712        0.0114           0.9712        0.9568        0.9856        5        0.9886
+    4       ANOVA_F_TEST   Tree         0.9626        0.0246           0.9568        0.9281        0.9928        5        0.9754
+    5 MUTUAL_INFORMATION LogReg         0.9612        0.0140           0.9712        0.9424        0.9712        5        0.9860
+    6        CORRELATION   Tree         0.9568        0.0269           0.9640        0.9209        0.9928        5        0.9731
+    7       ANOVA_F_TEST LogReg         0.9540        0.0173           0.9496        0.9353        0.9784        5        0.9827
+    8               None LogReg         0.9457        0.0229           0.9412        0.9254        0.9706        3        0.9771
+    9 MUTUAL_INFORMATION   Tree         0.9439        0.0186           0.9496        0.9209        0.9640        5        0.9814
+   10           VARIANCE LogReg         0.9165        0.0225           0.9065        0.8921        0.9496        5        0.9775
+   11           VARIANCE   Tree         0.8892        0.0355           0.8777        0.8417        0.9281        5        0.9645
+   12               None   Tree         0.8521        0.0677           0.8358        0.7941        0.9265        3        0.9323
+
+FOLD-LEVEL RESULTS (for auditability)
+------------------------------------------------------------------------------------------------------------------------
+ Method: ANOVA_F_TEST 
+ Model  Fold    Acc
+LogReg   1.0 0.9424
+LogReg   2.0 0.9784
+LogReg   3.0 0.9640
+LogReg   4.0 0.9496
+LogReg   5.0 0.9353
+  Tree   1.0 0.9568
+  Tree   2.0 0.9928
+  Tree   3.0 0.9784
+  Tree   4.0 0.9568
+  Tree   5.0 0.9281
+
+ Method: CHI_SQUARED 
+ Model  Fold    Acc
+LogReg   1.0 0.9856
+LogReg   2.0 1.0000
+LogReg   3.0 0.9712
+LogReg   4.0 0.9928
+LogReg   5.0 0.9784
+  Tree   1.0 0.9856
+  Tree   2.0 0.9928
+  Tree   3.0 0.9784
+  Tree   4.0 0.9856
+  Tree   5.0 0.9784
+
+ Method: CORRELATION 
+ Model  Fold    Acc
+LogReg   1.0 0.9640
+LogReg   2.0 0.9856
+LogReg   3.0 0.9784
+LogReg   4.0 0.9712
+LogReg   5.0 0.9568
+  Tree   1.0 0.9640
+  Tree   2.0 0.9928
+  Tree   3.0 0.9424
+  Tree   4.0 0.9640
+  Tree   5.0 0.9209
+
+ Method: MUTUAL_INFORMATION 
+ Model  Fold    Acc
+LogReg   1.0 0.9496
+LogReg   2.0 0.9712
+LogReg   3.0 0.9712
+LogReg   4.0 0.9712
+LogReg   5.0 0.9424
+  Tree   1.0 0.9496
+  Tree   2.0 0.9568
+  Tree   3.0 0.9640
+  Tree   4.0 0.9209
+  Tree   5.0 0.9281
+
+ Method: None 
+ Model  Fold    Acc
+LogReg   1.0 0.9706
+LogReg   2.0 0.9412
+LogReg   3.0 0.9254
+  Tree   1.0 0.9265
+  Tree   2.0 0.7941
+  Tree   3.0 0.8358
+
+ Method: VARIANCE 
+ Model  Fold    Acc
+LogReg   1.0 0.8921
+LogReg   2.0 0.9496
+LogReg   3.0 0.9281
+LogReg   4.0 0.9065
+LogReg   5.0 0.9065
+  Tree   1.0 0.9281
+  Tree   2.0 0.9209
+  Tree   3.0 0.8777
+  Tree   4.0 0.8777
+  Tree   5.0 0.8417
+
+
+------------------------------------------------------------------------------------------------------------------------

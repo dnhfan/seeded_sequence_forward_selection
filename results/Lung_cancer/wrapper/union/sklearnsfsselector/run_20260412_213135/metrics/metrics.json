@@ -1,0 +1,8 @@
+{
+  "dataset": "Lung_cancer",
+  "dataset_variant": "union",
+  "n_features_selected": 4,
+  "global_best_score": 0.9063414634146341,
+  "total_fit_time_ms": 7452.1517749999475,
+  "run_root": "results/Lung_cancer/wrapper/union/sklearnsfsselector/run_20260412_213135"
+}
