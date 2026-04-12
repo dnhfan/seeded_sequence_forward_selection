@@ -1,0 +1,8 @@
+{
+  "dataset": "DLBCL",
+  "dataset_variant": "raw",
+  "n_features_selected": 2,
+  "global_best_score": 1.0,
+  "total_fit_time_ms": 229963.86184000006,
+  "run_root": "results/DLBCL/wrapper/raw/sklearnsfsselector/run_20260412_135237"
+}

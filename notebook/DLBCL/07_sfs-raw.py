@@ -7,7 +7,7 @@ import pandas as pd
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
 from src.config import ProjectPath
-from src.wrapper.wrapper_selector import WrapperSelector
+from src.wrapper import SeededSFSSelector
 
 
 def main():
@@ -17,26 +17,17 @@ def main():
     data_name = "DLBCL"
     n_features = 50
 
-    valid_methods = [
-        "variance",
-        "correlation",
-        "chi_squared",
-        "mutual_information",
-        "anova_f_test",
-    ]
-
     path = ProjectPath(data_name=data_name, n_features=n_features)
 
-    voting_csv_name = f"top50_features_voting_2026-04-03.csv"
+    voting_csv_name = f"top50_features_voting.csv"
 
     # 2. Init WrapperSelector
-    wrapper = WrapperSelector(
+    wrapper = SeededSFSSelector(
         data_name=data_name,
-        valid_method=valid_methods,
         n_features=n_features,
         voting_csv_name=voting_csv_name,
         using_timer=True,
-        unit="s",
+        unit="ms",
     )
 
     df = pd.read_csv(path.raw_path)

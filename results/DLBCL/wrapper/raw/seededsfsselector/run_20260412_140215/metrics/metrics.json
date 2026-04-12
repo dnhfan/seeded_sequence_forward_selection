@@ -1,0 +1,10 @@
+{
+  "dataset": "DLBCL",
+  "dataset_variant": "raw",
+  "n_features_selected": 3,
+  "global_best_score": 0.9866666666666667,
+  "total_fit_time_ms": 104515.546976,
+  "run_root": "results/DLBCL/wrapper/raw/seededsfsselector/run_20260412_140215",
+  "patience": 3,
+  "n_seeds": 1
+}
