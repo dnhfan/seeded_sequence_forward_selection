@@ -10,6 +10,8 @@ import seaborn as sns
 import sklearn
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold, cross_validate
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
 from sklearn.tree import DecisionTreeClassifier
 
 from src.config import ProjectPath
@@ -41,12 +43,14 @@ class ModelEvaluator:
         ],
         n_features: int = 50,
         max_iter: int = 4000,
+        use_scaler: bool = True,
         custom_base_dir: Optional[str | Path] = None,
     ) -> None:
         self.data_name = data_name
         self.valid_method = valid_method
         self.n_features = n_features
         self.max_iter = max_iter
+        self.use_scaler = use_scaler
         self.path = ProjectPath(data_name, n_features)
 
         self.results: List[Dict[str, Any]] = []
@@ -94,8 +98,12 @@ class ModelEvaluator:
         scoring = ["accuracy"]
 
         # 2. Init model in a dict -> easy to add new one
+        logreg_model = LogisticRegression(max_iter=self.max_iter, random_state=42)
+        if self.use_scaler:
+            logreg_model = make_pipeline(StandardScaler(), logreg_model)
+
         models = {
-            "LogReg": LogisticRegression(max_iter=self.max_iter, random_state=42),
+            "LogReg": logreg_model,
             "Tree": DecisionTreeClassifier(max_depth=5, random_state=42),
         }
 
