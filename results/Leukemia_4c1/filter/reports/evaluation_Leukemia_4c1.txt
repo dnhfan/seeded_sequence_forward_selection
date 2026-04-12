@@ -1,0 +1,103 @@
+MODEL EVALUATION REPORT
+generated_at: 2026-04-12 15:16:29
+experiment_id: evaluation_Leukemia_4c1_20260412
+dataset: Leukemia_4c1
+experiment_prefix: evaluation
+feature_count: 50
+logreg_max_iter: 4000
+python_version: 3.12.12
+pandas_version: 3.0.1
+sklearn_version: 1.8.0
+
+ARTIFACTS
+plot_path: results/Leukemia_4c1/filter/plots/evaluation_Leukemia_4c1.png
+report_path: results/Leukemia_4c1/filter/reports/evaluation_Leukemia_4c1.txt
+
+EXECUTIVE SUMMARY
+best_configuration: method=CORRELATION, model=LogReg, mean_accuracy=0.9583, std=0.0532, folds=4
+total_configurations: 12 | total_fold_evaluations: 46
+
+CROSS-VALIDATION SUMMARY (ranked)
+------------------------------------------------------------------------------------------------------------------------
+ rank             Method  Model  mean_accuracy  std_accuracy  median_accuracy  min_accuracy  max_accuracy  n_folds  cv_stability
+    1        CORRELATION LogReg         0.9583        0.0532           0.9722        0.8889        1.0000        4        0.9468
+    1       ANOVA_F_TEST LogReg         0.9583        0.0532           0.9722        0.8889        1.0000        4        0.9468
+    2           VARIANCE LogReg         0.9306        0.0699           0.9444        0.8333        1.0000        4        0.9301
+    3        CORRELATION   Tree         0.9028        0.0532           0.9167        0.8333        0.9444        4        0.9468
+    3               None LogReg         0.9028        0.1339           0.9583        0.7500        1.0000        3        0.8661
+    4       ANOVA_F_TEST   Tree         0.9028        0.0278           0.8889        0.8889        0.9444        4        0.9722
+    5 MUTUAL_INFORMATION LogReg         0.8889        0.0786           0.9167        0.7778        0.9444        4        0.9214
+    6        CHI_SQUARED   Tree         0.8611        0.0717           0.8611        0.7778        0.9444        4        0.9283
+    7        CHI_SQUARED LogReg         0.8472        0.0949           0.8611        0.7222        0.9444        4        0.9051
+    8 MUTUAL_INFORMATION   Tree         0.8194        0.0833           0.8333        0.7222        0.8889        4        0.9167
+    9               None   Tree         0.7639        0.0636           0.7500        0.7083        0.8333        3        0.9364
+   10           VARIANCE   Tree         0.6806        0.0532           0.6944        0.6111        0.7222        4        0.9468
+
+FOLD-LEVEL RESULTS (for auditability)
+------------------------------------------------------------------------------------------------------------------------
+ Method: ANOVA_F_TEST 
+ Model  Fold    Acc
+LogReg   1.0 1.0000
+LogReg   2.0 1.0000
+LogReg   3.0 0.9444
+LogReg   4.0 0.8889
+  Tree   1.0 0.8889
+  Tree   2.0 0.9444
+  Tree   3.0 0.8889
+  Tree   4.0 0.8889
+
+ Method: CHI_SQUARED 
+ Model  Fold    Acc
+LogReg   1.0 0.8889
+LogReg   2.0 0.9444
+LogReg   3.0 0.8333
+LogReg   4.0 0.7222
+  Tree   1.0 0.8333
+  Tree   2.0 0.9444
+  Tree   3.0 0.8889
+  Tree   4.0 0.7778
+
+ Method: CORRELATION 
+ Model  Fold    Acc
+LogReg   1.0 1.0000
+LogReg   2.0 1.0000
+LogReg   3.0 0.9444
+LogReg   4.0 0.8889
+  Tree   1.0 0.8333
+  Tree   2.0 0.9444
+  Tree   3.0 0.8889
+  Tree   4.0 0.9444
+
+ Method: MUTUAL_INFORMATION 
+ Model  Fold    Acc
+LogReg   1.0 0.9444
+LogReg   2.0 0.9444
+LogReg   3.0 0.7778
+LogReg   4.0 0.8889
+  Tree   1.0 0.8889
+  Tree   2.0 0.8889
+  Tree   3.0 0.7778
+  Tree   4.0 0.7222
+
+ Method: None 
+ Model  Fold    Acc
+LogReg   1.0 0.9583
+LogReg   2.0 1.0000
+LogReg   3.0 0.7500
+  Tree   1.0 0.7500
+  Tree   2.0 0.8333
+  Tree   3.0 0.7083
+
+ Method: VARIANCE 
+ Model  Fold    Acc
+LogReg   1.0 0.9444
+LogReg   2.0 1.0000
+LogReg   3.0 0.8333
+LogReg   4.0 0.9444
+  Tree   1.0 0.7222
+  Tree   2.0 0.6667
+  Tree   3.0 0.7222
+  Tree   4.0 0.6111
+
+
+------------------------------------------------------------------------------------------------------------------------
