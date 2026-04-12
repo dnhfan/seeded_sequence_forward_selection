@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, cast
 
 import matplotlib.pyplot as plt
+from matplotlib.container import BarContainer
 import pandas as pd
 import seaborn as sns
 import sklearn
@@ -199,12 +200,24 @@ class ModelEvaluator:
         # --- Generates Chart ---
         sns.set_theme(style="whitegrid")
         plt.figure(figsize=(10, 7))
-        sns.barplot(
+        ax = sns.barplot(
             data=fold_level_df, x="Method", y="Acc", hue="Model", palette="pastel"
         )
 
+        acc_series = cast(pd.Series, fold_level_df["Acc"])
+        min_acc = float(acc_series.min())
+        max_acc = float(acc_series.max())
+        y_min = max(0.0, min_acc - 0.05)
+        y_max = min(1.05, max_acc + 0.08)
+
+        for container in ax.containers:
+            if isinstance(container, BarContainer):
+                ax.bar_label(
+                    container, fmt="%.4f", padding=3, fontsize=9, color="black"
+                )
+
         plt.title(f"{chart_title} ({self.data_name})")
-        plt.ylim(0.1, 1.05)
+        ax.set_ylim(y_min, y_max)
         plt.ylabel("Accuracy Score")
         plt.xlabel("Feature Selection Method")
         plt.xticks(rotation=45, ha="right", fontweight="bold")
