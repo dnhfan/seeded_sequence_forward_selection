@@ -1,0 +1,8 @@
+{
+  "dataset": "CNS1",
+  "dataset_variant": "raw",
+  "n_features_selected": 6,
+  "global_best_score": 0.9166666666666666,
+  "total_fit_time_ms": 777813.2454270017,
+  "run_root": "results/CNS1/wrapper/raw/sklearnsfsselector/run_20260412_121328"
+}

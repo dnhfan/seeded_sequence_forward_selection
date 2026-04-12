@@ -1,0 +1,2 @@
+dataset,dataset_variant,n_features_selected,global_best_score,total_fit_time_ms,run_root
+CNS1,union,4,0.9,63018.426768998324,results/CNS1/wrapper/union/sklearnsfsselector/run_20260412_115622

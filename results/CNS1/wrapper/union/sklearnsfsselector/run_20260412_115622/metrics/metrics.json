@@ -1,0 +1,8 @@
+{
+  "dataset": "CNS1",
+  "dataset_variant": "union",
+  "n_features_selected": 4,
+  "global_best_score": 0.9,
+  "total_fit_time_ms": 63018.426768998324,
+  "run_root": "results/CNS1/wrapper/union/sklearnsfsselector/run_20260412_115622"
+}
