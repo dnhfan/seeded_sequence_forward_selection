@@ -1,0 +1,11 @@
+{
+  "dataset": "Leukemia_3c1",
+  "dataset_variant": "raw",
+  "n_features_selected": 2,
+  "global_best_score": 0.96,
+  "total_fit_time_ms": 275768.0635070001,
+  "run_root": "results/Leukemia_3c1/wrapper/raw/sklearnsfsselector/run_20260412_144806",
+  "patience": 3,
+  "n_seeds": 1,
+  "engine": "sklearn"
+}
