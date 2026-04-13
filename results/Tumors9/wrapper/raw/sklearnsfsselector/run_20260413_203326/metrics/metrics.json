@@ -1,0 +1,8 @@
+{
+  "dataset": "Tumors9",
+  "dataset_variant": "raw",
+  "n_features_selected": 6,
+  "global_best_score": 0.55,
+  "total_fit_time_ms": 538756.931504,
+  "run_root": "results/Tumors9/wrapper/raw/sklearnsfsselector/run_20260413_203326"
+}

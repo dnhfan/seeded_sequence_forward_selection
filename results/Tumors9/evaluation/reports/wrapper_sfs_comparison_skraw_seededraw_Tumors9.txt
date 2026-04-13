@@ -1,0 +1,45 @@
+MODEL EVALUATION REPORT
+generated_at: 2026-04-13 21:46:10
+experiment_id: wrapper_sfs_comparison_skraw_seededraw_Tumors9_20260413
+dataset: Tumors9
+experiment_prefix: wrapper_sfs_comparison_skraw_seededraw
+feature_count: 50
+logreg_max_iter: 4000
+python_version: 3.12.12
+pandas_version: 3.0.1
+sklearn_version: 1.8.0
+
+ARTIFACTS
+plot_path: results/Tumors9/evaluation/plots/wrapper_sfs_comparison_skraw_seededraw_Tumors9.png
+report_path: results/Tumors9/evaluation/reports/wrapper_sfs_comparison_skraw_seededraw_Tumors9.txt
+
+EXECUTIVE SUMMARY
+best_configuration: method=sklearn, model=Tree, mean_accuracy=0.5500, std=0.0236, folds=2
+total_configurations: 4 | total_fold_evaluations: 8
+
+CROSS-VALIDATION SUMMARY (ranked)
+------------------------------------------------------------------------------------------------------------------------
+ rank  Method  Model  mean_accuracy  std_accuracy  median_accuracy  min_accuracy  max_accuracy  n_folds  cv_stability
+    1 sklearn   Tree         0.5500        0.0236           0.5500        0.5333        0.5667        2        0.9764
+    2  seeded   Tree         0.5333        0.0000           0.5333        0.5333        0.5333        2        1.0000
+    3 sklearn LogReg         0.3833        0.0236           0.3833        0.3667        0.4000        2        0.9764
+    4  seeded LogReg         0.3500        0.0707           0.3500        0.3000        0.4000        2        0.9293
+
+FOLD-LEVEL RESULTS (for auditability)
+------------------------------------------------------------------------------------------------------------------------
+ Method: seeded 
+ Model  Fold    Acc
+LogReg   1.0 0.4000
+LogReg   2.0 0.3000
+  Tree   1.0 0.5333
+  Tree   2.0 0.5333
+
+ Method: sklearn 
+ Model  Fold    Acc
+LogReg   1.0 0.3667
+LogReg   2.0 0.4000
+  Tree   1.0 0.5333
+  Tree   2.0 0.5667
+
+
+------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,10 @@
+{
+  "dataset": "Tumors9",
+  "dataset_variant": "union",
+  "n_features_selected": 11,
+  "global_best_score": 0.6499999999999999,
+  "total_fit_time_ms": 4536.403287002031,
+  "run_root": "results/Tumors9/wrapper/union/seededsfsselector/run_20260413_212415",
+  "patience": 3,
+  "n_seeds": 1
+}
