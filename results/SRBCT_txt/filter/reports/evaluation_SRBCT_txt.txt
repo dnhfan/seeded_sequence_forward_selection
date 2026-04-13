@@ -1,0 +1,103 @@
+MODEL EVALUATION REPORT
+generated_at: 2026-04-13 17:47:58
+experiment_id: evaluation_SRBCT_txt_20260413
+dataset: SRBCT_txt
+experiment_prefix: evaluation
+feature_count: 50
+logreg_max_iter: 7000
+python_version: 3.12.12
+pandas_version: 3.0.1
+sklearn_version: 1.8.0
+
+ARTIFACTS
+plot_path: results/SRBCT_txt/filter/plots/evaluation_SRBCT_txt.png
+report_path: results/SRBCT_txt/filter/reports/evaluation_SRBCT_txt.txt
+
+EXECUTIVE SUMMARY
+best_configuration: method=ANOVA_F_TEST, model=LogReg, mean_accuracy=1.0000, std=0.0000, folds=4
+total_configurations: 12 | total_fold_evaluations: 46
+
+CROSS-VALIDATION SUMMARY (ranked)
+------------------------------------------------------------------------------------------------------------------------
+ rank             Method  Model  mean_accuracy  std_accuracy  median_accuracy  min_accuracy  max_accuracy  n_folds  cv_stability
+    1       ANOVA_F_TEST LogReg         1.0000        0.0000           1.0000        1.0000        1.0000        4        1.0000
+    1        CHI_SQUARED LogReg         1.0000        0.0000           1.0000        1.0000        1.0000        4        1.0000
+    1 MUTUAL_INFORMATION LogReg         1.0000        0.0000           1.0000        1.0000        1.0000        4        1.0000
+    1        CORRELATION LogReg         1.0000        0.0000           1.0000        1.0000        1.0000        4        1.0000
+    2           VARIANCE LogReg         0.9688        0.0361           0.9688        0.9375        1.0000        4        0.9639
+    3               None LogReg         0.9683        0.0275           0.9524        0.9524        1.0000        3        0.9725
+    4        CHI_SQUARED   Tree         0.8417        0.0612           0.8708        0.7500        0.8750        4        0.9388
+    5        CORRELATION   Tree         0.8260        0.0578           0.8396        0.7500        0.8750        4        0.9422
+    6 MUTUAL_INFORMATION   Tree         0.8104        0.0865           0.8396        0.6875        0.8750        4        0.9135
+    7       ANOVA_F_TEST   Tree         0.8094        0.0514           0.8062        0.7500        0.8750        4        0.9486
+    8           VARIANCE   Tree         0.7490        0.1331           0.7188        0.6250        0.9333        4        0.8669
+    9               None   Tree         0.7460        0.1100           0.8095        0.6190        0.8095        3        0.8900
+
+FOLD-LEVEL RESULTS (for auditability)
+------------------------------------------------------------------------------------------------------------------------
+ Method: ANOVA_F_TEST 
+ Model  Fold    Acc
+LogReg   1.0 1.0000
+LogReg   2.0 1.0000
+LogReg   3.0 1.0000
+LogReg   4.0 1.0000
+  Tree   1.0 0.7500
+  Tree   2.0 0.8125
+  Tree   3.0 0.8750
+  Tree   4.0 0.8000
+
+ Method: CHI_SQUARED 
+ Model  Fold    Acc
+LogReg   1.0 1.0000
+LogReg   2.0 1.0000
+LogReg   3.0 1.0000
+LogReg   4.0 1.0000
+  Tree   1.0 0.7500
+  Tree   2.0 0.8750
+  Tree   3.0 0.8750
+  Tree   4.0 0.8667
+
+ Method: CORRELATION 
+ Model  Fold    Acc
+LogReg   1.0 1.0000
+LogReg   2.0 1.0000
+LogReg   3.0 1.0000
+LogReg   4.0 1.0000
+  Tree   1.0 0.7500
+  Tree   2.0 0.8125
+  Tree   3.0 0.8750
+  Tree   4.0 0.8667
+
+ Method: MUTUAL_INFORMATION 
+ Model  Fold    Acc
+LogReg   1.0 1.0000
+LogReg   2.0 1.0000
+LogReg   3.0 1.0000
+LogReg   4.0 1.0000
+  Tree   1.0 0.6875
+  Tree   2.0 0.8125
+  Tree   3.0 0.8750
+  Tree   4.0 0.8667
+
+ Method: None 
+ Model  Fold    Acc
+LogReg   1.0 0.9524
+LogReg   2.0 0.9524
+LogReg   3.0 1.0000
+  Tree   1.0 0.6190
+  Tree   2.0 0.8095
+  Tree   3.0 0.8095
+
+ Method: VARIANCE 
+ Model  Fold    Acc
+LogReg   1.0 0.9375
+LogReg   2.0 1.0000
+LogReg   3.0 0.9375
+LogReg   4.0 1.0000
+  Tree   1.0 0.7500
+  Tree   2.0 0.6875
+  Tree   3.0 0.6250
+  Tree   4.0 0.9333
+
+
+------------------------------------------------------------------------------------------------------------------------

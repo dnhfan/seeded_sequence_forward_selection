@@ -1,0 +1,10 @@
+{
+  "dataset": "SRBCT_txt",
+  "dataset_variant": "raw",
+  "n_features_selected": 4,
+  "global_best_score": 1.0,
+  "total_fit_time_ms": 38540.54139899927,
+  "run_root": "results/SRBCT_txt/wrapper/raw/seededsfsselector/run_20260413_175811",
+  "patience": 3,
+  "n_seeds": 1
+}

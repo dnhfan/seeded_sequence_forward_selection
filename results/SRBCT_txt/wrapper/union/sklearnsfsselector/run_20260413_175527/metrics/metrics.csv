@@ -1,0 +1,2 @@
+dataset,dataset_variant,n_features_selected,global_best_score,total_fit_time_ms,run_root
+SRBCT_txt,union,4,1.0,11371.623916000317,results/SRBCT_txt/wrapper/union/sklearnsfsselector/run_20260413_175527

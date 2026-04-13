@@ -1,0 +1,5 @@
+feature,dataset,dataset_variant,algorithm
+V510,SRBCT_txt,raw,seededsfsselector
+V247,SRBCT_txt,raw,seededsfsselector
+V743,SRBCT_txt,raw,seededsfsselector
+V95,SRBCT_txt,raw,seededsfsselector

@@ -1,0 +1,2 @@
+dataset,dataset_variant,n_features_selected,global_best_score,total_fit_time_ms,run_root,patience,n_seeds
+SRBCT_txt,union,4,1.0,4076.9627370000308,results/SRBCT_txt/wrapper/union/seededsfsselector/run_20260413_175552,3,1
