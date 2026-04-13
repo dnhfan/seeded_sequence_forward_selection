@@ -1,0 +1,57 @@
+MODEL EVALUATION REPORT
+generated_at: 2026-04-13 10:14:06
+experiment_id: wrapper_sfs_comparison_NCI_20260413
+dataset: NCI
+experiment_prefix: wrapper_sfs_comparison
+feature_count: 50
+logreg_max_iter: 4000
+python_version: 3.12.12
+pandas_version: 3.0.1
+sklearn_version: 1.8.0
+
+ARTIFACTS
+plot_path: results/NCI/evaluation/plots/wrapper_sfs_comparison_NCI.png
+report_path: results/NCI/evaluation/reports/wrapper_sfs_comparison_NCI.txt
+
+EXECUTIVE SUMMARY
+best_configuration: method=seeded, model=LogReg, mean_accuracy=0.7872, std=0.0937, folds=5
+total_configurations: 4 | total_fold_evaluations: 20
+
+CROSS-VALIDATION SUMMARY (ranked)
+------------------------------------------------------------------------------------------------------------------------
+ rank  Method  Model  mean_accuracy  std_accuracy  median_accuracy  min_accuracy  max_accuracy  n_folds  cv_stability
+    1  seeded LogReg         0.7872        0.0937           0.7692        0.6667        0.9167        5        0.9063
+    2 sklearn LogReg         0.7731        0.1515           0.7500        0.6154        1.0000        5        0.8485
+    3  seeded   Tree         0.5910        0.1122           0.6667        0.4167        0.6667        5        0.8878
+    4 sklearn   Tree         0.4449        0.1452           0.4167        0.3077        0.6667        5        0.8548
+
+FOLD-LEVEL RESULTS (for auditability)
+------------------------------------------------------------------------------------------------------------------------
+ Method: seeded 
+ Model  Fold    Acc
+LogReg   1.0 0.7692
+LogReg   2.0 0.7500
+LogReg   3.0 0.6667
+LogReg   4.0 0.9167
+LogReg   5.0 0.8333
+  Tree   1.0 0.5385
+  Tree   2.0 0.6667
+  Tree   3.0 0.4167
+  Tree   4.0 0.6667
+  Tree   5.0 0.6667
+
+ Method: sklearn 
+ Model  Fold    Acc
+LogReg   1.0 0.6154
+LogReg   2.0 0.6667
+LogReg   3.0 0.7500
+LogReg   4.0 0.8333
+LogReg   5.0 1.0000
+  Tree   1.0 0.3077
+  Tree   2.0 0.3333
+  Tree   3.0 0.5000
+  Tree   4.0 0.4167
+  Tree   5.0 0.6667
+
+
+------------------------------------------------------------------------------------------------------------------------

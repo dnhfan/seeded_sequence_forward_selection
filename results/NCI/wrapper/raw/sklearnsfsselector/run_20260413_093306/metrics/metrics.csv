@@ -1,0 +1,2 @@
+dataset,dataset_variant,n_features_selected,global_best_score,total_fit_time_ms,run_root
+NCI,raw,9,0.8551282051282051,825323.785499997,results/NCI/wrapper/raw/sklearnsfsselector/run_20260413_093306

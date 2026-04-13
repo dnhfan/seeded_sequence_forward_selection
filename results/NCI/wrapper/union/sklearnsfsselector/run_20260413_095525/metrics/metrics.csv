@@ -1,0 +1,2 @@
+dataset,dataset_variant,n_features_selected,global_best_score,total_fit_time_ms,run_root
+NCI,union,8,0.8192307692307693,29052.7399959974,results/NCI/wrapper/union/sklearnsfsselector/run_20260413_095525

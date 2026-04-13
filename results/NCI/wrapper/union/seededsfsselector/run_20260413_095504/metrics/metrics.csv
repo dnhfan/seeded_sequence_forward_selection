@@ -1,0 +1,2 @@
+dataset,dataset_variant,n_features_selected,global_best_score,total_fit_time_ms,run_root,patience,n_seeds
+NCI,union,10,0.7538461538461539,4742.765463000978,results/NCI/wrapper/union/seededsfsselector/run_20260413_095504,3,1
