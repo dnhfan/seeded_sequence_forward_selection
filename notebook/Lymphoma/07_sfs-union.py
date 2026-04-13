@@ -6,7 +6,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")
 
 from src.config import ProjectPath
 from src.utils import create_union_features
-from src.wrapper.wrapper_selector import WrapperSelector
+from src.wrapper import SeededSFSSelector
 
 
 def main():
@@ -26,14 +26,15 @@ def main():
 
     path = ProjectPath(data_name=data_name, n_features=n_features)
 
-    voting_csv_name = f"top50_features_voting_20260305_1633.csv"
+    voting_csv_name = f"top{n_features}_features_voting.csv"
 
     # 2. Init WrapperSelector
-    wrapper = WrapperSelector(
+    wrapper = SeededSFSSelector(
         data_name=data_name,
-        valid_method=valid_methods,
         n_features=n_features,
         voting_csv_name=voting_csv_name,
+        using_timer=True,
+        unit="ms",
         dataset_variant="union",
     )
 
@@ -48,11 +49,10 @@ def main():
 
     df_final = wrapper.run_sfs(
         df=df,
-        file_suffix="Union",
         max_features=20,
         patience=3,
         n_seeds=1,
-        model="dt",
+        model="log",
         scoring="accuracy",
         cv=5,
     )

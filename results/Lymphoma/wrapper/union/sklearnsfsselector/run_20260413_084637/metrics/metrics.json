@@ -1,0 +1,8 @@
+{
+  "dataset": "Lymphoma",
+  "dataset_variant": "union",
+  "n_features_selected": 3,
+  "global_best_score": 1.0,
+  "total_fit_time_ms": 13759.217101000104,
+  "run_root": "results/Lymphoma/wrapper/union/sklearnsfsselector/run_20260413_084637"
+}

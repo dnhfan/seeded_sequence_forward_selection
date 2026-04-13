@@ -1,0 +1,2 @@
+dataset,dataset_variant,n_features_selected,global_best_score,total_fit_time_ms,run_root,patience,n_seeds
+Lymphoma,raw,2,1.0,35798.826518999704,results/Lymphoma/wrapper/raw/seededsfsselector/run_20260413_084533,3,1
