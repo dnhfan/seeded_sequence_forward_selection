@@ -1,0 +1,57 @@
+MODEL EVALUATION REPORT
+generated_at: 2026-04-13 17:34:50
+experiment_id: wrapper_sfs_comparison_Prostate_20260413
+dataset: Prostate
+experiment_prefix: wrapper_sfs_comparison
+feature_count: 50
+logreg_max_iter: 4000
+python_version: 3.12.12
+pandas_version: 3.0.1
+sklearn_version: 1.8.0
+
+ARTIFACTS
+plot_path: results/Prostate/evaluation/plots/wrapper_sfs_comparison_Prostate.png
+report_path: results/Prostate/evaluation/reports/wrapper_sfs_comparison_Prostate.txt
+
+EXECUTIVE SUMMARY
+best_configuration: method=seeded, model=LogReg, mean_accuracy=0.9714, std=0.0639, folds=5
+total_configurations: 4 | total_fold_evaluations: 20
+
+CROSS-VALIDATION SUMMARY (ranked)
+------------------------------------------------------------------------------------------------------------------------
+ rank  Method  Model  mean_accuracy  std_accuracy  median_accuracy  min_accuracy  max_accuracy  n_folds  cv_stability
+    1  seeded LogReg         0.9714        0.0639             1.00        0.8571        1.0000        5        0.9361
+    2 sklearn LogReg         0.9419        0.0781             0.95        0.8095        1.0000        5        0.9219
+    3 sklearn   Tree         0.9219        0.0424             0.95        0.8571        0.9524        5        0.9576
+    4  seeded   Tree         0.8724        0.0550             0.85        0.8095        0.9524        5        0.9450
+
+FOLD-LEVEL RESULTS (for auditability)
+------------------------------------------------------------------------------------------------------------------------
+ Method: seeded 
+ Model  Fold    Acc
+LogReg   1.0 1.0000
+LogReg   2.0 0.8571
+LogReg   3.0 1.0000
+LogReg   4.0 1.0000
+LogReg   5.0 1.0000
+  Tree   1.0 0.9524
+  Tree   2.0 0.8095
+  Tree   3.0 0.8500
+  Tree   4.0 0.8500
+  Tree   5.0 0.9000
+
+ Method: sklearn 
+ Model  Fold    Acc
+LogReg   1.0 1.0000
+LogReg   2.0 0.8095
+LogReg   3.0 0.9500
+LogReg   4.0 0.9500
+LogReg   5.0 1.0000
+  Tree   1.0 0.9524
+  Tree   2.0 0.8571
+  Tree   3.0 0.9500
+  Tree   4.0 0.9000
+  Tree   5.0 0.9500
+
+
+------------------------------------------------------------------------------------------------------------------------

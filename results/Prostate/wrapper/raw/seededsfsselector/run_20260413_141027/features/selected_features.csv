@@ -1,0 +1,6 @@
+feature,dataset,dataset_variant,algorithm
+V1840,Prostate,raw,seededsfsselector
+V2620,Prostate,raw,seededsfsselector
+V1806,Prostate,raw,seededsfsselector
+V24,Prostate,raw,seededsfsselector
+V4590,Prostate,raw,seededsfsselector
