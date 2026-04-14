@@ -1,0 +1,10 @@
+{
+  "dataset": "Breast2classes",
+  "dataset_variant": "union",
+  "n_features_selected": 9,
+  "global_best_score": 0.8958333333333334,
+  "total_fit_time_ms": 5659.613397001522,
+  "run_root": "results/Breast2classes/wrapper/union/seededsfsselector/run_20260414_151742",
+  "patience": 5,
+  "n_seeds": 1
+}
