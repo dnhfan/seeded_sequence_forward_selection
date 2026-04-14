@@ -5,10 +5,10 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, cast
 
 import matplotlib.pyplot as plt
-from matplotlib.container import BarContainer
 import pandas as pd
 import seaborn as sns
 import sklearn
+from matplotlib.container import BarContainer
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold, cross_validate
 from sklearn.pipeline import make_pipeline
@@ -338,6 +338,91 @@ class ModelEvaluator:
             self._train_and_evaluate(X, y, method_name=method_label, n_splits=n_splits)
         except FileNotFoundError:
             print(f" Lỗi: Không tìm thấy file tại {file_path}")
+
+    def plot_fit_time_comparison(
+        self,
+        seeded_metrics_path: str | Path,
+        sklearn_metrics_path: str | Path,
+        output_name: str = "time_comparison_seeded_vs_sklearn.png",
+        algorithm_labels: Tuple[str, str] = ("SeededSFS", "SklearnSFS"),
+        save_dir: Optional[str | Path] = None,
+        show_plot: bool = True,
+    ) -> pd.DataFrame:
+        """
+        Compare fit time between SeededSFS and SklearnSFS using metrics CSV files.
+
+        Args:
+            seeded_metrics_path (str | Path): Path to seeded selector metrics.csv file.
+            sklearn_metrics_path (str | Path): Path to sklearn selector metrics.csv file.
+            output_name (str): Output filename for the plot image.
+            algorithm_labels (Tuple[str, str]): Labels shown on x-axis for seeded and sklearn.
+            save_dir (Optional[str | Path]): Optional custom plot directory.
+            show_plot (bool): Whether to display the chart after saving.
+
+        Returns:
+            pd.DataFrame: Comparison table with total fit time in milliseconds and seconds.
+        """
+        seeded_path = Path(seeded_metrics_path)
+        sklearn_path = Path(sklearn_metrics_path)
+
+        seeded_df = pd.read_csv(seeded_path)
+        sklearn_df = pd.read_csv(sklearn_path)
+
+        required_column = "total_fit_time_ms"
+        if required_column not in seeded_df.columns:
+            raise KeyError(f"Missing column '{required_column}' in: {seeded_path}")
+        if required_column not in sklearn_df.columns:
+            raise KeyError(f"Missing column '{required_column}' in: {sklearn_path}")
+
+        comparison_df = pd.DataFrame(
+            {
+                "algorithm": [algorithm_labels[0], algorithm_labels[1]],
+                "total_fit_time_ms": [
+                    float(seeded_df.loc[0, required_column]),
+                    float(sklearn_df.loc[0, required_column]),
+                ],
+            }
+        )
+        comparison_df["total_fit_time_sec"] = comparison_df["total_fit_time_ms"] / 1000
+
+        target_plot_dir = (
+            Path(save_dir) if save_dir else self.path.evaluation_dir / "plots"
+        )
+        target_plot_dir.mkdir(parents=True, exist_ok=True)
+        output_path = target_plot_dir / output_name
+
+        plt.style.use("seaborn-v0_8-whitegrid")
+        fig, ax = plt.subplots(figsize=(9, 5))
+        bars = ax.bar(
+            comparison_df["algorithm"],
+            comparison_df["total_fit_time_sec"],
+        )
+
+        ax.set_title(f"{self.data_name} Dataset: Fit Time Comparison", fontsize=14)
+        ax.set_xlabel("Algorithm")
+        ax.set_ylabel("Total Fit Time (seconds)")
+
+        for bar, value in zip(bars, comparison_df["total_fit_time_sec"]):
+            ax.text(
+                bar.get_x() + bar.get_width() / 2,
+                bar.get_height(),
+                f"{value:.2f}s",
+                ha="center",
+                va="bottom",
+                fontsize=10,
+            )
+
+        fig.tight_layout()
+        fig.savefig(output_path, dpi=300, bbox_inches="tight")
+
+        if show_plot:
+            plt.show()
+        else:
+            plt.close(fig)
+
+        print(f" Chart saved at: {output_path}")
+
+        return comparison_df
 
     def clear_results(self) -> None:
         """
