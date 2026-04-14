@@ -38,7 +38,7 @@ def main():
         max_features="auto",
         model="dt",
         scoring="accuracy",
-        cv=3,
+        cv=4,
     )
 
     # View data

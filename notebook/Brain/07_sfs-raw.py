@@ -40,7 +40,7 @@ def main():
         n_seeds=3,
         model="dt",
         scoring="accuracy",
-        cv=3,
+        cv=4,
     )
 
     # View data
