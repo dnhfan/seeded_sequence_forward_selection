@@ -1,0 +1,57 @@
+MODEL EVALUATION REPORT
+generated_at: 2026-04-15 00:16:27
+experiment_id: wrapper_sfs_comparison_sk_union_seeded_union_adenocarcinoma_20260415
+dataset: adenocarcinoma
+experiment_prefix: wrapper_sfs_comparison_sk_union_seeded_union
+feature_count: 50
+logreg_max_iter: 4000
+python_version: 3.12.12
+pandas_version: 3.0.1
+sklearn_version: 1.8.0
+
+ARTIFACTS
+plot_path: results/adenocarcinoma/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_adenocarcinoma.png
+report_path: results/adenocarcinoma/evaluation/reports/wrapper_sfs_comparison_sk_union_seeded_union_adenocarcinoma.txt
+
+EXECUTIVE SUMMARY
+best_configuration: method=sklearn, model=LogReg, mean_accuracy=0.9467, std=0.0298, folds=5
+total_configurations: 4 | total_fold_evaluations: 20
+
+CROSS-VALIDATION SUMMARY (ranked)
+------------------------------------------------------------------------------------------------------------------------
+ rank  Method  Model  mean_accuracy  std_accuracy  median_accuracy  min_accuracy  max_accuracy  n_folds  cv_stability
+    1 sklearn LogReg         0.9467        0.0298           0.9333        0.9333        1.0000        5        0.9702
+    2  seeded LogReg         0.9350        0.0443           0.9333        0.8750        1.0000        5        0.9557
+    3 sklearn   Tree         0.9075        0.0373           0.9333        0.8667        0.9375        5        0.9627
+    4  seeded   Tree         0.8292        0.0346           0.8125        0.8000        0.8667        5        0.9654
+
+FOLD-LEVEL RESULTS (for auditability)
+------------------------------------------------------------------------------------------------------------------------
+ Method: seeded 
+ Model  Fold    Acc
+LogReg   1.0 0.8750
+LogReg   2.0 1.0000
+LogReg   3.0 0.9333
+LogReg   4.0 0.9333
+LogReg   5.0 0.9333
+  Tree   1.0 0.8125
+  Tree   2.0 0.8000
+  Tree   3.0 0.8667
+  Tree   4.0 0.8000
+  Tree   5.0 0.8667
+
+ Method: sklearn 
+ Model  Fold    Acc
+LogReg   1.0 1.0000
+LogReg   2.0 0.9333
+LogReg   3.0 0.9333
+LogReg   4.0 0.9333
+LogReg   5.0 0.9333
+  Tree   1.0 0.9375
+  Tree   2.0 0.9333
+  Tree   3.0 0.8667
+  Tree   4.0 0.8667
+  Tree   5.0 0.9333
+
+
+------------------------------------------------------------------------------------------------------------------------
