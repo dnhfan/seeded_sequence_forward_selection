@@ -1,6 +1,6 @@
 MODEL EVALUATION REPORT
-generated_at: 2026-04-14 22:45:15
-experiment_id: wrapper_sfs_comparison_sk_union_seeded_union_Breast2classes_20260414_224509
+generated_at: 2026-04-14 23:05:18
+experiment_id: wrapper_sfs_comparison_sk_union_seeded_union_Breast2classes_20260414_230508
 dataset: Breast2classes
 experiment_prefix: wrapper_sfs_comparison_sk_union_seeded_union
 feature_count: 50

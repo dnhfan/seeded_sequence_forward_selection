@@ -1,6 +1,6 @@
 MODEL EVALUATION REPORT
-generated_at: 2026-04-14 22:44:16
-experiment_id: wrapper_sfs_comparison_sk_raw_seeded_raw_Breast2classes_20260414_224405
+generated_at: 2026-04-14 23:04:22
+experiment_id: wrapper_sfs_comparison_sk_raw_seeded_raw_Breast2classes_20260414
 dataset: Breast2classes
 experiment_prefix: wrapper_sfs_comparison_sk_raw_seeded_raw
 feature_count: 50
