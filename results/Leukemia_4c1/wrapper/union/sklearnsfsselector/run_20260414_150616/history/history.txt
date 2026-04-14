@@ -1,0 +1,31 @@
+============================================================
+ SKLEARN SEQUENTIAL FEATURE SELECTION (SFS) - REPORT
+Generated: 2026-04-14 15:06:26
+============================================================
+
+----------------------------------------
+ CONFIGURATION
+----------------------------------------
+  Direction:           forward
+  Model:               DecisionTreeClassifier
+  Scoring:             accuracy
+  CV Folds:            4
+  Max Features:        auto
+
+----------------------------------------
+  SUMMARY
+----------------------------------------
+  Total Fit Time:      10240.827 ms
+  Final Best Score:    0.972222
+  Total Selected:      3
+  Selected Features:   1833, 2214, 2334
+
+----------------------------------------
+ ITERATION LOGS
+----------------------------------------
+  [!] Not available.
+  Sklearn's SequentialFeatureSelector does not track per-iteration history.
+
+============================================================
+ END OF REPORT
+============================================================

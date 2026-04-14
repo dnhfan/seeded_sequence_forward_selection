@@ -1,0 +1,8 @@
+{
+  "dataset": "Leukemia_4c1",
+  "dataset_variant": "union",
+  "n_features_selected": 3,
+  "global_best_score": 0.9722222222222222,
+  "total_fit_time_ms": 10240.826738998294,
+  "run_root": "results/Leukemia_4c1/wrapper/union/sklearnsfsselector/run_20260414_150616"
+}
