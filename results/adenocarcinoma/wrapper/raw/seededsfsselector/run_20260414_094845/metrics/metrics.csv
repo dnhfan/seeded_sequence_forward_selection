@@ -1,0 +1,2 @@
+dataset,dataset_variant,n_features_selected,global_best_score,total_fit_time_ms,run_root,patience,n_seeds
+adenocarcinoma,raw,3,0.9608333333333334,258032.04443999857,results/adenocarcinoma/wrapper/raw/seededsfsselector/run_20260414_094845,3,1

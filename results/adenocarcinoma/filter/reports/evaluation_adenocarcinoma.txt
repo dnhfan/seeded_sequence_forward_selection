@@ -1,0 +1,113 @@
+MODEL EVALUATION REPORT
+generated_at: 2026-04-14 09:18:57
+experiment_id: evaluation_adenocarcinoma_20260414
+dataset: adenocarcinoma
+experiment_prefix: evaluation
+feature_count: 50
+logreg_max_iter: 7000
+python_version: 3.12.12
+pandas_version: 3.0.1
+sklearn_version: 1.8.0
+
+ARTIFACTS
+plot_path: results/adenocarcinoma/filter/plots/evaluation_adenocarcinoma.png
+report_path: results/adenocarcinoma/filter/reports/evaluation_adenocarcinoma.txt
+
+EXECUTIVE SUMMARY
+best_configuration: method=CORRELATION, model=LogReg, mean_accuracy=0.9342, std=0.0472, folds=5
+total_configurations: 12 | total_fold_evaluations: 56
+
+CROSS-VALIDATION SUMMARY (ranked)
+------------------------------------------------------------------------------------------------------------------------
+ rank             Method  Model  mean_accuracy  std_accuracy  median_accuracy  min_accuracy  max_accuracy  n_folds  cv_stability
+    1        CORRELATION LogReg         0.9342        0.0472           0.9333        0.8667        1.0000        5        0.9528
+    1       ANOVA_F_TEST LogReg         0.9342        0.0472           0.9333        0.8667        1.0000        5        0.9528
+    2       ANOVA_F_TEST   Tree         0.8808        0.0568           0.8667        0.8000        0.9375        5        0.9432
+    3        CHI_SQUARED LogReg         0.8692        0.0637           0.8667        0.8000        0.9333        5        0.9363
+    4           VARIANCE LogReg         0.8558        0.0530           0.8667        0.8000        0.9333        5        0.9470
+    5               None LogReg         0.8554        0.0215           0.8462        0.8400        0.8800        3        0.9785
+    6 MUTUAL_INFORMATION   Tree         0.8425        0.0334           0.8667        0.8000        0.8667        5        0.9666
+    7        CORRELATION   Tree         0.8417        0.0382           0.8667        0.8000        0.8750        5        0.9618
+    8 MUTUAL_INFORMATION LogReg         0.8292        0.0346           0.8125        0.8000        0.8667        5        0.9654
+    9           VARIANCE   Tree         0.7883        0.0754           0.8000        0.6667        0.8750        5        0.9246
+   10               None   Tree         0.7626        0.1074           0.8077        0.6400        0.8400        3        0.8926
+   11        CHI_SQUARED   Tree         0.7367        0.0075           0.7333        0.7333        0.7500        5        0.9925
+
+FOLD-LEVEL RESULTS (for auditability)
+------------------------------------------------------------------------------------------------------------------------
+ Method: ANOVA_F_TEST 
+ Model  Fold    Acc
+LogReg   1.0 0.9375
+LogReg   2.0 1.0000
+LogReg   3.0 0.9333
+LogReg   4.0 0.9333
+LogReg   5.0 0.8667
+  Tree   1.0 0.9375
+  Tree   2.0 0.9333
+  Tree   3.0 0.8667
+  Tree   4.0 0.8000
+  Tree   5.0 0.8667
+
+ Method: CHI_SQUARED 
+ Model  Fold    Acc
+LogReg   1.0 0.8125
+LogReg   2.0 0.9333
+LogReg   3.0 0.9333
+LogReg   4.0 0.8667
+LogReg   5.0 0.8000
+  Tree   1.0 0.7500
+  Tree   2.0 0.7333
+  Tree   3.0 0.7333
+  Tree   4.0 0.7333
+  Tree   5.0 0.7333
+
+ Method: CORRELATION 
+ Model  Fold    Acc
+LogReg   1.0 0.9375
+LogReg   2.0 1.0000
+LogReg   3.0 0.9333
+LogReg   4.0 0.9333
+LogReg   5.0 0.8667
+  Tree   1.0 0.8750
+  Tree   2.0 0.8667
+  Tree   3.0 0.8667
+  Tree   4.0 0.8000
+  Tree   5.0 0.8000
+
+ Method: MUTUAL_INFORMATION 
+ Model  Fold    Acc
+LogReg   1.0 0.8125
+LogReg   2.0 0.8667
+LogReg   3.0 0.8000
+LogReg   4.0 0.8000
+LogReg   5.0 0.8667
+  Tree   1.0 0.8125
+  Tree   2.0 0.8667
+  Tree   3.0 0.8667
+  Tree   4.0 0.8000
+  Tree   5.0 0.8667
+
+ Method: None 
+ Model  Fold    Acc
+LogReg   1.0 0.8462
+LogReg   2.0 0.8400
+LogReg   3.0 0.8800
+  Tree   1.0 0.8077
+  Tree   2.0 0.8400
+  Tree   3.0 0.6400
+
+ Method: VARIANCE 
+ Model  Fold    Acc
+LogReg   1.0 0.8125
+LogReg   2.0 0.9333
+LogReg   3.0 0.8000
+LogReg   4.0 0.8667
+LogReg   5.0 0.8667
+  Tree   1.0 0.8750
+  Tree   2.0 0.6667
+  Tree   3.0 0.8000
+  Tree   4.0 0.8000
+  Tree   5.0 0.8000
+
+
+------------------------------------------------------------------------------------------------------------------------

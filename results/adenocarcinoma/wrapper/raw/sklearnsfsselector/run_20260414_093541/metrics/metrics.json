@@ -1,0 +1,8 @@
+{
+  "dataset": "adenocarcinoma",
+  "dataset_variant": "raw",
+  "n_features_selected": 3,
+  "global_best_score": 0.9733333333333334,
+  "total_fit_time_ms": 644416.6412900013,
+  "run_root": "results/adenocarcinoma/wrapper/raw/sklearnsfsselector/run_20260414_093541"
+}
