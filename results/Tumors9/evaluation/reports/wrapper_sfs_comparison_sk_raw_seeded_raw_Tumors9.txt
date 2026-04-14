@@ -1,8 +1,8 @@
 MODEL EVALUATION REPORT
-generated_at: 2026-04-13 21:46:10
-experiment_id: wrapper_sfs_comparison_skraw_seededraw_Tumors9_20260413
+generated_at: 2026-04-15 00:12:58
+experiment_id: wrapper_sfs_comparison_sk_raw_seeded_raw_Tumors9_20260415
 dataset: Tumors9
-experiment_prefix: wrapper_sfs_comparison_skraw_seededraw
+experiment_prefix: wrapper_sfs_comparison_sk_raw_seeded_raw
 feature_count: 50
 logreg_max_iter: 4000
 python_version: 3.12.12
@@ -10,8 +10,8 @@ pandas_version: 3.0.1
 sklearn_version: 1.8.0
 
 ARTIFACTS
-plot_path: results/Tumors9/evaluation/plots/wrapper_sfs_comparison_skraw_seededraw_Tumors9.png
-report_path: results/Tumors9/evaluation/reports/wrapper_sfs_comparison_skraw_seededraw_Tumors9.txt
+plot_path: results/Tumors9/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_Tumors9.png
+report_path: results/Tumors9/evaluation/reports/wrapper_sfs_comparison_sk_raw_seeded_raw_Tumors9.txt
 
 EXECUTIVE SUMMARY
 best_configuration: method=sklearn, model=Tree, mean_accuracy=0.5500, std=0.0236, folds=2
