@@ -1,0 +1,8 @@
+{
+  "dataset": "Tumors9",
+  "dataset_variant": "union",
+  "n_features_selected": 3,
+  "global_best_score": 0.5,
+  "total_fit_time_ms": 14974.969887000043,
+  "run_root": "results/Tumors9/wrapper/union/sklearnsfsselector/run_20260414_093208"
+}
