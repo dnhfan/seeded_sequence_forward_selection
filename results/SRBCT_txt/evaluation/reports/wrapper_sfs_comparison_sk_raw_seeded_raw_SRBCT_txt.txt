@@ -1,8 +1,8 @@
 MODEL EVALUATION REPORT
-generated_at: 2026-04-13 18:00:52
-experiment_id: wrapper_sfs_comparison_SRBCT_txt_20260413
+generated_at: 2026-04-14 23:56:46
+experiment_id: wrapper_sfs_comparison_sk_raw_seeded_raw_SRBCT_txt_20260414
 dataset: SRBCT_txt
-experiment_prefix: wrapper_sfs_comparison
+experiment_prefix: wrapper_sfs_comparison_sk_raw_seeded_raw
 feature_count: 50
 logreg_max_iter: 4000
 python_version: 3.12.12
@@ -10,8 +10,8 @@ pandas_version: 3.0.1
 sklearn_version: 1.8.0
 
 ARTIFACTS
-plot_path: results/SRBCT_txt/evaluation/plots/wrapper_sfs_comparison_SRBCT_txt.png
-report_path: results/SRBCT_txt/evaluation/reports/wrapper_sfs_comparison_SRBCT_txt.txt
+plot_path: results/SRBCT_txt/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_SRBCT_txt.png
+report_path: results/SRBCT_txt/evaluation/reports/wrapper_sfs_comparison_sk_raw_seeded_raw_SRBCT_txt.txt
 
 EXECUTIVE SUMMARY
 best_configuration: method=seeded, model=LogReg, mean_accuracy=0.9846, std=0.0344, folds=5

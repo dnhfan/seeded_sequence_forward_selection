@@ -1,0 +1,57 @@
+MODEL EVALUATION REPORT
+generated_at: 2026-04-14 23:57:13
+experiment_id: wrapper_sfs_comparison_sk_union_seeded_union_SRBCT_txt_20260414
+dataset: SRBCT_txt
+experiment_prefix: wrapper_sfs_comparison_sk_union_seeded_union
+feature_count: 50
+logreg_max_iter: 4000
+python_version: 3.12.12
+pandas_version: 3.0.1
+sklearn_version: 1.8.0
+
+ARTIFACTS
+plot_path: results/SRBCT_txt/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_SRBCT_txt.png
+report_path: results/SRBCT_txt/evaluation/reports/wrapper_sfs_comparison_sk_union_seeded_union_SRBCT_txt.txt
+
+EXECUTIVE SUMMARY
+best_configuration: method=seeded, model=LogReg, mean_accuracy=0.9846, std=0.0344, folds=5
+total_configurations: 4 | total_fold_evaluations: 20
+
+CROSS-VALIDATION SUMMARY (ranked)
+------------------------------------------------------------------------------------------------------------------------
+ rank  Method  Model  mean_accuracy  std_accuracy  median_accuracy  min_accuracy  max_accuracy  n_folds  cv_stability
+    1  seeded LogReg         0.9846        0.0344           1.0000        0.9231           1.0        5        0.9656
+    2 sklearn LogReg         0.9667        0.0745           1.0000        0.8333           1.0        5        0.9255
+    3  seeded   Tree         0.8897        0.0866           0.9167        0.7692           1.0        5        0.9134
+    4 sklearn   Tree         0.8397        0.1250           0.8333        0.6923           1.0        5        0.8750
+
+FOLD-LEVEL RESULTS (for auditability)
+------------------------------------------------------------------------------------------------------------------------
+ Method: seeded 
+ Model  Fold    Acc
+LogReg   1.0 0.9231
+LogReg   2.0 1.0000
+LogReg   3.0 1.0000
+LogReg   4.0 1.0000
+LogReg   5.0 1.0000
+  Tree   1.0 0.7692
+  Tree   2.0 0.8462
+  Tree   3.0 1.0000
+  Tree   4.0 0.9167
+  Tree   5.0 0.9167
+
+ Method: sklearn 
+ Model  Fold    Acc
+LogReg   1.0 1.0000
+LogReg   2.0 1.0000
+LogReg   3.0 1.0000
+LogReg   4.0 0.8333
+LogReg   5.0 1.0000
+  Tree   1.0 0.6923
+  Tree   2.0 1.0000
+  Tree   3.0 0.9231
+  Tree   4.0 0.7500
+  Tree   5.0 0.8333
+
+
+------------------------------------------------------------------------------------------------------------------------
