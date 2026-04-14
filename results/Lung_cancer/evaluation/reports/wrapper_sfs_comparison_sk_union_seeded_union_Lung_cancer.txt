@@ -1,8 +1,8 @@
 MODEL EVALUATION REPORT
-generated_at: 2026-04-12 22:29:57
-experiment_id: wrapper_sfs_comparison_(union)_Lung_cancer_20260412
+generated_at: 2026-04-14 23:37:32
+experiment_id: wrapper_sfs_comparison_sk_union_seeded_union_Lung_cancer_20260414
 dataset: Lung_cancer
-experiment_prefix: wrapper_sfs_comparison (union)
+experiment_prefix: wrapper_sfs_comparison_sk_union_seeded_union
 feature_count: 50
 logreg_max_iter: 4000
 python_version: 3.12.12
@@ -10,20 +10,20 @@ pandas_version: 3.0.1
 sklearn_version: 1.8.0
 
 ARTIFACTS
-plot_path: results/Lung_cancer/evaluation/plots/wrapper_sfs_comparison_(union)_Lung_cancer.png
-report_path: results/Lung_cancer/evaluation/reports/wrapper_sfs_comparison_(union)_Lung_cancer.txt
+plot_path: results/Lung_cancer/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_Lung_cancer.png
+report_path: results/Lung_cancer/evaluation/reports/wrapper_sfs_comparison_sk_union_seeded_union_Lung_cancer.txt
 
 EXECUTIVE SUMMARY
-best_configuration: method=seeded, model=Tree, mean_accuracy=0.9262, std=0.0538, folds=10
-total_configurations: 4 | total_fold_evaluations: 40
+best_configuration: method=seeded, model=Tree, mean_accuracy=0.9262, std=0.0571, folds=5
+total_configurations: 4 | total_fold_evaluations: 20
 
 CROSS-VALIDATION SUMMARY (ranked)
 ------------------------------------------------------------------------------------------------------------------------
  rank  Method  Model  mean_accuracy  std_accuracy  median_accuracy  min_accuracy  max_accuracy  n_folds  cv_stability
-    1  seeded   Tree         0.9262        0.0538           0.9500        0.8293        0.9756       10        0.9462
-    2 sklearn   Tree         0.9063        0.0304           0.9024        0.8750        0.9512       10        0.9696
-    3  seeded LogReg         0.9012        0.0338           0.9024        0.8500        0.9512       10        0.9662
-    4 sklearn LogReg         0.8768        0.0233           0.8780        0.8500        0.9024       10        0.9767
+    1  seeded   Tree         0.9262        0.0571           0.9500        0.8293        0.9756        5        0.9429
+    2 sklearn   Tree         0.9063        0.0322           0.9024        0.8750        0.9512        5        0.9678
+    3  seeded LogReg         0.9012        0.0358           0.9024        0.8500        0.9512        5        0.9642
+    4 sklearn LogReg         0.8768        0.0248           0.8780        0.8500        0.9024        5        0.9752
 
 FOLD-LEVEL RESULTS (for auditability)
 ------------------------------------------------------------------------------------------------------------------------
