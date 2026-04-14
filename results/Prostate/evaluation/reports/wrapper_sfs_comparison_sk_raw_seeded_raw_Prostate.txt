@@ -1,8 +1,8 @@
 MODEL EVALUATION REPORT
-generated_at: 2026-04-13 17:34:50
-experiment_id: wrapper_sfs_comparison_Prostate_20260413
+generated_at: 2026-04-14 23:50:33
+experiment_id: wrapper_sfs_comparison_sk_raw_seeded_raw_Prostate_20260414
 dataset: Prostate
-experiment_prefix: wrapper_sfs_comparison
+experiment_prefix: wrapper_sfs_comparison_sk_raw_seeded_raw
 feature_count: 50
 logreg_max_iter: 4000
 python_version: 3.12.12
@@ -10,8 +10,8 @@ pandas_version: 3.0.1
 sklearn_version: 1.8.0
 
 ARTIFACTS
-plot_path: results/Prostate/evaluation/plots/wrapper_sfs_comparison_Prostate.png
-report_path: results/Prostate/evaluation/reports/wrapper_sfs_comparison_Prostate.txt
+plot_path: results/Prostate/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_Prostate.png
+report_path: results/Prostate/evaluation/reports/wrapper_sfs_comparison_sk_raw_seeded_raw_Prostate.txt
 
 EXECUTIVE SUMMARY
 best_configuration: method=seeded, model=LogReg, mean_accuracy=0.9714, std=0.0639, folds=5

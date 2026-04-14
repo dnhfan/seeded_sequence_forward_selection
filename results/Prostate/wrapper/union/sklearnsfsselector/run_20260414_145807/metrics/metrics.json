@@ -1,0 +1,8 @@
+{
+  "dataset": "Prostate",
+  "dataset_variant": "union",
+  "n_features_selected": 3,
+  "global_best_score": 0.9514285714285714,
+  "total_fit_time_ms": 10967.549907996727,
+  "run_root": "results/Prostate/wrapper/union/sklearnsfsselector/run_20260414_145807"
+}

@@ -1,0 +1,10 @@
+{
+  "dataset": "Prostate",
+  "dataset_variant": "union",
+  "n_features_selected": 6,
+  "global_best_score": 0.9411764705882353,
+  "total_fit_time_ms": 2925.9338230040157,
+  "run_root": "results/Prostate/wrapper/union/seededsfsselector/run_20260414_145757",
+  "patience": 3,
+  "n_seeds": 1
+}

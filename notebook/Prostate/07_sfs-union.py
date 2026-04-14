@@ -8,6 +8,7 @@ from src.config import ProjectPath
 from src.utils import create_union_features
 from src.wrapper import SeededSFSSelector
 
+
 def main():
     print("󰜎 Running Wrapper Features Slection using Union data set..")
 
@@ -51,14 +52,15 @@ def main():
         max_features=20,
         patience=3,
         n_seeds=1,
-        model="dt",
+        model="log",
         scoring="accuracy",
-        cv=2,
+        cv=5,
     )
 
     # View data
     print("\n󰔂  Preview head of FINAL DATASET:")
     print(df_final.head())
+
 
 if __name__ == "__main__":
     main()

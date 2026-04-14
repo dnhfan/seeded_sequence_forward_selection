@@ -1,0 +1,2 @@
+dataset,dataset_variant,n_features_selected,global_best_score,total_fit_time_ms,run_root
+Prostate,union,3,0.9514285714285714,10967.549907996727,results/Prostate/wrapper/union/sklearnsfsselector/run_20260414_145807

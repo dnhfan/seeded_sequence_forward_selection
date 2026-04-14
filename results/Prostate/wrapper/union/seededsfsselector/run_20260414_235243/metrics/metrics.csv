@@ -1,0 +1,2 @@
+dataset,dataset_variant,n_features_selected,global_best_score,total_fit_time_ms,run_root,patience,n_seeds
+Prostate,union,4,0.9414285714285715,3250.630127004115,results/Prostate/wrapper/union/seededsfsselector/run_20260414_235243,3,1
