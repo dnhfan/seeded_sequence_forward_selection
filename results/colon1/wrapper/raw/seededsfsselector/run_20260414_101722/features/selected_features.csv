@@ -1,0 +1,9 @@
+feature,dataset,dataset_variant,algorithm
+T95018,colon1,raw,seededsfsselector
+T63508,colon1,raw,seededsfsselector
+X14958,colon1,raw,seededsfsselector
+T57780,colon1,raw,seededsfsselector
+H09263,colon1,raw,seededsfsselector
+T49423,colon1,raw,seededsfsselector
+H16991,colon1,raw,seededsfsselector
+T83673,colon1,raw,seededsfsselector

@@ -1,0 +1,10 @@
+{
+  "dataset": "colon1",
+  "dataset_variant": "raw",
+  "n_features_selected": 8,
+  "global_best_score": 0.9346153846153846,
+  "total_fit_time_ms": 188277.84328900452,
+  "run_root": "results/colon1/wrapper/raw/seededsfsselector/run_20260414_101722",
+  "patience": 3,
+  "n_seeds": 1
+}

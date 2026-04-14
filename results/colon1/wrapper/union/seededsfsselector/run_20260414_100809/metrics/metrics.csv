@@ -1,0 +1,2 @@
+dataset,dataset_variant,n_features_selected,global_best_score,total_fit_time_ms,run_root,patience,n_seeds
+colon1,union,5,0.9358974358974358,7700.067810998007,results/colon1/wrapper/union/seededsfsselector/run_20260414_100809,3,1

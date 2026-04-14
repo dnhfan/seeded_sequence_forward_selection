@@ -1,0 +1,2 @@
+dataset,dataset_variant,n_features_selected,global_best_score,total_fit_time_ms,run_root
+colon1,raw,4,0.9512820512820512,193299.51228400023,results/colon1/wrapper/raw/sklearnsfsselector/run_20260414_100912

@@ -1,0 +1,10 @@
+{
+  "dataset": "colon1",
+  "dataset_variant": "union",
+  "n_features_selected": 5,
+  "global_best_score": 0.9358974358974358,
+  "total_fit_time_ms": 7700.067810998007,
+  "run_root": "results/colon1/wrapper/union/seededsfsselector/run_20260414_100809",
+  "patience": 3,
+  "n_seeds": 1
+}
