@@ -1,0 +1,57 @@
+MODEL EVALUATION REPORT
+generated_at: 2026-04-14 23:47:33
+experiment_id: wrapper_sfs_comparison_sk_union_seeded_union_NCI_20260414
+dataset: NCI
+experiment_prefix: wrapper_sfs_comparison_sk_union_seeded_union
+feature_count: 50
+logreg_max_iter: 4000
+python_version: 3.12.12
+pandas_version: 3.0.1
+sklearn_version: 1.8.0
+
+ARTIFACTS
+plot_path: results/NCI/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_NCI.png
+report_path: results/NCI/evaluation/reports/wrapper_sfs_comparison_sk_union_seeded_union_NCI.txt
+
+EXECUTIVE SUMMARY
+best_configuration: method=sklearn, model=LogReg, mean_accuracy=0.7385, std=0.1053, folds=5
+total_configurations: 4 | total_fold_evaluations: 20
+
+CROSS-VALIDATION SUMMARY (ranked)
+------------------------------------------------------------------------------------------------------------------------
+ rank  Method  Model  mean_accuracy  std_accuracy  median_accuracy  min_accuracy  max_accuracy  n_folds  cv_stability
+    1 sklearn LogReg         0.7385        0.1053           0.6923        0.6667        0.9167        5        0.8947
+    2  seeded LogReg         0.7372        0.0714           0.7500        0.6667        0.8333        5        0.9286
+    3  seeded   Tree         0.5410        0.0417           0.5385        0.5000        0.5833        5        0.9583
+    4 sklearn   Tree         0.4769        0.0783           0.5000        0.3846        0.5833        5        0.9217
+
+FOLD-LEVEL RESULTS (for auditability)
+------------------------------------------------------------------------------------------------------------------------
+ Method: seeded 
+ Model  Fold    Acc
+LogReg   1.0 0.7692
+LogReg   2.0 0.6667
+LogReg   3.0 0.6667
+LogReg   4.0 0.7500
+LogReg   5.0 0.8333
+  Tree   1.0 0.5385
+  Tree   2.0 0.5833
+  Tree   3.0 0.5000
+  Tree   4.0 0.5833
+  Tree   5.0 0.5000
+
+ Method: sklearn 
+ Model  Fold    Acc
+LogReg   1.0 0.6923
+LogReg   2.0 0.7500
+LogReg   3.0 0.6667
+LogReg   4.0 0.6667
+LogReg   5.0 0.9167
+  Tree   1.0 0.3846
+  Tree   2.0 0.5000
+  Tree   3.0 0.5000
+  Tree   4.0 0.4167
+  Tree   5.0 0.5833
+
+
+------------------------------------------------------------------------------------------------------------------------

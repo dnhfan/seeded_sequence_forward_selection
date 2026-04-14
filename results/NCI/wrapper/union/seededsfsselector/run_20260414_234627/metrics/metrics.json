@@ -1,0 +1,10 @@
+{
+  "dataset": "NCI",
+  "dataset_variant": "union",
+  "n_features_selected": 6,
+  "global_best_score": 0.8358974358974358,
+  "total_fit_time_ms": 7373.240125001757,
+  "run_root": "results/NCI/wrapper/union/seededsfsselector/run_20260414_234627",
+  "patience": 3,
+  "n_seeds": 1
+}

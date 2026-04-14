@@ -1,8 +1,8 @@
 MODEL EVALUATION REPORT
-generated_at: 2026-04-13 10:14:06
-experiment_id: wrapper_sfs_comparison_NCI_20260413
+generated_at: 2026-04-14 23:43:55
+experiment_id: wrapper_sfs_comparison_sk_raw_seeded_raw_NCI_20260414
 dataset: NCI
-experiment_prefix: wrapper_sfs_comparison
+experiment_prefix: wrapper_sfs_comparison_sk_raw_seeded_raw
 feature_count: 50
 logreg_max_iter: 4000
 python_version: 3.12.12
@@ -10,8 +10,8 @@ pandas_version: 3.0.1
 sklearn_version: 1.8.0
 
 ARTIFACTS
-plot_path: results/NCI/evaluation/plots/wrapper_sfs_comparison_NCI.png
-report_path: results/NCI/evaluation/reports/wrapper_sfs_comparison_NCI.txt
+plot_path: results/NCI/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_NCI.png
+report_path: results/NCI/evaluation/reports/wrapper_sfs_comparison_sk_raw_seeded_raw_NCI.txt
 
 EXECUTIVE SUMMARY
 best_configuration: method=seeded, model=LogReg, mean_accuracy=0.7872, std=0.0937, folds=5
