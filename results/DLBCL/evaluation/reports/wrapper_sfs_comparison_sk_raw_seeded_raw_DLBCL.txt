@@ -1,0 +1,57 @@
+MODEL EVALUATION REPORT
+generated_at: 2026-04-14 23:20:17
+experiment_id: wrapper_sfs_comparison_sk_raw_seeded_raw_DLBCL_20260414
+dataset: DLBCL
+experiment_prefix: wrapper_sfs_comparison_sk_raw_seeded_raw
+feature_count: 50
+logreg_max_iter: 4000
+python_version: 3.12.12
+pandas_version: 3.0.1
+sklearn_version: 1.8.0
+
+ARTIFACTS
+plot_path: results/DLBCL/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_DLBCL.png
+report_path: results/DLBCL/evaluation/reports/wrapper_sfs_comparison_sk_raw_seeded_raw_DLBCL.txt
+
+EXECUTIVE SUMMARY
+best_configuration: method=seeded, model=LogReg, mean_accuracy=0.9867, std=0.0298, folds=5
+total_configurations: 4 | total_fold_evaluations: 20
+
+CROSS-VALIDATION SUMMARY (ranked)
+------------------------------------------------------------------------------------------------------------------------
+ rank  Method  Model  mean_accuracy  std_accuracy  median_accuracy  min_accuracy  max_accuracy  n_folds  cv_stability
+    1  seeded LogReg         0.9867        0.0298           1.0000        0.9333        1.0000        5        0.9702
+    2 sklearn   Tree         0.9608        0.0358           0.9375        0.9333        1.0000        5        0.9642
+    3 sklearn LogReg         0.9475        0.0556           0.9375        0.8667        1.0000        5        0.9444
+    4  seeded   Tree         0.9092        0.0352           0.9333        0.8667        0.9375        5        0.9648
+
+FOLD-LEVEL RESULTS (for auditability)
+------------------------------------------------------------------------------------------------------------------------
+ Method: seeded 
+ Model  Fold    Acc
+LogReg   1.0 1.0000
+LogReg   2.0 1.0000
+LogReg   3.0 1.0000
+LogReg   4.0 1.0000
+LogReg   5.0 0.9333
+  Tree   1.0 0.9375
+  Tree   2.0 0.8750
+  Tree   3.0 0.9333
+  Tree   4.0 0.9333
+  Tree   5.0 0.8667
+
+ Method: sklearn 
+ Model  Fold    Acc
+LogReg   1.0 1.0000
+LogReg   2.0 0.9375
+LogReg   3.0 0.9333
+LogReg   4.0 1.0000
+LogReg   5.0 0.8667
+  Tree   1.0 1.0000
+  Tree   2.0 0.9375
+  Tree   3.0 1.0000
+  Tree   4.0 0.9333
+  Tree   5.0 0.9333
+
+
+------------------------------------------------------------------------------------------------------------------------
