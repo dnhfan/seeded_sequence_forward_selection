@@ -10,18 +10,27 @@ This repository provides an end-to-end, script-driven feature selection pipeline
 
 **Note:** _Seeded SFS_ is a hybrid approach that combines Filter + Wrapper.
 
----
+## Table of Contents
 
-## Current Repository Reality
-
-- Main execution flow is script/notebook-driven under `notebook/<dataset>/`.
-- Canonical paths are managed by `src/config.py` (`ProjectPath`).
-- Processed (machine-readable) data lives under `data/processed/...`.
-- Human-readable experiment outputs live under `results/...`.
+- [End-to-End Pipeline Stages](#end-to-end-pipeline-stages)
+- [Folder Structure](#folder-structure)
+- [Setup](#setup)
+- [How to Run (End-to-End)](#how-to-run-end-to-end)
+  - [1) Run notebook stages (EDA -> Ensemble)](#1-run-notebook-stages-eda---ensemble)
+  - [2) Run wrapper scripts (raw + union)](#2-run-wrapper-scripts-raw--union)
+  - [3) Run evaluation notebooks](#3-run-evaluation-notebooks)
+- [Wrapper Output Contract](#wrapper-output-contract)
+- [Variant Rules (Raw vs Union)](#variant-rules-raw-vs-union)
+- [Key Source Entry Points](#key-source-entry-points)
+- [Quick Verification Commands](#quick-verification-commands)
+- [Known Gotchas](#known-gotchas)
+- [Documentation Index](#documentation-index)
 
 ---
 
 ## End-to-End Pipeline Stages
+
+![graph](./docs/graph.png)
 
 Each dataset follows these stages:
 
@@ -41,6 +50,51 @@ Canonical processed-data layout:
 - `data/processed/<dataset>/02_filter`
 - `data/processed/<dataset>/03_ensemble`
 - `data/processed/<dataset>/04_wrapper`
+
+## Folder Structure
+
+Top-level layout (trimmed to important paths):
+
+```text
+.
+├── data/
+│   ├── raw/
+│   └── processed/
+│       └── <dataset>/
+│           ├── 01_clean/
+│           ├── 02_filter/
+│           ├── 03_ensemble/
+│           └── 04_wrapper/
+├── docs/
+├── notebook/
+│   └── <dataset>/
+│       ├── 01_eda.ipynb
+│       ├── ...
+│       ├── 06_sklearn_sfs-raw.py
+│       ├── 06_sklearn_sfs-union.py
+│       ├── 07_sfs-raw.py
+│       └── 07_sfs-union.py
+├── results/
+│   └── <dataset>/
+│       ├── filter/
+│       ├── wrapper/
+│       │   └── <variant>/<algorithm>/run_YYYYMMDD_HHMMSS[_tag]/
+│       │       ├── history/
+│       │       ├── features/
+│       │       ├── metrics/
+│       │       └── artifacts/
+│       └── evaluation/
+├── src/
+│   ├── config.py
+│   ├── utils/
+│   ├── wrapper/
+│   ├── modeling/
+│   └── filter/
+├── README.md
+├── README.vi.md
+├── requirements.txt
+└── run_sfs.sh
+```
 
 ---
 
@@ -158,26 +212,6 @@ chart_title=f"Sklearn sfs({sk_data_variant}) vs Seeded sfs({data_variant}) Perfo
 - Wrapper run path contract: `src/utils/experiment_paths.py`, `src/wrapper/base.py`
 - Evaluation logic: `src/modeling/evaluation.py`
 - Union feature generation: `src/utils/utils.py` (`create_union_features`)
-
----
-
-## Quick Verification Commands
-
-Syntax check:
-
-```bash
-python -m py_compile src/modeling/evaluation.py
-```
-
-Check union wrapper metrics exist:
-
-```bash
-python - <<'PY'
-from pathlib import Path
-p = Path("results/colon1/wrapper/union")
-print(p.exists(), list(p.glob("*/*/metrics/metrics.csv"))[:3])
-PY
-```
 
 ---
 

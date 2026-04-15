@@ -10,19 +10,23 @@ _Read this in [English](README.md)_
 
 **Lưu ý:** _Seeded SFS_ là hướng lai (hybrid), kết hợp giữa Filter + Wrapper.
 
----
+## Mục Lục
 
-## Hiện Trạng Repository
-
-- Luồng chạy chính là script/notebook trong `notebook/<dataset>/`.
-- Quy ước đường dẫn được quản lý bởi `src/config.py` (`ProjectPath`).
-- Dữ liệu đã xử lý (machine-readable) nằm trong `data/processed/...`.
-- Kết quả thí nghiệm để đọc (human-readable) nằm trong `results/...`.
-
----
+- [Các Giai Đoạn Pipeline End-to-End](#các-giai-đoạn-pipeline-end-to-end)
+- [Cấu Trúc Thư Mục](#cấu-trúc-thư-mục)
+- [Cài Đặt](#cài-đặt)
+- [Cách Chạy (End-to-End)](#cách-chạy-end-to-end)
+  - [1) Chạy các notebook giai đoạn (EDA -> Ensemble)](#1-chạy-các-notebook-giai-đoạn-eda---ensemble)
+  - [2) Chạy wrapper scripts (raw + union)](#2-chạy-wrapper-scripts-raw--union)
+  - [3) Chạy notebook đánh giá](#3-chạy-notebook-đánh-giá)
+- [Quy Ước Đầu Ra Wrapper](#quy-ước-đầu-ra-wrapper)
+- [Quy Tắc Biến Thể (Raw vs Union)](#quy-tắc-biến-thể-raw-vs-union)
+- [Lưu Ý Quan Trọng](#lưu-ý-quan-trọng)
+- [Mục Lục Tài Liệu](#mục-lục-tài-liệu)
 
 ## Các Giai Đoạn Pipeline End-to-End
 
+![graph](./docs/graph.png)
 Mỗi dataset đi qua các bước sau:
 
 1. EDA
@@ -41,6 +45,52 @@ Bố cục dữ liệu xử lý theo chuẩn:
 - `data/processed/<dataset>/02_filter`
 - `data/processed/<dataset>/03_ensemble`
 - `data/processed/<dataset>/04_wrapper`
+
+## Cấu Trúc Thư Mục
+
+Bố cục cấp cao (đã lược giản các phần quan trọng):
+
+```text
+.
+├── data/
+│   ├── raw/
+│   └── processed/
+│       └── <dataset>/
+│           ├── 01_clean/
+│           ├── 02_filter/
+│           ├── 03_ensemble/
+│           └── 04_wrapper/
+├── docs/
+├── notebook/
+│   └── <dataset>/
+│       ├── 01_eda.ipynb
+│       ├── ...
+│       ├── 06_sklearn_sfs-raw.py
+│       ├── 06_sklearn_sfs-union.py
+│       ├── 07_sfs-raw.py
+│       └── 07_sfs-union.py
+├── results/
+│   └── <dataset>/
+│       ├── filter/
+│       ├── wrapper/
+│       │   └── <variant>/<algorithm>/run_YYYYMMDD_HHMMSS[_tag]/
+│       │       ├── history/
+│       │       ├── features/
+│       │       ├── metrics/
+│       │       └── artifacts/
+│       └── evaluation/
+├── src/
+│   ├── config.py
+│   ├── utils/
+│   ├── wrapper/
+│   ├── modeling/
+│   └── filter/
+├── README.md
+├── README.vi.md
+├── requirements.txt
+├── run_sfs.sh
+└── run_all_sklearn_sfs.sh
+```
 
 ---
 
@@ -80,7 +130,7 @@ Thường sẽ có các file:
 - `04_modeling.ipynb`
 - `05_esemble_filter.ipynb`
 
-Tên file chưa đồng nhất hoàn toàn giữa các dataset (ví dụ `8_accuracu...`, `08_accuracy...`, `7_.../8_...` trong `Lung_cancer`).
+**note**: Tên file chưa đồng nhất hoàn toàn giữa các dataset (ví dụ `8_accuracu...`, `08_accuracy...`, `7_.../8_...` trong `Lung_cancer`).
 
 ## 2) Chạy wrapper scripts (raw + union)
 
@@ -148,35 +198,6 @@ Notebook đánh giá thời gian sử dụng:
 ```python
 experiment_prefix=f"wrapper_sfs_comparison_sk_{sk_data_variant}_seeded_{data_variant}"
 chart_title=f"Sklearn sfs({sk_data_variant}) vs Seeded sfs({data_variant}) Performance"
-```
-
----
-
-## Các Điểm Vào Quan Trọng Trong Source
-
-- Quy ước đường dẫn và thư mục: `src/config.py` (`ProjectPath`)
-- Cấu trúc output cho wrapper run: `src/utils/experiment_paths.py`, `src/wrapper/base.py`
-- Logic đánh giá: `src/modeling/evaluation.py`
-- Tạo union feature: `src/utils/utils.py` (`create_union_features`)
-
----
-
-## Lệnh Kiểm Tra Nhanh
-
-Kiểm tra syntax:
-
-```bash
-python -m py_compile src/modeling/evaluation.py
-```
-
-Kiểm tra metrics của union wrapper tồn tại:
-
-```bash
-python - <<'PY'
-from pathlib import Path
-p = Path("results/colon1/wrapper/union")
-print(p.exists(), list(p.glob("*/*/metrics/metrics.csv"))[:3])
-PY
 ```
 
 ---
