@@ -1,11 +1,13 @@
 # Pipeline Wrapper - Seeded Forward Selection (Seeded SFS) Tùy Biến
 
-_Read in [English](04_wrapper_seeded_sfs.md)._ 
+_Read in [English](04_wrapper_seeded_sfs.md)._
 
 **1. Tổng quan / Mục đích:**  
 Pipeline này chạy thuật toán Seeded Forward Selection tùy biến, khởi tạo từ các seed features do ensemble voting đề xuất và mở rộng tập đặc trưng theo chiến lược greedy với điểm CV. Thiết kế này giúp tăng hiệu quả tìm kiếm và độ ổn định so với forward selection khởi tạo ngẫu nhiên/không seed.
 
-**2. Đầu vào:**  
+Bạn có thể đọc chi tiết hơn về thuật toán này ở [SeededForwardSelection](../seeded_sfs_core_vi.md)
+**2. Đầu vào:**
+
 - DataFrame đầu vào: cột đầu là target, các cột sau là features.
 - File seed từ ensemble voting:
   - `data/processed/<dataset>/03_ensemble/top<n_features>_features_voting.csv`
@@ -25,7 +27,8 @@ Pipeline này chạy thuật toán Seeded Forward Selection tùy biến, khởi 
   - `src/wrapper/base.py` (điều phối + lưu artifacts)
   - `src/utils/utils.py` (`load_seed_from_csv`, `validate_features`)
 
-**3. Logic thực thi từng bước:**  
+**3. Logic thực thi từng bước:**
+
 1. **Khởi tạo wrapper và xác định seed file**  
    `SeededSFSSelector` dựng đường dẫn seed CSV từ `ProjectPath.ensemble_dir / voting_csv_name`.
 
@@ -79,7 +82,8 @@ Pipeline này chạy thuật toán Seeded Forward Selection tùy biến, khởi 
 10. **Lưu artifacts theo cùng chuẩn wrapper**  
     Base wrapper lưu CSV output và toàn bộ artifacts thí nghiệm theo cấu trúc run chuẩn.
 
-**4. Đầu ra / Artifacts:**  
+**4. Đầu ra / Artifacts:**
+
 - Dataset sau chọn đặc trưng:
   - `data/processed/<dataset>/04_wrapper/<variant>/seededsfsselector/<dataset>_seededsfsselector_*.csv`
 - Run artifacts:

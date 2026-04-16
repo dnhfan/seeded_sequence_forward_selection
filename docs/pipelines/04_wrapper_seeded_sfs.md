@@ -1,10 +1,13 @@
 # Wrapper Pipeline - Custom Seeded Forward Selection (Seeded SFS)
-_Read in [Vietnamese](04_wrapper_seeded_sfs.vi.md)._ 
+
+_Read in [Vietnamese](04_wrapper_seeded_sfs.vi.md)._
 
 **1. Overview / Purpose:**  
 This pipeline executes a custom Seeded Forward Selection algorithm that starts from ensemble-voted seed features and expands feature subsets greedily using cross-validated performance. It is designed to improve search efficiency and stability compared to blind forward selection.
 
-**2. Inputs:**  
+You can read how this algorithm work more specific in [SeededForwardSelection](../seeded_sfs_core.md)
+**2. Inputs:**
+
 - Input dataset DataFrame: first column target, remaining columns features.
 - Seed source CSV (from ensemble voting):
   - `data/processed/<dataset>/03_ensemble/top<n_features>_features_voting.csv`
@@ -24,7 +27,8 @@ This pipeline executes a custom Seeded Forward Selection algorithm that starts f
   - `src/wrapper/base.py` (orchestration + artifact saving)
   - `src/utils/utils.py` (`load_seed_from_csv`, `validate_features`)
 
-**3. Step-by-Step Execution Logic:**  
+**3. Step-by-Step Execution Logic:**
+
 1. **Initialize wrapper and resolve seed file**  
    `SeededSFSSelector` builds seed CSV path from `ProjectPath.ensemble_dir / voting_csv_name`.
 
@@ -78,7 +82,8 @@ This pipeline executes a custom Seeded Forward Selection algorithm that starts f
 10. **Persist artifacts (same wrapper contract)**  
     Base wrapper saves processed CSV and experiment artifacts under standardized run folders.
 
-**4. Outputs / Artifacts:**  
+**4. Outputs / Artifacts:**
+
 - Selected wrapper dataset:
   - `data/processed/<dataset>/04_wrapper/<variant>/seededsfsselector/<dataset>_seededsfsselector_*.csv`
 - Run artifacts:
