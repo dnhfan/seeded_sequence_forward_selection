@@ -1,7 +1,9 @@
 # Results and Evaluation
 
+_Read this in [Vietnamese](README.vi.md)_
+
 This index splits the previous monolithic report into one file per dataset.
-You can findout how we evaluate in [5.Evaluation](./pipelines/05_evaluation_metrics.md)
+You can find out how we evaluate in [5.Evaluation](../pipelines/05_evaluation_metrics.md)
 
 ## Executive Summary
 
@@ -25,21 +27,21 @@ You can findout how we evaluate in [5.Evaluation](./pipelines/05_evaluation_metr
 
 ## Dataset Reports
 
-- [colon1](results/result-colon1.md)
-- [Prostate](results/result-prostate.md)
-- [Lung_cancer](results/result-lung_cancer.md)
-- [Brain](results/result-brain.md)
-- [Breast2classes](results/result-breast2classes.md)
-- [Breast3classes](results/result-breast3classes.md)
-- [CNS1](results/result-cns1.md)
-- [DLBCL](results/result-dlbcl.md)
-- [Leukemia_3c1](results/result-leukemia_3c1.md)
-- [Leukemia_4c1](results/result-leukemia_4c1.md)
-- [Lymphoma](results/result-lymphoma.md)
-- [NCI](results/result-nci.md)
-- [SRBCT_txt](results/result-srbct_txt.md)
-- [Tumors9](results/result-tumors9.md)
-- [adenocarcinoma](results/result-adenocarcinoma.md)
+- [colon1](./result-colon1.md)
+- [Prostate](./result-prostate.md)
+- [Lung_cancer](./result-lung_cancer.md)
+- [Brain](./result-brain.md)
+- [Breast2classes](./result-breast2classes.md)
+- [Breast3classes](./result-breast3classes.md)
+- [CNS1](./result-cns1.md)
+- [DLBCL](./result-dlbcl.md)
+- [Leukemia_3c1](./result-leukemia_3c1.md)
+- [Leukemia_4c1](./result-leukemia_4c1.md)
+- [Lymphoma](./result-lymphoma.md)
+- [NCI](./result-nci.md)
+- [SRBCT_txt](./result-srbct_txt.md)
+- [Tumors9](./result-tumors9.md)
+- [adenocarcinoma](./result-adenocarcinoma.md)
 
 ## Notes
 
