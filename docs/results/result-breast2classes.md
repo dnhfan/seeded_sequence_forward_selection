@@ -1,6 +1,6 @@
 # Breast2classes Results and Evaluation
 
-[Back to index](results.md)
+[Back to index](../results.md)
 
 ## 1) EDA (Exploratory Data Analysis)
 
@@ -8,7 +8,7 @@
 - `notebook/Breast2classes/01_eda.ipynb`
 
 [Insert Chart: EDA Summary]
-![Breast2classes EDA](../results/Breast2classes/eda/plot/countplot.png)
+![Breast2classes EDA](../../results/Breast2classes/eda/plot/countplot.png)
 
 ## 2) Data Preprocessing
 
@@ -23,8 +23,8 @@
 - Report artifact: `results/Breast2classes/filter/reports/filter_compare_50features_Breast2classes.txt`
 
 [Insert Chart: Filter Selection Comparison]
-![Breast2classes Filter Selection](../results/Breast2classes/filter/plots/filter_compare_50features_Breast2classes.png)
-![Breast2classes Filter Selection](../results/Breast2classes/filter/plots/model_comparison_top50_2026-04-09.png)
+![Breast2classes Filter Selection](../../results/Breast2classes/filter/plots/filter_compare_50features_Breast2classes.png)
+![Breast2classes Filter Selection](../../results/Breast2classes/filter/plots/model_comparison_top50_2026-04-09.png)
 
 ## 4) Modeling (Filter-stage comparison)
 
@@ -41,7 +41,7 @@
 - Top voting features: `V2221(4)`, `V3818(4)`, `V1325(4)`, `V2273(4)`, `V4360(4)`
 
 [Insert Chart: Ensemble Voting / Union Features]
-![Breast2classes Ensemble Voting](../results/Breast2classes/ensemble/plots/top50_features_voting_2026-04-10.png)
+![Breast2classes Ensemble Voting](../../results/Breast2classes/ensemble/plots/top50_features_voting_2026-04-10.png)
 
 ## 6) Wrapper: Sklearn SFS (Raw vs Union execution)
 
@@ -72,8 +72,8 @@
 - `notebook/Breast2classes/8_accuracu_evaluate_union.ipynb`
 
 [Insert Chart: Accuracy Comparison Raw vs Union]
-![Breast2classes Accuracy Evaluation](../results/Breast2classes/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_Breast2classes.png)
-![Breast2classes Accuracy Evaluation](../results/Breast2classes/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_Breast2classes.png)
+![Breast2classes Accuracy Evaluation](../../results/Breast2classes/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_Breast2classes.png)
+![Breast2classes Accuracy Evaluation](../../results/Breast2classes/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_Breast2classes.png)
 
 - **Observation:** Raw seeded performs materially better than union seeded in evaluation.
 - **Explanation:** Discriminative information appears spread beyond union-restricted candidates.
@@ -90,8 +90,8 @@
 - `notebook/Breast2classes/9_time_evaluate_union.ipynb`
 
 [Insert Chart: Time Comparison Raw vs Union]
-![Breast2classes Time Evaluation](../results/Breast2classes/evaluation/plots/time_comparison_raw_seeded_vs_raw_sklearn.png)
-![Breast2classes Time Evaluation](../results/Breast2classes/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
+![Breast2classes Time Evaluation](../../results/Breast2classes/evaluation/plots/time_comparison_raw_seeded_vs_raw_sklearn.png)
+![Breast2classes Time Evaluation](../../results/Breast2classes/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
 
 - **Observation:** Union runs are generally faster than raw runs across wrapper methods.
 - **Explanation:** Union reduces candidate-space size, reducing total model-fit operations.

@@ -1,6 +1,6 @@
 # NCI Results and Evaluation
 
-[Back to index](results.md)
+[Back to index](../results.md)
 
 ## 1) EDA (Exploratory Data Analysis)
 
@@ -8,7 +8,7 @@
 - `notebook/NCI/01_eda.ipynb`
 
 [Insert Chart: EDA Summary]
-![NCI EDA](../results/NCI/eda/plot/countplot.png)
+![NCI EDA](../../results/NCI/eda/plot/countplot.png)
 
 ## 2) Data Preprocessing
 
@@ -23,7 +23,7 @@
 - Report artifact: `results/NCI/filter/reports/evaluation_NCI.txt`
 
 [Insert Chart: Filter Selection Comparison]
-![NCI Filter Selection](../results/NCI/filter/plots/evaluation_NCI.png)
+![NCI Filter Selection](../../results/NCI/filter/plots/evaluation_NCI.png)
 
 ## 4) Modeling (Filter-stage comparison)
 
@@ -40,7 +40,7 @@
 - Top voting features: `V155(4)`, `V4968(4)`, `V4516(4)`, `V4618(4)`, `V4581(4)`
 
 [Insert Chart: Ensemble Voting / Union Features]
-![NCI Ensemble Voting](../results/NCI/ensemble/plots/top50_features_voting.png)
+![NCI Ensemble Voting](../../results/NCI/ensemble/plots/top50_features_voting.png)
 
 ## 6) Wrapper: Sklearn SFS (Raw vs Union execution)
 
@@ -71,8 +71,8 @@
 - `notebook/NCI/8_accuracu_evaluate_union.ipynb`
 
 [Insert Chart: Accuracy Comparison Raw vs Union]
-![NCI Accuracy Evaluation](../results/NCI/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_NCI.png)
-![NCI Accuracy Evaluation](../results/NCI/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_NCI.png)
+![NCI Accuracy Evaluation](../../results/NCI/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_NCI.png)
+![NCI Accuracy Evaluation](../../results/NCI/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_NCI.png)
 
 - **Observation:** Raw variant outperforms union in both wrapper and evaluation scores.
 - **Explanation:** Additional raw features appear to preserve useful discriminatory signal.
@@ -88,8 +88,8 @@
 - `notebook/NCI/9_time_evaluate_union.ipynb`
 
 [Insert Chart: Time Comparison Raw vs Union]
-![NCI Time Evaluation](../results/NCI/evaluation/plots/time_comparison_raw_seeded_vs_raw_sklearn.png)
-![NCI Time Evaluation](../results/NCI/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
+![NCI Time Evaluation](../../results/NCI/evaluation/plots/time_comparison_raw_seeded_vs_raw_sklearn.png)
+![NCI Time Evaluation](../../results/NCI/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
 
 - **Observation:** Union runs are generally faster than raw runs across wrapper methods.
 - **Explanation:** Union reduces candidate-space size, reducing total model-fit operations.

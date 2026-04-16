@@ -1,6 +1,6 @@
 # Lymphoma Results and Evaluation
 
-[Back to index](results.md)
+[Back to index](../results.md)
 
 ## 1) EDA (Exploratory Data Analysis)
 
@@ -8,7 +8,7 @@
 - `notebook/Lymphoma/01_eda.ipynb`
 
 [Insert Chart: EDA Summary]
-![Lymphoma EDA](../results/Lymphoma/eda/plot/countplot.png)
+![Lymphoma EDA](../../results/Lymphoma/eda/plot/countplot.png)
 
 ## 2) Data Preprocessing
 
@@ -23,7 +23,7 @@
 - Report artifact: `results/Lymphoma/filter/reports/evaluation_Lymphoma.txt`
 
 [Insert Chart: Filter Selection Comparison]
-![Lymphoma Filter Selection](../results/Lymphoma/filter/plots/evaluation_Lymphoma.png)
+![Lymphoma Filter Selection](../../results/Lymphoma/filter/plots/evaluation_Lymphoma.png)
 
 ## 4) Modeling (Filter-stage comparison)
 
@@ -40,7 +40,7 @@
 - Top voting features: `V3755(5)`, `V3790(5)`, `V3783(4)`, `V3764(4)`, `V758(4)`
 
 [Insert Chart: Ensemble Voting / Union Features]
-![Lymphoma Ensemble Voting](../results/Lymphoma/ensemble/plots/top50_features_voting.png)
+![Lymphoma Ensemble Voting](../../results/Lymphoma/ensemble/plots/top50_features_voting.png)
 
 ## 6) Wrapper: Sklearn SFS (Raw vs Union execution)
 
@@ -71,8 +71,8 @@
 - `notebook/Lymphoma/8_accuracu_evaluate_union.ipynb`
 
 [Insert Chart: Accuracy Comparison Raw vs Union]
-![Lymphoma Accuracy Evaluation](../results/Lymphoma/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_Lymphoma.png)
-![Lymphoma Accuracy Evaluation](../results/Lymphoma/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_Lymphoma.png)
+![Lymphoma Accuracy Evaluation](../../results/Lymphoma/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_Lymphoma.png)
+![Lymphoma Accuracy Evaluation](../../results/Lymphoma/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_Lymphoma.png)
 
 - **Observation:** Leading methods achieve ceiling-level performance in both variants.
 - **Explanation:** Class separation remains strong after both raw and union feature pipelines.
@@ -88,8 +88,8 @@
 - `notebook/Lymphoma/9_time_evaluate_union.ipynb`
 
 [Insert Chart: Time Comparison Raw vs Union]
-![Lymphoma Time Evaluation](../results/Lymphoma/evaluation/plots/time_comparison_seeded_vs_sklearn.png)
-![Lymphoma Time Evaluation](../results/Lymphoma/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
+![Lymphoma Time Evaluation](../../results/Lymphoma/evaluation/plots/time_comparison_seeded_vs_sklearn.png)
+![Lymphoma Time Evaluation](../../results/Lymphoma/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
 
 - **Observation:** Union runs are generally faster than raw runs across wrapper methods.
 - **Explanation:** Union reduces candidate-space size, reducing total model-fit operations.

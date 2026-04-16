@@ -1,6 +1,6 @@
 # Leukemia_3c1 Results and Evaluation
 
-[Back to index](results.md)
+[Back to index](../results.md)
 
 ## 1) EDA (Exploratory Data Analysis)
 
@@ -8,7 +8,7 @@
 - `notebook/Leukemia_3c1/01_eda.ipynb`
 
 [Insert Chart: EDA Summary]
-![Leukemia_3c1 EDA](../results/Leukemia_3c1/eda/plot/countplot.png)
+![Leukemia_3c1 EDA](../../results/Leukemia_3c1/eda/plot/countplot.png)
 
 ## 2) Data Preprocessing
 
@@ -23,7 +23,7 @@
 - Report artifact: `results/Leukemia_3c1/filter/reports/evaluation_Leukemia_3c1.txt`
 
 [Insert Chart: Filter Selection Comparison]
-![Leukemia_3c1 Filter Selection](../results/Leukemia_3c1/filter/plots/evaluation_Leukemia_3c1.png)
+![Leukemia_3c1 Filter Selection](../../results/Leukemia_3c1/filter/plots/evaluation_Leukemia_3c1.png)
 
 ## 4) Modeling (Filter-stage comparison)
 
@@ -40,7 +40,7 @@
 - Top voting features: `1881(5)`, `4846(4)`, `2641(4)`, `6605(4)`, `1833(4)`
 
 [Insert Chart: Ensemble Voting / Union Features]
-![Leukemia_3c1 Ensemble Voting](../results/Leukemia_3c1/ensemble/plots/top50_features_voting.png)
+![Leukemia_3c1 Ensemble Voting](../../results/Leukemia_3c1/ensemble/plots/top50_features_voting.png)
 
 ## 6) Wrapper: Sklearn SFS (Raw vs Union execution)
 
@@ -71,8 +71,8 @@
 - `notebook/Leukemia_3c1/8_accuracu_evaluate_union.ipynb`
 
 [Insert Chart: Accuracy Comparison Raw vs Union]
-![Leukemia_3c1 Accuracy Evaluation](../results/Leukemia_3c1/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_Leukemia_3c1.png)
-![Leukemia_3c1 Accuracy Evaluation](../results/Leukemia_3c1/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_Leukemia_3c1.png)
+![Leukemia_3c1 Accuracy Evaluation](../../results/Leukemia_3c1/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_Leukemia_3c1.png)
+![Leukemia_3c1 Accuracy Evaluation](../../results/Leukemia_3c1/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_Leukemia_3c1.png)
 
 - **Observation:** Accuracy is effectively unchanged across methods and variants.
 - **Explanation:** The dataset is separable with a very small number of features.
@@ -88,8 +88,8 @@
 - `notebook/Leukemia_3c1/9_time_evaluate_union.ipynb`
 
 [Insert Chart: Time Comparison Raw vs Union]
-![Leukemia_3c1 Time Evaluation](../results/Leukemia_3c1/evaluation/plots/time_comparison_raw_seeded_vs_raw_sklearn.png)
-![Leukemia_3c1 Time Evaluation](../results/Leukemia_3c1/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
+![Leukemia_3c1 Time Evaluation](../../results/Leukemia_3c1/evaluation/plots/time_comparison_raw_seeded_vs_raw_sklearn.png)
+![Leukemia_3c1 Time Evaluation](../../results/Leukemia_3c1/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
 
 - **Observation:** Union runs are generally faster than raw runs across wrapper methods.
 - **Explanation:** Union reduces candidate-space size, reducing total model-fit operations.

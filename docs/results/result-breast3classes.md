@@ -1,6 +1,6 @@
 # Breast3classes Results and Evaluation
 
-[Back to index](results.md)
+[Back to index](../results.md)
 
 ## 1) EDA (Exploratory Data Analysis)
 
@@ -8,7 +8,7 @@
 - `notebook/Breast3classes/01_eda.ipynb`
 
 [Insert Chart: EDA Summary]
-![Breast3classes EDA](../results/Breast3classes/eda/plot/countplot.png)
+![Breast3classes EDA](../../results/Breast3classes/eda/plot/countplot.png)
 
 ## 2) Data Preprocessing
 
@@ -23,7 +23,7 @@
 - Report artifact: `results/Breast3classes/filter/reports/filter_compare_50features_Breast3classes.txt`
 
 [Insert Chart: Filter Selection Comparison]
-![Breast3classes Filter Selection](../results/Breast3classes/filter/plots/filter_compare_50features_Breast3classes.png)
+![Breast3classes Filter Selection](../../results/Breast3classes/filter/plots/filter_compare_50features_Breast3classes.png)
 
 ## 4) Modeling (Filter-stage comparison)
 
@@ -40,7 +40,7 @@
 - Top voting features: `V3780(4)`, `V1414(4)`, `V3662(4)`, `V805(4)`, `V4512(4)`
 
 [Insert Chart: Ensemble Voting / Union Features]
-![Breast3classes Ensemble Voting](../results/Breast3classes/ensemble/plots/top50_features_voting.png)
+![Breast3classes Ensemble Voting](../../results/Breast3classes/ensemble/plots/top50_features_voting.png)
 
 ## 6) Wrapper: Sklearn SFS (Raw vs Union execution)
 
@@ -71,8 +71,8 @@
 - `notebook/Breast3classes/8_accuracu_evaluate_union.ipynb`
 
 [Insert Chart: Accuracy Comparison Raw vs Union]
-![Breast3classes Accuracy Evaluation](../results/Breast3classes/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_Breast3classes.png)
-![Breast3classes Accuracy Evaluation](../results/Breast3classes/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_Breast3classes.png)
+![Breast3classes Accuracy Evaluation](../../results/Breast3classes/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_Breast3classes.png)
+![Breast3classes Accuracy Evaluation](../../results/Breast3classes/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_Breast3classes.png)
 
 - **Observation:** Sklearn LogReg ranks first in both raw and union evaluation.
 - **Explanation:** For this multiclass setting, sklearn-selected subsets align better with downstream classifier behavior.
@@ -88,8 +88,8 @@
 - `notebook/Breast3classes/9_time_evaluate_union.ipynb`
 
 [Insert Chart: Time Comparison Raw vs Union]
-![Breast3classes Time Evaluation](../results/Breast3classes/evaluation/plots/time_comparison_raw_seeded_vs_raw_sklearn.png)
-![Breast3classes Time Evaluation](../results/Breast3classes/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
+![Breast3classes Time Evaluation](../../results/Breast3classes/evaluation/plots/time_comparison_raw_seeded_vs_raw_sklearn.png)
+![Breast3classes Time Evaluation](../../results/Breast3classes/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
 
 - **Observation:** Union runs are generally faster than raw runs across wrapper methods.
 - **Explanation:** Union reduces candidate-space size, reducing total model-fit operations.

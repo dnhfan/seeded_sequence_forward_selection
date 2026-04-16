@@ -1,6 +1,6 @@
 # adenocarcinoma Results and Evaluation
 
-[Back to index](results.md)
+[Back to index](../results.md)
 
 ## 1) EDA (Exploratory Data Analysis)
 
@@ -8,7 +8,7 @@
 - `notebook/adenocarcinoma/01_eda.ipynb`
 
 [Insert Chart: EDA Summary]
-![adenocarcinoma EDA](../results/adenocarcinoma/eda/plot/countplot.png)
+![adenocarcinoma EDA](../../results/adenocarcinoma/eda/plot/countplot.png)
 
 ## 2) Data Preprocessing
 
@@ -23,7 +23,7 @@
 - Report artifact: `results/adenocarcinoma/filter/reports/evaluation_adenocarcinoma.txt`
 
 [Insert Chart: Filter Selection Comparison]
-![adenocarcinoma Filter Selection](../results/adenocarcinoma/filter/plots/evaluation_adenocarcinoma.png)
+![adenocarcinoma Filter Selection](../../results/adenocarcinoma/filter/plots/evaluation_adenocarcinoma.png)
 
 ## 4) Modeling (Filter-stage comparison)
 
@@ -40,7 +40,7 @@
 - Top voting features: `V7301(4)`, `V8621(3)`, `V6316(3)`, `V3089(3)`, `V9771(3)`
 
 [Insert Chart: Ensemble Voting / Union Features]
-![adenocarcinoma Ensemble Voting](../results/adenocarcinoma/ensemble/plots/top50_features_voting.png)
+![adenocarcinoma Ensemble Voting](../../results/adenocarcinoma/ensemble/plots/top50_features_voting.png)
 
 ## 6) Wrapper: Sklearn SFS (Raw vs Union execution)
 
@@ -71,8 +71,8 @@
 - `notebook/adenocarcinoma/8_accuracu_evaluate_union.ipynb`
 
 [Insert Chart: Accuracy Comparison Raw vs Union]
-![adenocarcinoma Accuracy Evaluation](../results/adenocarcinoma/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_adenocarcinoma.png)
-![adenocarcinoma Accuracy Evaluation](../results/adenocarcinoma/evaluation/plots/wrapper_sfs_comparison_skraw_seededraw_adenocarcinoma.png)
+![adenocarcinoma Accuracy Evaluation](../../results/adenocarcinoma/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_adenocarcinoma.png)
+![adenocarcinoma Accuracy Evaluation](../../results/adenocarcinoma/evaluation/plots/wrapper_sfs_comparison_skraw_seededraw_adenocarcinoma.png)
 
 - **Observation:** Union sklearn is best in final evaluation despite lower wrapper score than raw sklearn.
 - **Explanation:** Wrapper objective and downstream evaluation objective are correlated but not identical.
@@ -88,8 +88,8 @@
 - `notebook/adenocarcinoma/9_time_evaluate_union.ipynb`
 
 [Insert Chart: Time Comparison Raw vs Union]
-![adenocarcinoma Time Evaluation](../results/adenocarcinoma/evaluation/plots/time_comparison_raw_seeded_vs_raw_sklearn.png)
-![adenocarcinoma Time Evaluation](../results/adenocarcinoma/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
+![adenocarcinoma Time Evaluation](../../results/adenocarcinoma/evaluation/plots/time_comparison_raw_seeded_vs_raw_sklearn.png)
+![adenocarcinoma Time Evaluation](../../results/adenocarcinoma/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
 
 - **Observation:** Union runs are generally faster than raw runs across wrapper methods.
 - **Explanation:** Union reduces candidate-space size, reducing total model-fit operations.

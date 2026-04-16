@@ -1,6 +1,6 @@
 # Tumors9 Results and Evaluation
 
-[Back to index](results.md)
+[Back to index](../results.md)
 
 ## 1) EDA (Exploratory Data Analysis)
 
@@ -8,7 +8,7 @@
 - `notebook/Tumors9/01_eda.ipynb`
 
 [Insert Chart: EDA Summary]
-![Tumors9 EDA](../results/Tumors9/eda/plot/countplot.png)
+![Tumors9 EDA](../../results/Tumors9/eda/plot/countplot.png)
 
 ## 2) Data Preprocessing
 
@@ -36,7 +36,7 @@
 - Top voting features: `V1664(5)`, `V2966(4)`, `V5033(4)`, `V1298(4)`, `V2147(3)`
 
 [Insert Chart: Ensemble Voting / Union Features]
-![Tumors9 Ensemble Voting](../results/Tumors9/ensemble/plots/top50_features_voting.png)
+![Tumors9 Ensemble Voting](../../results/Tumors9/ensemble/plots/top50_features_voting.png)
 
 ## 6) Wrapper: Sklearn SFS (Raw vs Union execution)
 
@@ -67,9 +67,9 @@
 - `notebook/Tumors9/8_accuracu_evaluate_union.ipynb`
 
 [Insert Chart: Accuracy Comparison Raw vs Union]
-![Tumors9 Accuracy Evaluation](../results/Tumors9/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_Tumors9.png)
-![Tumors9 Accuracy Evaluation](../results/Tumors9/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_union_Tumors9.png)
-![Tumors9 Accuracy Evaluation](../results/Tumors9/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_Tumors9.png)
+![Tumors9 Accuracy Evaluation](../../results/Tumors9/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_Tumors9.png)
+![Tumors9 Accuracy Evaluation](../../results/Tumors9/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_union_Tumors9.png)
+![Tumors9 Accuracy Evaluation](../../results/Tumors9/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_Tumors9.png)
 
 - **Observation:** Union seeded improves both wrapper score and final evaluation metrics over raw.
 - **Explanation:** Union aggregation likely strengthens weak multiclass signal concentration.
@@ -85,8 +85,8 @@
 - `notebook/Tumors9/9_time_evaluate_union.ipynb`
 
 [Insert Chart: Time Comparison Raw vs Union]
-![Tumors9 Time Evaluation](../results/Tumors9/evaluation/plots/time_comparison_raw_seeded_vs_raw_sklearn.png)
-![Tumors9 Time Evaluation](../results/Tumors9/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
+![Tumors9 Time Evaluation](../../results/Tumors9/evaluation/plots/time_comparison_raw_seeded_vs_raw_sklearn.png)
+![Tumors9 Time Evaluation](../../results/Tumors9/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
 
 - **Observation:** Union runs are generally faster than raw runs across wrapper methods.
 - **Explanation:** Union reduces candidate-space size, reducing total model-fit operations.

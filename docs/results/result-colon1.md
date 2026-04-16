@@ -1,6 +1,6 @@
 # colon1 Results and Evaluation
 
-[Back to index](results.md)
+[Back to index](../results.md)
 
 ## 1) EDA (Exploratory Data Analysis)
 
@@ -8,7 +8,7 @@
 - `notebook/colon1/01_eda.ipynb`
 
 [Insert Chart: EDA Summary]
-![colon1 EDA](../results/colon1/eda/plot/countplot.png)
+![colon1 EDA](../../results/colon1/eda/plot/countplot.png)
 
 ## 2) Data Preprocessing
 
@@ -23,7 +23,7 @@
 - Report artifact: `results/colon1/filter/reports/evaluation_colon1.txt`
 
 [Insert Chart: Filter Selection Comparison]
-![colon1 Filter Selection](../results/colon1/filter/plots/evaluation_colon1.png)
+![colon1 Filter Selection](../../results/colon1/filter/plots/evaluation_colon1.png)
 
 ## 4) Modeling (Filter-stage comparison)
 
@@ -40,7 +40,7 @@
 - Top voting features: `T95018(5)`, `M63391(5)`, `M76378(4)`, `T60155(4)`, `M22382(4)`
 
 [Insert Chart: Ensemble Voting / Union Features]
-![colon1 Ensemble Voting](../results/colon1/ensemble/plots/top50_features_voting.png)
+![colon1 Ensemble Voting](../../results/colon1/ensemble/plots/top50_features_voting.png)
 
 ## 6) Wrapper: Sklearn SFS (Raw vs Union execution)
 
@@ -71,8 +71,8 @@
 - `notebook/colon1/8_accuracu_evaluate_union.ipynb`
 
 [Insert Chart: Accuracy Comparison Raw vs Union]
-![colon1 Accuracy Evaluation](../results/colon1/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_colon1.png)
-![colon1 Accuracy Evaluation](../results/colon1/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_colon1.png)
+![colon1 Accuracy Evaluation](../../results/colon1/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_colon1.png)
+![colon1 Accuracy Evaluation](../../results/colon1/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_colon1.png)
 
 - **Observation:** Score improves strongly in early iterations and then plateaus near 0.9346.
 - **Explanation:** Early selected candidates add strong signal; later candidates contribute marginal gain.
@@ -90,8 +90,8 @@
 - `notebook/colon1/9_time_evaluate_union.ipynb`
 
 [Insert Chart: Time Comparison Raw vs Union]
-![colon1 Time Evaluation](../results/colon1/evaluation/plots/time_comparison_raw_seeded_vs_raw_sklearn.png)
-![colon1 Time Evaluation](../results/colon1/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
+![colon1 Time Evaluation](../../results/colon1/evaluation/plots/time_comparison_raw_seeded_vs_raw_sklearn.png)
+![colon1 Time Evaluation](../../results/colon1/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
 
 - **Observation:** Union runs are generally faster than raw runs across wrapper methods.
 - **Explanation:** Union reduces candidate-space size, reducing total model-fit operations.

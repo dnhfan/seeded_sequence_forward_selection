@@ -1,6 +1,6 @@
 # SRBCT_txt Results and Evaluation
 
-[Back to index](results.md)
+[Back to index](../results.md)
 
 ## 1) EDA (Exploratory Data Analysis)
 
@@ -8,7 +8,7 @@
 - `notebook/SRBCT_txt/01_eda.ipynb`
 
 [Insert Chart: EDA Summary]
-![SRBCT_txt EDA](../results/SRBCT_txt/eda/plot/countplot.png)
+![SRBCT_txt EDA](../../results/SRBCT_txt/eda/plot/countplot.png)
 
 ## 2) Data Preprocessing
 
@@ -23,7 +23,7 @@
 - Report artifact: `results/SRBCT_txt/filter/reports/evaluation_SRBCT_txt.txt`
 
 [Insert Chart: Filter Selection Comparison]
-![SRBCT_txt Filter Selection](../results/SRBCT_txt/filter/plots/evaluation_SRBCT_txt.png)
+![SRBCT_txt Filter Selection](../../results/SRBCT_txt/filter/plots/evaluation_SRBCT_txt.png)
 
 ## 4) Modeling (Filter-stage comparison)
 
@@ -40,7 +40,7 @@
 - Top voting features: `V510(5)`, `V546(5)`, `V247(5)`, `V1956(5)`, `V1955(5)`
 
 [Insert Chart: Ensemble Voting / Union Features]
-![SRBCT_txt Ensemble Voting](../results/SRBCT_txt/ensemble/plots/top50_features_voting.png)
+![SRBCT_txt Ensemble Voting](../../results/SRBCT_txt/ensemble/plots/top50_features_voting.png)
 
 ## 6) Wrapper: Sklearn SFS (Raw vs Union execution)
 
@@ -71,8 +71,8 @@
 - `notebook/SRBCT_txt/8_accuracu_evaluate_union.ipynb`
 
 [Insert Chart: Accuracy Comparison Raw vs Union]
-![SRBCT_txt Accuracy Evaluation](../results/SRBCT_txt/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_SRBCT_txt.png)
-![SRBCT_txt Accuracy Evaluation](../results/SRBCT_txt/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_SRBCT_txt.png)
+![SRBCT_txt Accuracy Evaluation](../../results/SRBCT_txt/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_SRBCT_txt.png)
+![SRBCT_txt Accuracy Evaluation](../../results/SRBCT_txt/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_SRBCT_txt.png)
 
 - **Observation:** Accuracy remains constant while union runtime decreases substantially.
 - **Explanation:** Union filtering does not remove core predictive features for this dataset.
@@ -88,8 +88,8 @@
 - `notebook/SRBCT_txt/9_time_evaluate_union.ipynb`
 
 [Insert Chart: Time Comparison Raw vs Union]
-![SRBCT_txt Time Evaluation](../results/SRBCT_txt/evaluation/plots/time_comparison_raw_seeded_vs_raw_sklearn.png)
-![SRBCT_txt Time Evaluation](../results/SRBCT_txt/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
+![SRBCT_txt Time Evaluation](../../results/SRBCT_txt/evaluation/plots/time_comparison_raw_seeded_vs_raw_sklearn.png)
+![SRBCT_txt Time Evaluation](../../results/SRBCT_txt/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
 
 - **Observation:** Union runs are generally faster than raw runs across wrapper methods.
 - **Explanation:** Union reduces candidate-space size, reducing total model-fit operations.

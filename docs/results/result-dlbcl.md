@@ -1,6 +1,6 @@
 # DLBCL Results and Evaluation
 
-[Back to index](results.md)
+[Back to index](../results.md)
 
 ## 1) EDA (Exploratory Data Analysis)
 
@@ -8,7 +8,7 @@
 - `notebook/DLBCL/01_eda.ipynb`
 
 [Insert Chart: EDA Summary]
-![DLBCL EDA](../results/DLBCL/eda/plot/countplot.png)
+![DLBCL EDA](../../results/DLBCL/eda/plot/countplot.png)
 
 ## 2) Data Preprocessing
 
@@ -23,7 +23,7 @@
 - Report artifact: `results/DLBCL/filter/reports/evaluation_DLBCL.txt`
 
 [Insert Chart: Filter Selection Comparison]
-![DLBCL Filter Selection](../results/DLBCL/filter/plots/evaluation_DLBCL.png)
+![DLBCL Filter Selection](../../results/DLBCL/filter/plots/evaluation_DLBCL.png)
 
 ## 4) Modeling (Filter-stage comparison)
 
@@ -40,7 +40,7 @@
 - Top voting features: `V3128(5)`, `V4553(5)`, `V1056(4)`, `V1601(4)`, `V3468(4)`
 
 [Insert Chart: Ensemble Voting / Union Features]
-![DLBCL Ensemble Voting](../results/DLBCL/ensemble/plots/top50_features_voting.png)
+![DLBCL Ensemble Voting](../../results/DLBCL/ensemble/plots/top50_features_voting.png)
 
 ## 6) Wrapper: Sklearn SFS (Raw vs Union execution)
 
@@ -71,9 +71,9 @@
 - `notebook/DLBCL/8_accuracu_evaluate_union.ipynb`
 
 [Insert Chart: Accuracy Comparison Raw vs Union]
-![DLBCL Accuracy Evaluation](../results/DLBCL/evaluation/plots/wrapper_sfs_comparison_DLBCL.png)
-![DLBCL Accuracy Evaluation](../results/DLBCL/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_DLBCL.png)
-![DLBCL Accuracy Evaluation](../results/DLBCL/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_DLBCL.png)
+![DLBCL Accuracy Evaluation](../../results/DLBCL/evaluation/plots/wrapper_sfs_comparison_DLBCL.png)
+![DLBCL Accuracy Evaluation](../../results/DLBCL/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_DLBCL.png)
+![DLBCL Accuracy Evaluation](../../results/DLBCL/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_DLBCL.png)
 
 - **Observation:** Near-ceiling performance is reached with 2-3 features.
 - **Explanation:** Predictive signal is concentrated in a compact feature subset.
@@ -90,9 +90,9 @@
 - `notebook/DLBCL/9_time_evaluate_union.ipynb`
 
 [Insert Chart: Time Comparison Raw vs Union]
-![DLBCL Time Evaluation](../results/DLBCL/evaluation/plots/time_comparison_raw_seeded_vs_raw_sklearn.png)
-![DLBCL Time Evaluation](../results/DLBCL/evaluation/plots/time_comparison_seeded3_vs_sklearn_brain.png)
-![DLBCL Time Evaluation](../results/DLBCL/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
+![DLBCL Time Evaluation](../../results/DLBCL/evaluation/plots/time_comparison_raw_seeded_vs_raw_sklearn.png)
+![DLBCL Time Evaluation](../../results/DLBCL/evaluation/plots/time_comparison_seeded3_vs_sklearn_brain.png)
+![DLBCL Time Evaluation](../../results/DLBCL/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
 
 - **Observation:** Union runs are generally faster than raw runs across wrapper methods.
 - **Explanation:** Union reduces candidate-space size, reducing total model-fit operations.

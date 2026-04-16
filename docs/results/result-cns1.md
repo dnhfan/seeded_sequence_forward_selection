@@ -1,6 +1,6 @@
 # CNS1 Results and Evaluation
 
-[Back to index](results.md)
+[Back to index](../results.md)
 
 ## 1) EDA (Exploratory Data Analysis)
 
@@ -8,7 +8,7 @@
 - `notebook/CNS1/01_eda.ipynb`
 
 [Insert Chart: EDA Summary]
-![CNS1 EDA](../results/CNS1/eda/plot/countplot.png)
+![CNS1 EDA](../../results/CNS1/eda/plot/countplot.png)
 
 ## 2) Data Preprocessing
 
@@ -23,7 +23,7 @@
 - Report artifact: `results/CNS1/filter/reports/evaluation_CNS1.txt`
 
 [Insert Chart: Filter Selection Comparison]
-![CNS1 Filter Selection](../results/CNS1/filter/plots/evaluation_CNS1.png)
+![CNS1 Filter Selection](../../results/CNS1/filter/plots/evaluation_CNS1.png)
 
 ## 4) Modeling (Filter-stage comparison)
 
@@ -40,7 +40,7 @@
 - Top voting features: `1053(4)`, `6041(4)`, `4307(4)`, `1477(4)`, `653(4)`
 
 [Insert Chart: Ensemble Voting / Union Features]
-![CNS1 Ensemble Voting](../results/CNS1/ensemble/plots/top50_features_voting.png)
+![CNS1 Ensemble Voting](../../results/CNS1/ensemble/plots/top50_features_voting.png)
 
 ## 6) Wrapper: Sklearn SFS (Raw vs Union execution)
 
@@ -71,8 +71,8 @@
 - `notebook/CNS1/8_accuracu_evaluate_union.ipynb`
 
 [Insert Chart: Accuracy Comparison Raw vs Union]
-![CNS1 Accuracy Evaluation](../results/CNS1/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_CNS1.png)
-![CNS1 Accuracy Evaluation](../results/CNS1/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_CNS1.png)
+![CNS1 Accuracy Evaluation](../../results/CNS1/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_CNS1.png)
+![CNS1 Accuracy Evaluation](../../results/CNS1/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_CNS1.png)
 
 - **Observation:** Raw seeded reaches higher wrapper score but requires much longer runtime.
 - **Explanation:** Raw search evaluates a larger candidate space than union.
@@ -88,8 +88,8 @@
 - `notebook/CNS1/9_time_evaluate_union.ipynb`
 
 [Insert Chart: Time Comparison Raw vs Union]
-![CNS1 Time Evaluation](../results/CNS1/evaluation/plots/time_comparison_raw_seeded_vs_raw_sklearn.png)
-![CNS1 Time Evaluation](../results/CNS1/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
+![CNS1 Time Evaluation](../../results/CNS1/evaluation/plots/time_comparison_raw_seeded_vs_raw_sklearn.png)
+![CNS1 Time Evaluation](../../results/CNS1/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
 
 - **Observation:** Union runs are generally faster than raw runs across wrapper methods.
 - **Explanation:** Union reduces candidate-space size, reducing total model-fit operations.

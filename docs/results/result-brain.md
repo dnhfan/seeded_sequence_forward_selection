@@ -1,6 +1,6 @@
 # Brain Results and Evaluation
 
-[Back to index](results.md)
+[Back to index](../results.md)
 
 ## 1) EDA (Exploratory Data Analysis)
 
@@ -8,7 +8,7 @@
 - `notebook/Brain/01_eda.ipynb`
 
 [Insert Chart: EDA Summary]
-![Brain EDA](../results/Brain/eda/plot/countplot.png)
+![Brain EDA](../../results/Brain/eda/plot/countplot.png)
 
 ## 2) Data Preprocessing
 
@@ -23,7 +23,7 @@
 - Report artifact: `results/Brain/filter/reports/filter_compare_50features_Brain.txt`
 
 [Insert Chart: Filter Selection Comparison]
-![Brain Filter Selection](../results/Brain/filter/plots/filter_compare_50features_Brain.png)
+![Brain Filter Selection](../../results/Brain/filter/plots/filter_compare_50features_Brain.png)
 
 ## 4) Modeling (Filter-stage comparison)
 
@@ -41,7 +41,7 @@
 - Top voting features: `V1893(5)`, `V523(4)`, `V541(4)`, `V1050(3)`, `V2332(3)`
 
 [Insert Chart: Ensemble Voting / Union Features]
-![Brain Ensemble Voting](../results/Brain/ensemble/plot/top50_features_voting.png)
+![Brain Ensemble Voting](../../results/Brain/ensemble/plot/top50_features_voting.png)
 
 ## 6) Wrapper: Sklearn SFS (Raw vs Union execution)
 
@@ -72,8 +72,8 @@
 - `notebook/Brain/08_accuracy_evaluate_union.ipynb`
 
 [Insert Chart: Accuracy Comparison Raw vs Union]
-![Brain Accuracy Evaluation](../results/Brain/evaluation/plots/evaluation_Brain.png)
-![Brain Accuracy Evaluation](../results/Brain/evaluation/plots/wrapper_sfs_comparison_union_Brain.png)
+![Brain Accuracy Evaluation](../../results/Brain/evaluation/plots/evaluation_Brain.png)
+![Brain Accuracy Evaluation](../../results/Brain/evaluation/plots/wrapper_sfs_comparison_union_Brain.png)
 
 - **Observation:** Score trajectory shows stepwise improvements with intermittent regressions.
 - **Explanation:** Feature interactions are non-monotonic; global-best tracking preserves optimal subset.
@@ -90,8 +90,8 @@
 - `notebook/Brain/9_time_evaluate_union.ipynb`
 
 [Insert Chart: Time Comparison Raw vs Union]
-![Brain Time Evaluation](../results/Brain/evaluation/plots/time_comparison_seeded3_vs_sklearn_brain.png)
-![Brain Time Evaluation](../results/Brain/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
+![Brain Time Evaluation](../../results/Brain/evaluation/plots/time_comparison_seeded3_vs_sklearn_brain.png)
+![Brain Time Evaluation](../../results/Brain/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
 
 - **Observation:** Union runs are generally faster than raw runs across wrapper methods.
 - **Explanation:** Union reduces candidate-space size, reducing total model-fit operations.
