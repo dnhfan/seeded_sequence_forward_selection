@@ -6,6 +6,7 @@ _Read in [English](04_wrapper_seeded_sfs.md)._
 Pipeline này chạy thuật toán Seeded Forward Selection tùy biến, khởi tạo từ các seed features do ensemble voting đề xuất và mở rộng tập đặc trưng theo chiến lược greedy với điểm CV. Thiết kế này giúp tăng hiệu quả tìm kiếm và độ ổn định so với forward selection khởi tạo ngẫu nhiên/không seed.
 
 Bạn có thể đọc chi tiết hơn về thuật toán này ở [SeededForwardSelection](../seeded_sfs_core_vi.md)
+
 **2. Đầu vào:**
 
 - DataFrame đầu vào: cột đầu là target, các cột sau là features.
