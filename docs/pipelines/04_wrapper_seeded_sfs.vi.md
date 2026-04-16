@@ -1,4 +1,4 @@
-# Pipeline Wrapper - Seeded Forward Selection (Seeded SFS) Tùy Biến
+# Pipeline Wrapper - Custom Seeded Forward Selection (Seeded SFS)
 
 _Read in [English](04_wrapper_seeded_sfs.md)._
 
