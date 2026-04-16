@@ -1,4 +1,6 @@
 # Wrapper Pipeline - Custom Seeded Forward Selection (Seeded SFS)
+_Read in [Vietnamese](04_wrapper_seeded_sfs.vi.md)._ 
+
 **1. Overview / Purpose:**  
 This pipeline executes a custom Seeded Forward Selection algorithm that starts from ensemble-voted seed features and expands feature subsets greedily using cross-validated performance. It is designed to improve search efficiency and stability compared to blind forward selection.
 

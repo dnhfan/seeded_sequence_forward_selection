@@ -1,4 +1,6 @@
 # Filter Selection Pipeline
+_Read in [Vietnamese](01_filter_selection.vi.md)._ 
+
 **1. Overview / Purpose:**  
 This pipeline performs the first-stage feature reduction using multiple filter-based methods. Its purpose is to quickly remove weak or redundant features before expensive wrapper methods run, while preserving diverse candidate signals for later ensemble voting and SFS.
 

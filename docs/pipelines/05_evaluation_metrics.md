@@ -1,4 +1,6 @@
 # Evaluation Metrics Pipeline (Accuracy + Fit Time, Raw vs Union)
+_Read in [Vietnamese](05_evaluation_metrics.vi.md)._ 
+
 **1. Overview / Purpose:**  
 This pipeline evaluates and compares feature-selection outcomes across methods, models, and data variants (Raw vs Union). It reports predictive performance (accuracy statistics) and training efficiency (fit time), enabling fair comparison between Seeded SFS and Sklearn SFS.
 

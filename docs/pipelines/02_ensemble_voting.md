@@ -1,4 +1,6 @@
 # Ensemble Voting Pipeline
+_Read in [Vietnamese](02_ensemble_voting.vi.md)._ 
+
 **1. Overview / Purpose:**  
 This pipeline aggregates selected features from multiple filter methods and applies a vote-count mechanism to identify robust "seed" features. The purpose is to create a consensus ranking that initializes Seeded SFS with strong starting points.
 
