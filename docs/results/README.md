@@ -45,5 +45,4 @@ You can find out how we evaluate in [5.Evaluation](../pipelines/05_evaluation_me
 
 ## Notes
 
-- Missing wrapper metrics: `results/CNS1/wrapper/union/sklearnsfsselector/run_20260412_115642`
 - Brain report naming/reference mismatch remains in source artifacts.

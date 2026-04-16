@@ -205,4 +205,5 @@ chart_title=f"Sklearn sfs({sk_data_variant}) vs Seeded sfs({data_variant}) Perfo
 ## Mục Lục Tài Liệu
 
 Bạn có thể xem cách từng **pipeline** hoạt động tại [Pipeline Documentation](./docs/pipelines/README.md)
+
 Bạn có thể xem **kết quả** tại [Results Report](./docs/results/README.md)

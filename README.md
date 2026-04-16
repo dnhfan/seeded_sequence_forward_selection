@@ -205,4 +205,5 @@ chart_title=f"Sklearn sfs({sk_data_variant}) vs Seeded sfs({data_variant}) Perfo
 ## Documentation Index
 
 You can find out how each **pipeline** work at [Pipeline Documentation](./docs/pipelines/README.md)
+
 You can look at the **results** in [Results Report](./docs/results/README.md)

@@ -5,7 +5,7 @@ _Read this in [English](README.md)_
 Tài liệu tổng quan này tách báo cáo tổng hợp trước đây thành một file riêng cho từng dataset.
 Bạn có thể xem cách đánh giá tại [5.Evaluation](../pipelines/05_evaluation_metrics.md)
 
-## Tóm Tắt Điều Hành
+## Tóm Tắt
 
 | Dataset        | Biến thể tốt nhất | Phương pháp/Mô hình tốt nhất | Accuracy trung bình |        Std | Số đặc trưng chọn | Wrapper global best score | Thời gian fit wrapper (ms) |
 | -------------- | ----------------: | ---------------------------- | ------------------: | ---------: | ----------------: | ------------------------: | -------------------------: |
@@ -45,5 +45,4 @@ Bạn có thể xem cách đánh giá tại [5.Evaluation](../pipelines/05_evalu
 
 ## Ghi Chú
 
-- Thiếu wrapper metrics: `results/CNS1/wrapper/union/sklearnsfsselector/run_20260412_115642`
 - Vẫn còn lệch tên/tham chiếu báo cáo Brain trong source artifacts.
