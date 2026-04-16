@@ -88,12 +88,16 @@
 
 **Caption:**
 - Purpose: Compare accuracy across wrapper configurations (Sklearn SFS and Seeded SFS) for each data variant.
-- How to read: The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
+- How to read:
+  - The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
+  - Vertical black lines (error bars) show Standard Deviation across cross-validation folds. Shorter bars indicate more stable model performance.
 ![Brain Accuracy Evaluation](../../results/Brain/evaluation/plots/wrapper_sfs_comparison_union_Brain.png)
 
 **Caption:**
 - Purpose: Compare accuracy across wrapper configurations (Sklearn SFS and Seeded SFS) for each data variant.
-- How to read: The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
+- How to read:
+  - The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
+  - Vertical black lines (error bars) show Standard Deviation across cross-validation folds. Shorter bars indicate more stable model performance.
 
 - **Observation:** Score trajectory shows stepwise improvements with intermittent regressions.
 - **Explanation:** Feature interactions are non-monotonic; global-best tracking preserves optimal subset.

@@ -87,12 +87,16 @@
 
 **Caption:**
 - Purpose: Compare accuracy across wrapper configurations (Sklearn SFS and Seeded SFS) for each data variant.
-- How to read: The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
+- How to read:
+  - The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
+  - Vertical black lines (error bars) show Standard Deviation across cross-validation folds. Shorter bars indicate more stable model performance.
 ![Leukemia_4c1 Accuracy Evaluation](../../results/Leukemia_4c1/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_Leukemia_4c1.png)
 
 **Caption:**
 - Purpose: Compare accuracy across wrapper configurations (Sklearn SFS and Seeded SFS) for each data variant.
-- How to read: The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
+- How to read:
+  - The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
+  - Vertical black lines (error bars) show Standard Deviation across cross-validation folds. Shorter bars indicate more stable model performance.
 
 - **Observation:** Class distribution is explicitly visualized before feature engineering steps.
 - **Explanation:** Early imbalance detection helps interpret downstream metric variance and model bias.

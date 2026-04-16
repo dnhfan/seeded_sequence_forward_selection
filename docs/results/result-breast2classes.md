@@ -92,12 +92,16 @@
 
 **Caption:**
 - Purpose: Compare accuracy across wrapper configurations (Sklearn SFS and Seeded SFS) for each data variant.
-- How to read: The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
+- How to read:
+  - The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
+  - Vertical black lines (error bars) show Standard Deviation across cross-validation folds. Shorter bars indicate more stable model performance.
 ![Breast2classes Accuracy Evaluation](../../results/Breast2classes/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_Breast2classes.png)
 
 **Caption:**
 - Purpose: Compare accuracy across wrapper configurations (Sklearn SFS and Seeded SFS) for each data variant.
-- How to read: The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
+- How to read:
+  - The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
+  - Vertical black lines (error bars) show Standard Deviation across cross-validation folds. Shorter bars indicate more stable model performance.
 
 - **Observation:** Raw seeded performs materially better than union seeded in evaluation.
 - **Explanation:** Discriminative information appears spread beyond union-restricted candidates.

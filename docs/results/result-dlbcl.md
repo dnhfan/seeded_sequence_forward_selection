@@ -87,17 +87,23 @@
 
 **Caption:**
 - Purpose: Compare accuracy across wrapper configurations (Sklearn SFS and Seeded SFS) for each data variant.
-- How to read: The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
+- How to read:
+  - The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
+  - Vertical black lines (error bars) show Standard Deviation across cross-validation folds. Shorter bars indicate more stable model performance.
 ![DLBCL Accuracy Evaluation](../../results/DLBCL/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_DLBCL.png)
 
 **Caption:**
 - Purpose: Compare accuracy across wrapper configurations (Sklearn SFS and Seeded SFS) for each data variant.
-- How to read: The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
+- How to read:
+  - The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
+  - Vertical black lines (error bars) show Standard Deviation across cross-validation folds. Shorter bars indicate more stable model performance.
 ![DLBCL Accuracy Evaluation](../../results/DLBCL/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_DLBCL.png)
 
 **Caption:**
 - Purpose: Compare accuracy across wrapper configurations (Sklearn SFS and Seeded SFS) for each data variant.
-- How to read: The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
+- How to read:
+  - The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
+  - Vertical black lines (error bars) show Standard Deviation across cross-validation folds. Shorter bars indicate more stable model performance.
 
 - **Observation:** Near-ceiling performance is reached with 2-3 features.
 - **Explanation:** Predictive signal is concentrated in a compact feature subset.

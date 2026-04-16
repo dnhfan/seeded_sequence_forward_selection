@@ -87,12 +87,16 @@
 
 **Caption:**
 - Purpose: Compare accuracy across wrapper configurations (Sklearn SFS and Seeded SFS) for each data variant.
-- How to read: The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
+- How to read:
+  - The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
+  - Vertical black lines (error bars) show Standard Deviation across cross-validation folds. Shorter bars indicate more stable model performance.
 ![Leukemia_3c1 Accuracy Evaluation](../../results/Leukemia_3c1/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_Leukemia_3c1.png)
 
 **Caption:**
 - Purpose: Compare accuracy across wrapper configurations (Sklearn SFS and Seeded SFS) for each data variant.
-- How to read: The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
+- How to read:
+  - The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
+  - Vertical black lines (error bars) show Standard Deviation across cross-validation folds. Shorter bars indicate more stable model performance.
 
 - **Observation:** Accuracy is effectively unchanged across methods and variants.
 - **Explanation:** The dataset is separable with a very small number of features.
