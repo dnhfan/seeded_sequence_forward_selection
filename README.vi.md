@@ -2,13 +2,13 @@
 
 _Read this in [English](README.md)_
 
-Đây là pipeline chọn đặc trưng theo hướng end-to-end, vận hành bằng script, cho nhiều bộ dữ liệu ung thư, gồm:
+Repository này cung cấp pipeline chọn đặc trưng end-to-end, chạy bằng script, cho nhiều bộ dữ liệu ung thư, bao gồm:
 
 - Các phương pháp Filter (variance, correlation, chi-squared, mutual information, ANOVA)
 - Các phương pháp Wrapper (Sklearn SFS, Seeded SFS)
 - Hai biến thể dữ liệu: Raw và Union
 
-**Lưu ý:** _Seeded SFS_ là hướng lai (hybrid), kết hợp giữa Filter + Wrapper.
+**Lưu ý:** _Seeded SFS_ là hướng lai (hybrid), kết hợp Filter + Wrapper.
 
 ## Mục Lục
 
@@ -19,27 +19,30 @@ _Read this in [English](README.md)_
   - [1) Chạy các notebook giai đoạn (EDA -> Ensemble)](#1-chạy-các-notebook-giai-đoạn-eda---ensemble)
   - [2) Chạy wrapper scripts (raw + union)](#2-chạy-wrapper-scripts-raw--union)
   - [3) Chạy notebook đánh giá](#3-chạy-notebook-đánh-giá)
-- [Quy Ước Đầu Ra Wrapper](#quy-ước-đầu-ra-wrapper)
 - [Quy Tắc Biến Thể (Raw vs Union)](#quy-tắc-biến-thể-raw-vs-union)
-- [Lưu Ý Quan Trọng](#lưu-ý-quan-trọng)
+- [Các Điểm Vào Nguồn Chính](#các-điểm-vào-nguồn-chính)
+- [Các Lưu Ý Thường Gặp](#các-lưu-ý-thường-gặp)
 - [Mục Lục Tài Liệu](#mục-lục-tài-liệu)
+
+---
 
 ## Các Giai Đoạn Pipeline End-to-End
 
 ![graph](./docs/graph.png)
+
 Mỗi dataset đi qua các bước sau:
 
 1. EDA
 2. Preprocess (có thể khác nhau tùy dataset)
 3. Filter Selection
-4. Modeling (so sánh kết quả ở tầng filter)
-5. Ensemble Filter (voting + tạo bộ đặc trưng union)
+4. Modeling (so sánh ở tầng filter)
+5. Ensemble Filter (voting + tập đặc trưng union)
 6. Wrapper: Sklearn SFS (raw/union)
 7. Wrapper: Seeded SFS (raw/union)
 8. Accuracy Evaluation (raw/union)
 9. Time Evaluation (raw/union)
 
-Bố cục dữ liệu xử lý theo chuẩn:
+Bố cục dữ liệu đã xử lý theo chuẩn:
 
 - `data/processed/<dataset>/01_clean`
 - `data/processed/<dataset>/02_filter`
@@ -48,7 +51,7 @@ Bố cục dữ liệu xử lý theo chuẩn:
 
 ## Cấu Trúc Thư Mục
 
-Bố cục cấp cao (đã lược giản các phần quan trọng):
+Bố cục cấp cao (lược gọn các đường dẫn quan trọng):
 
 ```text
 .
@@ -88,8 +91,7 @@ Bố cục cấp cao (đã lược giản các phần quan trọng):
 ├── README.md
 ├── README.vi.md
 ├── requirements.txt
-├── run_sfs.sh
-└── run_all_sklearn_sfs.sh
+└── run_sfs.sh
 ```
 
 ---
@@ -122,7 +124,7 @@ Ví dụ thư mục dataset:
 
 - `notebook/colon1/`
 
-Thường sẽ có các file:
+Các file thường gặp:
 
 - `01_eda.ipynb`
 - `02_preprocess.ipynb`
@@ -130,7 +132,7 @@ Thường sẽ có các file:
 - `04_modeling.ipynb`
 - `05_esemble_filter.ipynb`
 
-**note**: Tên file chưa đồng nhất hoàn toàn giữa các dataset (ví dụ `8_accuracu...`, `08_accuracy...`, `7_.../8_...` trong `Lung_cancer`).
+Tên file chưa đồng nhất hoàn toàn giữa các dataset (ví dụ `8_accuracu...`, `08_accuracy...`, và `7_.../8_...` trong `Lung_cancer`).
 
 ## 2) Chạy wrapper scripts (raw + union)
 
@@ -143,7 +145,7 @@ python notebook/colon1/06_sklearn_sfs-union.py
 python notebook/colon1/07_sfs-union.py
 ```
 
-Bạn có thể dùng script hỗ trợ:
+Bạn cũng có thể dùng script hỗ trợ:
 
 ```bash
 bash run_sfs.sh --list
@@ -161,31 +163,12 @@ bash run_all_sklearn_sfs.sh
 
 ## 3) Chạy notebook đánh giá
 
-Mỗi dataset cần chạy:
+Với mỗi dataset, chạy:
 
 - Notebook so sánh Accuracy (`8_...evaluate...ipynb` hoặc `08_...`)
 - Notebook so sánh Time (`9_time_evaluate...ipynb` hoặc `8_time...` trong `Lung_cancer`)
 
 Cả hai biến thể raw và union đều có sẵn.
-
----
-
-## Quy Ước Đầu Ra Wrapper
-
-Mỗi lần chạy wrapper được lưu theo cấu trúc:
-
-`results/<dataset>/wrapper/<variant>/<algorithm>/run_YYYYMMDD_HHMMSS[_tag]/`
-
-Mỗi run gồm:
-
-- `history/`
-- `features/`
-- `metrics/`
-- `artifacts/`
-
-Notebook đánh giá thời gian sử dụng:
-
-- `metrics/metrics.csv` với cột `total_fit_time_ms`
 
 ---
 
@@ -202,12 +185,24 @@ chart_title=f"Sklearn sfs({sk_data_variant}) vs Seeded sfs({data_variant}) Perfo
 
 ---
 
-## Lưu Ý Quan Trọng
+## Các Điểm Vào Nguồn Chính
 
-- Tên notebook không đồng nhất giữa các dataset; giữ đúng convention của từng thư mục.
-- Nhiều notebook được sửa trực tiếp dạng JSON; tránh thay đổi metadata/id không cần thiết.
-- Wrapper scripts phụ thuộc `sys.path` injection; nên chạy từ repo root.
+- Quy ước path và cấu trúc thư mục: `src/config.py` (`ProjectPath`)
+- Quy ước output wrapper: `src/utils/experiment_paths.py`, `src/wrapper/base.py`
+- Logic đánh giá: `src/modeling/evaluation.py`
+- Tạo union features: `src/utils/utils.py` (`create_union_features`)
+
+---
+
+## Các Lưu Ý Thường Gặp
+
+- Tên notebook không đồng nhất giữa các dataset; giữ đúng convention tại từng thư mục.
+- Nhiều notebook được chỉnh trực tiếp dạng JSON; tránh thay đổi metadata/id không cần thiết.
+- Wrapper scripts phụ thuộc `sys.path` injection, nên chạy từ repo root.
 
 ---
 
 ## Mục Lục Tài Liệu
+
+Bạn có thể xem cách từng **pipeline** hoạt động tại [Pipeline Documentation](./docs/pipelines/README.md)
+Bạn có thể xem **kết quả** tại [Results Report](./docs/results.md)

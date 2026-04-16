@@ -19,10 +19,8 @@ This repository provides an end-to-end, script-driven feature selection pipeline
   - [1) Run notebook stages (EDA -> Ensemble)](#1-run-notebook-stages-eda---ensemble)
   - [2) Run wrapper scripts (raw + union)](#2-run-wrapper-scripts-raw--union)
   - [3) Run evaluation notebooks](#3-run-evaluation-notebooks)
-- [Wrapper Output Contract](#wrapper-output-contract)
 - [Variant Rules (Raw vs Union)](#variant-rules-raw-vs-union)
 - [Key Source Entry Points](#key-source-entry-points)
-- [Quick Verification Commands](#quick-verification-commands)
 - [Known Gotchas](#known-gotchas)
 - [Documentation Index](#documentation-index)
 
@@ -174,25 +172,6 @@ Both raw and union variants are available.
 
 ---
 
-## Wrapper Output Contract
-
-Wrapper runs are stored as:
-
-`results/<dataset>/wrapper/<variant>/<algorithm>/run_YYYYMMDD_HHMMSS[_tag]/`
-
-Each run contains:
-
-- `history/`
-- `features/`
-- `metrics/`
-- `artifacts/`
-
-Time-evaluation notebooks consume:
-
-- `metrics/metrics.csv` with column `total_fit_time_ms`
-
----
-
 ## Variant Rules (Raw vs Union)
 
 - Keep raw and union artifacts strictly separated via `dataset_variant` (`raw`, `union`).
@@ -224,3 +203,6 @@ chart_title=f"Sklearn sfs({sk_data_variant}) vs Seeded sfs({data_variant}) Perfo
 ---
 
 ## Documentation Index
+
+You can find out how each **pipeline** work at [Pipeline Documentation](./docs/pipelines/README.md)
+You can look at the **results** in [Results Report](./docs/results.md)
