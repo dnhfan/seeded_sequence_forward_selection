@@ -10,6 +10,10 @@
 [Insert Chart: EDA Summary]
 ![Lymphoma EDA](../../results/Lymphoma/eda/plot/countplot.png)
 
+**Caption:**
+- Purpose: Check whether the dataset is imbalanced.
+- How to read: The x-axis (V1) shows class labels (0 and 1), and the y-axis (count) shows the number of samples in each class.
+
 ## 2) Data Preprocessing
 
 - Notebook entry point(s):
@@ -24,6 +28,10 @@
 
 [Insert Chart: Filter Selection Comparison]
 ![Lymphoma Filter Selection](../../results/Lymphoma/filter/plots/evaluation_Lymphoma.png)
+
+**Caption:**
+- Purpose: Compare filter-method performance to select the best feature set for the next stage.
+- How to read: The x-axis lists filter methods, and the y-axis shows evaluation scores; higher bars/scores indicate better methods.
 
 ## 4) Modeling (Filter-stage comparison)
 
@@ -41,6 +49,10 @@
 
 [Insert Chart: Ensemble Voting / Union Features]
 ![Lymphoma Ensemble Voting](../../results/Lymphoma/ensemble/plots/top50_features_voting.png)
+
+**Caption:**
+- Purpose: Show agreement among filter methods when voting for features.
+- How to read: The x-axis lists feature names, and the y-axis shows vote counts; features with higher votes are prioritized.
 
 ## 6) Wrapper: Sklearn SFS (Raw vs Union execution)
 
@@ -72,7 +84,15 @@
 
 [Insert Chart: Accuracy Comparison Raw vs Union]
 ![Lymphoma Accuracy Evaluation](../../results/Lymphoma/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_Lymphoma.png)
+
+**Caption:**
+- Purpose: Compare accuracy across wrapper configurations (Sklearn SFS and Seeded SFS) for each data variant.
+- How to read: The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
 ![Lymphoma Accuracy Evaluation](../../results/Lymphoma/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_Lymphoma.png)
+
+**Caption:**
+- Purpose: Compare accuracy across wrapper configurations (Sklearn SFS and Seeded SFS) for each data variant.
+- How to read: The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
 
 - **Observation:** Leading methods achieve ceiling-level performance in both variants.
 - **Explanation:** Class separation remains strong after both raw and union feature pipelines.
@@ -89,7 +109,15 @@
 
 [Insert Chart: Time Comparison Raw vs Union]
 ![Lymphoma Time Evaluation](../../results/Lymphoma/evaluation/plots/time_comparison_seeded_vs_sklearn.png)
+
+**Caption:**
+- Purpose: Compare training-time cost across wrapper methods on the same dataset.
+- How to read: The x-axis shows methods/configurations, and the y-axis shows total fit time (ms); lower bars mean faster runtime.
 ![Lymphoma Time Evaluation](../../results/Lymphoma/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
+
+**Caption:**
+- Purpose: Compare training-time cost across wrapper methods on the same dataset.
+- How to read: The x-axis shows methods/configurations, and the y-axis shows total fit time (ms); lower bars mean faster runtime.
 
 - **Observation:** Union runs are generally faster than raw runs across wrapper methods.
 - **Explanation:** Union reduces candidate-space size, reducing total model-fit operations.
