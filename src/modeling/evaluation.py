@@ -249,12 +249,12 @@ class ModelEvaluator:
             n_folds=("Acc", "count"),
         )
         summary_df = cast(pd.DataFrame, summary_df)
-        summary_df = summary_df.sort_values(by="std_accuracy", ascending=True)
+        summary_df["std_accuracy"] = summary_df["std_accuracy"].fillna(0.0)
+
         summary_df = summary_df.sort_values(
             by="mean_accuracy", ascending=False
         ).reset_index(drop=True)
 
-        summary_df["std_accuracy"] = summary_df["std_accuracy"].fillna(0.0)
         summary_df["cv_stability"] = 1.0 - summary_df["std_accuracy"]
         summary_df["rank"] = (
             summary_df["mean_accuracy"]
@@ -269,7 +269,7 @@ class ModelEvaluator:
             f.write("MODEL EVALUATION REPORT\n")
             f.write(f"generated_at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
             f.write(
-                f"experiment_id: {save_prefix}_{self.data_name}_{self.timestamp.replace('-', '')}\n"
+                f"experiment_id: {save_prefix}_{self.data_name}_{self.timestamp.replace('-', '').replace('_', '')}\n"
             )
             f.write(f"dataset: {self.data_name}\n")
             f.write(f"experiment_prefix: {experiment_prefix}\n")
@@ -332,7 +332,7 @@ class ModelEvaluator:
             f.write("\n" + "-" * 120 + "\n")
         print(f"󰎞 Report saved at: {report_path}")
 
-        return result_df
+        return fold_level_df
 
     def evaluate_custom_file(
         self, file_path: str, method_label: str, n_splits: int = 5
@@ -358,7 +358,7 @@ class ModelEvaluator:
         output_name: str = "time_comparison_seeded_vs_sklearn.png",
         algorithm_labels: Tuple[str, str] = ("SeededSFS", "SklearnSFS"),
         save_dir: Optional[str | Path] = None,
-        show_plot: bool = True,
+        show_plot: bool = False,
     ) -> pd.DataFrame:
         """
         Compare fit time between SeededSFS and SklearnSFS using metrics CSV files.
@@ -390,8 +390,8 @@ class ModelEvaluator:
             {
                 "algorithm": [algorithm_labels[0], algorithm_labels[1]],
                 "total_fit_time_ms": [
-                    float(seeded_df.loc[0, required_column]),
-                    float(sklearn_df.loc[0, required_column]),
+                    float(seeded_df[required_column].iloc[0]),
+                    float(sklearn_df[required_column].iloc[0]),
                 ],
             }
         )
