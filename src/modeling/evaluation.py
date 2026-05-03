@@ -54,7 +54,9 @@ class ModelEvaluator:
         self.use_scaler = use_scaler
         self.path = ProjectPath(data_name, n_features)
 
-        self.results: List[Dict[str, Any]] = []
+        self.fold_results: List[Dict[str, Any]] = []
+        self.model_results: List[Dict[str, Any]] = []
+
         self.timestamp: str = datetime.now().strftime("%Y-%m-%d")
 
         # path
@@ -112,10 +114,12 @@ class ModelEvaluator:
         for model_name, model in models.items():
             # cross_validate will auto fit and predict
             scores = cross_validate(model, X, y, cv=cv, scoring=scoring, n_jobs=-1)
+            test_accuracy = scores["test_accuracy"]
+            mean_acc = test_accuracy.mean()
 
             # 4. Store the result of each fold
             for i in range(cv.get_n_splits()):
-                self.results.append(
+                self.fold_results.append(
                     {
                         "Method": method_name,
                         "Model": model_name,
@@ -123,9 +127,17 @@ class ModelEvaluator:
                         "Acc": scores["test_accuracy"][i],
                     }
                 )
-
-            mean_acc = scores["test_accuracy"].mean()
-            self.results.append({"Mean Acc": mean_acc})
+            self.model_results.append(
+                {
+                    "Method": method_name,
+                    "Model": model_name,
+                    "mean_acc": mean_acc,
+                    "std": test_accuracy.std(),
+                    "min": test_accuracy.min(),
+                    "max": test_accuracy.max(),
+                    "n_folds": len(test_accuracy),
+                }
+            )
 
             print(f"󰄭  [{method_name:<12}] {model_name:<8} | Acc: {mean_acc:.4f} ")
 
@@ -176,11 +188,11 @@ class ModelEvaluator:
             Optional[pd.DataFrame]: A DataFrame containing all evaluation metrics, or None if no data.
         """
 
-        if not self.results:
+        if not self.fold_results:
             print(" NO results. Aborting report generation.")
             return None
 
-        result_df = pd.DataFrame(self.results)
+        result_df = pd.DataFrame(self.fold_results)
         fold_level_df = cast(
             pd.DataFrame, result_df[["Method", "Model", "Fold", "Acc"]].dropna()
         )
@@ -429,7 +441,8 @@ class ModelEvaluator:
         Dọn sạch danh sách kết quả cũ trong bộ nhớ (RAM).
         Dùng khi muốn dùng lại class này cho một thí nghiệm hoàn toàn mới.
         """
-        self.results = []
+        self.fold_results = []
+        self.model_results = []
         # Cập nhật lại timestamp để tên file mới không đè lên file cũ
         self.timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         print("\n Cleaned result. Ready for new experiment!")
