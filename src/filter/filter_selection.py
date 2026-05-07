@@ -183,13 +183,14 @@ class FeatureFilter:
         print(f" Saved filtered data csv in {save_path}")
         print(f"󰓫 New size of the dataset: {df_output.shape}")
 
-    def save_metrics(self, data_name: str, output_dir: str = "results") -> Path:
+    def save_metrics(self, data_name: str, output_dir: str = "results", append: bool = True) -> Path:
         """
         Save metrics to a CSV file in results/{data_name}/filter/metrics/metrics.csv
 
         Args:
             data_name: Name of the dataset
             output_dir: Base output directory (default: "results")
+            append: If True, append to existing file; if False, overwrite (default: True)
 
         Returns:
             Path to the saved metrics file
@@ -206,6 +207,12 @@ class FeatureFilter:
 
         if metrics_list:
             df_metrics = pd.DataFrame(metrics_list)
+            
+            # Check if file exists and append mode is enabled
+            if metrics_file.exists() and append:
+                existing_df = pd.read_csv(metrics_file)
+                df_metrics = pd.concat([existing_df, df_metrics], ignore_index=True)
+            
             df_metrics.to_csv(metrics_file, index=False)
             print(f" Saved metrics to {metrics_file}")
         else:
