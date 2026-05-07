@@ -1,0 +1,6 @@
+algorithm,elapsed_ms,n_features_selected
+variance,176.2586830009241,50
+correlation,6508.722376995138,50
+chi_squared,410.0370130036026,50
+mutual_information,24543.532290001167,50
+anova_f_test,33.49782900477294,50
