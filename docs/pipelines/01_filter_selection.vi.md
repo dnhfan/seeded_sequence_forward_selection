@@ -19,32 +19,35 @@ Pipeline này thực hiện bước giảm chiều đặc trưng ban đầu bằ
     - `anova_f_test`
   - `random_state` (dùng cho MI)
 - Mã nguồn chính:
-  - `src/filter/filter_selection.py`
-  - `src/filter/filter_algorithms.py`
+   - `src/filter/filter_selection.py`
+   - `src/filter/filter_algorithms.py`
+   - `src/utils/Timer.py` (`TimerContext` — dùng để đo thời gian thực tế (wall-clock) từng phương pháp)
 
 **3. Logic thực thi từng bước:**  
 1. **Khởi tạo bộ chọn (`FeatureFilter`)**  
-   Pipeline tạo `FeatureFilter(method, n_features, random_state)`.  
-   Class này kiểm tra method hợp lệ và chuẩn bị trạng thái nội bộ (`selected_features_`, `feature_scores_`).
+    Pipeline tạo `FeatureFilter(method, n_features, random_state)`.  
+    Class này kiểm tra method hợp lệ và chuẩn bị trạng thái nội bộ (`selected_features_`, `feature_scores_`, `metrics_`).
 
 2. **Tách dữ liệu thành `X` và `y`**  
    Nhãn mục tiêu được tách riêng vì nhiều phương pháp lọc là supervised (cần nhãn), trong khi variance là unsupervised.
 
 3. **Chạy logic chấm điểm theo từng phương pháp**  
-   Tùy `method`, pipeline gọi đúng thuật toán:
-   - **Variance (`calc_variance`)**: tính phương sai từng đặc trưng và xếp hạng giảm dần.
-   - **Correlation (`calc_correlation`)**:  
-     a) tạo ma trận tương quan tuyệt đối giữa các đặc trưng,  
-     b) loại cột tương quan quá cao (`|corr| > 0.95`),  
-     c) xếp hạng phần còn lại bằng ANOVA F-score theo nhãn.  
-     Cách này giúp tránh chọn quá nhiều đặc trưng gần như trùng thông tin.
-   - **Chi-squared (`calc_chi_squared`)**:  
-     a) kiểm tra giá trị âm,  
-     b) nếu có âm thì chuẩn hóa `MinMaxScaler` về miền không âm,  
-     c) tính điểm chi2 bằng `SelectKBest`.  
-     Bước này đảm bảo đúng giả định của chi-squared.
-   - **Mutual Information (`calc_mutual_info`)**: ước lượng mức phụ thuộc phi tuyến giữa từng đặc trưng và nhãn bằng `mutual_info_classif`.
-   - **ANOVA F-test (`calc_anova`)**: tính F-statistics với `SelectKBest(f_classif)`.
+    Tùy `method`, pipeline gọi đúng thuật toán:
+    - **Variance (`calc_variance`)**: tính phương sai từng đặc trưng và xếp hạng giảm dần.
+    - **Correlation (`calc_correlation`)**:  
+      a) tạo ma trận tương quan tuyệt đối giữa các đặc trưng,  
+      b) loại cột tương quan quá cao (`|corr| > 0.95`),  
+      c) xếp hạng phần còn lại bằng ANOVA F-score theo nhãn.  
+      Cách này giúp tránh chọn quá nhiều đặc trưng gần như trùng thông tin.
+    - **Chi-squared (`calc_chi_squared`)**:  
+      a) kiểm tra giá trị âm,  
+      b) nếu có âm thì chuẩn hóa `MinMaxScaler` về miền không âm,  
+      c) tính điểm chi2 bằng `SelectKBest`.  
+      Bước này đảm bảo đúng giả định của chi-squared.
+    - **Mutual Information (`calc_mutual_info`)**: ước lượng mức phụ thuộc phi tuyến giữa từng đặc trưng và nhãn bằng `mutual_info_classif`.
+    - **ANOVA F-test (`calc_anova`)**: tính F-statistics với `SelectKBest(f_classif)`.
+
+    Mỗi phương pháp dispatch được bao bọc trong `TimerContext` để ghi lại thời gian dùng tính bằng mili giây. Sau khi mỗi phương pháp hoàn tất, một entry metrics `{algorithm, elapsed_ms, n_features_selected}` được lưu vào `self.metrics_`.
 
 4. **Chọn top-k đặc trưng**  
    Với mỗi method, đặc trưng được xếp theo score và giữ lại top `n_features`.  
@@ -55,17 +58,27 @@ Pipeline này thực hiện bước giảm chiều đặc trưng ban đầu bằ
    `fit_transform()` chạy fit + transform trong một lần gọi.
 
 6. **Lưu CSV sau lọc**  
-   `save_filtered_data()` ghép lại `[target + selected features]` rồi lưu vào:  
-   `data/processed/<dataset>/02_filter/<dataset>_<method>_<n_features>features.csv`
+    `save_filtered_data()` ghép lại `[target + selected features]` rồi lưu vào:  
+    `data/processed/<dataset>/02_filter/<dataset>_<method>_<n_features>features.csv`
+
+7. **Lưu metrics thời gian (tùy chọn)**  
+    `save_metrics(data_name, output_dir, append=True)` xuất `metrics_` vào:  
+    `results/<dataset>/filter/metrics/metrics.csv`  
+    Mỗi hàng chứa `algorithm`, `elapsed_ms`, và `n_features_selected` cho lần chạy đó.  
+    - Nếu `append=True` (mặc định) và file đã tồn tại, các hàng mới được nối thêm vào CSV hiện có thay vì ghi đè. Điều này cho phép tích lũy metrics qua nhiều lần chạy `FeatureFilter` (ví dụ, chạy cả 5 phương pháp tuần tự và thu thập kết quả vào một file).  
+    - Nếu `append=False`, file bị ghi đè mỗi lần.
 
 **4. Đầu ra / Artifacts:**  
 - Một file CSV sau lọc cho mỗi method trong `02_filter/`:
-  - Ví dụ: `data/processed/colon1/02_filter/colon1_anova_f_test_50features.csv`
+   - Ví dụ: `data/processed/colon1/02_filter/colon1_anova_f_test_50features.csv`
 - Trạng thái trong bộ nhớ sau khi fit:
-  - `selected_features_` (danh sách đặc trưng đã chọn theo thứ tự)
-  - `feature_scores_` (map đặc trưng -> điểm)
-  - scaler tùy chọn cho nhánh chi2
+   - `selected_features_` (danh sách đặc trưng đã chọn theo thứ tự)
+   - `feature_scores_` (map đặc trưng -> điểm)
+   - `metrics_` (dict timing cho mỗi thuật toán: `{algorithm, elapsed_ms, n_features_selected}`)
+   - scaler tùy chọn cho nhánh chi2
+- Optional timing artifact:
+   - `results/<dataset>/filter/metrics/metrics.csv` (được ghi bởi `save_metrics()`)
 - Các file sau lọc này là đầu vào cho:
-  - Ensemble voting (`03_ensemble`)
-  - Tạo Union features
-  - Đánh giá baseline cho nhóm filter methods
+   - Ensemble voting (`03_ensemble`)
+   - Tạo Union features
+   - Đánh giá baseline cho nhóm filter methods

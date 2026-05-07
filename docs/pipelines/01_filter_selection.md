@@ -20,11 +20,12 @@ This pipeline performs the first-stage feature reduction using multiple filter-b
 - Core implementation:
   - `src/filter/filter_selection.py`
   - `src/filter/filter_algorithms.py`
+  - `src/utils/Timer.py` (`TimerContext` — used to measure per-method wall-clock time)
 
 **3. Step-by-Step Execution Logic:**  
 1. **Initialize the selector (`FeatureFilter`)**  
    The pipeline creates `FeatureFilter(method, n_features, random_state)`.  
-   It validates the method name and prepares internal state (`selected_features_`, `feature_scores_`).
+   It validates the method name and prepares internal state (`selected_features_`, `feature_scores_`, `metrics_`).
 
 2. **Split input data into `X` and `y`**  
    The target stays separate because several filters are supervised (need labels), while variance is unsupervised.
@@ -45,6 +46,8 @@ This pipeline performs the first-stage feature reduction using multiple filter-b
    - **Mutual Information (`calc_mutual_info`)**: estimate non-linear dependency between each feature and target using `mutual_info_classif`.
    - **ANOVA F-test (`calc_anova`)**: compute F-statistics with `SelectKBest(f_classif)`.
 
+   Each method dispatch is wrapped in a `TimerContext` that records elapsed time in milliseconds. After each method completes, a metrics entry `{algorithm, elapsed_ms, n_features_selected}` is stored in `self.metrics_`.
+
 4. **Select top-k features**  
    For each method, features are sorted by score and top `n_features` are retained.  
    If requested `n_features` exceeds available features, it is clipped safely.
@@ -57,13 +60,23 @@ This pipeline performs the first-stage feature reduction using multiple filter-b
    `save_filtered_data()` reconstructs `[target + selected features]` and writes to:  
    `data/processed/<dataset>/02_filter/<dataset>_<method>_<n_features>features.csv`
 
+7. **Persist timing metrics (optional)**  
+   `save_metrics(data_name, output_dir, append=True)` exports `metrics_` to:  
+   `results/<dataset>/filter/metrics/metrics.csv`  
+   Each row contains `algorithm`, `elapsed_ms`, and `n_features_selected` for that run.  
+   - If `append=True` (default) and the file already exists, new rows are concatenated onto the existing CSV rather than overwriting it. This allows accumulating metrics across multiple `FeatureFilter` runs (e.g., running all 5 methods sequentially and collecting results in one file).  
+   - If `append=False`, the file is overwritten each time.
+
 **4. Outputs / Artifacts:**  
 - One filtered CSV per method in `02_filter/`:
   - Example: `data/processed/colon1/02_filter/colon1_anova_f_test_50features.csv`
 - In-memory artifacts after fit:
   - `selected_features_` (ordered selected feature names)
   - `feature_scores_` (feature -> score mapping)
+  - `metrics_` (per-algorithm timing dict: `{algorithm, elapsed_ms, n_features_selected}`)
   - optional scaler object for chi2 path
+- Optional timing artifact:
+  - `results/<dataset>/filter/metrics/metrics.csv` (written by `save_metrics()`)
 - These per-method filtered files become inputs for:
   - Ensemble voting (`03_ensemble`)
   - Union feature generation
