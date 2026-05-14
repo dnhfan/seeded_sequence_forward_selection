@@ -2,7 +2,7 @@ import os
 import platform
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple, cast
+from typing import Any, Dict, List, Optional, Sequence, Tuple, cast
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -179,10 +179,20 @@ class ModelEvaluator:
         experiment_prefix: str = "evaluation",
         chart_title: str = "Model Performance Comparison",
         report_metadata: Optional[Dict[str, Any]] = None,
+        figsize: Optional[Tuple[int, int]] = None,
+        horizontal: Optional[bool] = None,
     ) -> Optional[pd.DataFrame]:
         """
         Compiles the evaluation results into a DataFrame, generates a comparison bar chart,
         and exports a text report.
+
+        Args:
+            experiment_prefix (str): Prefix for saved artifacts.
+            chart_title (str): Title of the chart.
+            report_metadata (Optional[Dict[str, Any]]): Additional metadata for the report.
+            figsize (Optional[Tuple[int, int]]): Custom figure size (width, height). Auto-sized if None.
+            horizontal (Optional[bool]): Use horizontal barplot (y-axis = methods).
+                                         Auto-detect if None: True if methods > 6, else False.
 
         Returns:
             Optional[pd.DataFrame]: A DataFrame containing all evaluation metrics, or None if no data.
@@ -211,34 +221,130 @@ class ModelEvaluator:
 
         # --- Generates Chart ---
         sns.set_theme(style="whitegrid")
-        plt.figure(figsize=(10, 7))
-        ax = sns.barplot(
-            data=fold_level_df, x="Method", y="Acc", hue="Model", palette="pastel"
-        )
+
+        # Auto-detect horizontal layout if not specified
+        n_methods = fold_level_df["Method"].nunique()
+        use_horizontal = horizontal if horizontal is not None else (n_methods > 6)
+
+        # Auto-size figsize if not provided
+        if figsize is None:
+            if use_horizontal:
+                figsize = (10, int(max(4, 3 + n_methods * 0.8)))
+            else:
+                figsize = (int(max(12, 6 + n_methods * 1.2)), 7)
+
+        plt.figure(figsize=figsize)
+
+        if use_horizontal:
+            ax = sns.barplot(
+                data=fold_level_df,
+                y="Method",
+                x="Acc",
+                hue="Model",
+                palette="pastel",
+                orient="h",
+            )
+            x_label = "Accuracy Score"
+            y_label = "Feature Selection Method"
+        else:
+            ax = sns.barplot(
+                data=fold_level_df, x="Method", y="Acc", hue="Model", palette="pastel"
+            )
+            x_label = "Feature Selection Method"
+            y_label = "Accuracy Score"
+            plt.xticks(rotation=45, ha="right", fontweight="bold")
 
         acc_series = cast(pd.Series, fold_level_df["Acc"])
         min_acc = float(acc_series.min())
         max_acc = float(acc_series.max())
-        y_min = max(0.0, min_acc - 0.05)
-        y_max = min(1.05, max_acc + 0.08)
 
+        if use_horizontal:
+            x_min = max(0.0, min_acc - 0.05)
+            x_max = min(1.05, max_acc + 0.08)
+            ax.set_xlim(x_min, x_max)
+        else:
+            y_min = max(0.0, min_acc - 0.05)
+            y_max = min(1.1, max_acc + 0.12)  # thêm khoảng cho label xoay
+            ax.set_ylim(y_min, y_max)
+
+        # --- Smart bar labels, tránh overlap ---
         for container in ax.containers:
-            if isinstance(container, BarContainer):
-                ax.bar_label(
-                    container, fmt="%.4f", padding=3, fontsize=9, color="black"
-                )
+            if not isinstance(container, BarContainer):
+                continue
+            for bar in container:
+                if use_horizontal:
+                    x = bar.get_width()
+                    if not x or x != x:
+                        continue
+
+                    y_center = bar.get_y() + bar.get_height() / 2
+                    label_x = x
+
+                    # Tìm đường error bar tương ứng với thanh hiện tại
+                    for line in ax.lines:
+                        # Ép kiểu ArrayLike thành Sequence[float] cho Pyright
+                        y_data = cast(Sequence[float], line.get_ydata())
+                        if len(y_data) > 0 and abs(y_data[0] - y_center) < 1e-4:
+                            x_data = cast(Sequence[float], line.get_xdata())
+                            label_x = max(label_x, max(x_data))
+                            break
+
+                    ax.annotate(
+                        f"{x:.4f}",
+                        xy=(label_x, y_center),
+                        xytext=(4, 0),
+                        textcoords="offset points",
+                        va="center",
+                        ha="left",
+                        fontsize=7,
+                        color="black",
+                    )
+                else:
+                    y = bar.get_height()
+                    if not y or y != y:
+                        continue
+
+                    x_center = bar.get_x() + bar.get_width() / 2
+                    label_y = y
+
+                    # Tìm đường error bar tương ứng cho biểu đồ dọc
+                    for line in ax.lines:
+                        # Ép kiểu ArrayLike thành Sequence[float] cho Pyright
+                        x_data = cast(Sequence[float], line.get_xdata())
+                        if len(x_data) > 0 and abs(x_data[0] - x_center) < 1e-4:
+                            y_data = cast(Sequence[float], line.get_ydata())
+                            label_y = max(label_y, max(y_data))
+                            break
+
+                    ax.annotate(
+                        f"{y:.4f}",
+                        xy=(x_center, label_y),
+                        xytext=(0, 3),
+                        textcoords="offset points",
+                        va="bottom",
+                        ha="left",
+                        fontsize=7,
+                        color="black",
+                        rotation=45,
+                        rotation_mode="anchor",
+                    )
 
         plt.title(f"{chart_title} ({self.data_name})")
-        ax.set_ylim(y_min, y_max)
-        plt.ylabel("Accuracy Score")
-        plt.xlabel("Feature Selection Method")
-        plt.xticks(rotation=45, ha="right", fontweight="bold")
-        plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
+        plt.ylabel(y_label)
+        plt.xlabel(x_label)
+
+        if use_horizontal:
+            plt.legend(
+                bbox_to_anchor=(0.5, -0.12), loc="upper center", ncol=2, frameon=True
+            )
+        else:
+            plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
+
         plt.tight_layout()
 
         plt.savefig(plot_path, dpi=300, bbox_inches="tight")
         plt.close()
-        print(f" Chart saved at: {plot_path}")
+        print(f" Chart saved at: {plot_path}")
 
         summary_df = fold_level_df.groupby(["Method", "Model"], as_index=False).agg(
             mean_accuracy=("Acc", "mean"),
@@ -322,7 +428,7 @@ class ModelEvaluator:
             ).round(4)
 
             for method_name, group_df in fold_report_df.groupby("Method", sort=False):
-                f.write(f" Method: {method_name} \n")
+                f.write(f" Method: {method_name} \n")
 
                 clean_df = group_df.drop(columns=["Method"])
                 f.write(clean_df.to_string(index=False))
