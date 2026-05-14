@@ -36,9 +36,9 @@ def main():
     df_final = wrapper.run_sfs(
         df=df,
         max_features="auto",
-        model="dt",
+        model="log",
         scoring="accuracy",
-        cv=4,
+        cv=5,
     )
 
     # View data
