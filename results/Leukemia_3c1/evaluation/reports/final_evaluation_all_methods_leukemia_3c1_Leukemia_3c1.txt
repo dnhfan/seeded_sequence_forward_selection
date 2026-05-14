@@ -1,0 +1,177 @@
+MODEL EVALUATION REPORT
+generated_at: 2026-05-15 03:59:39
+experiment_id: final_evaluation_all_methods_leukemia_3c1_Leukemia_3c1_20260515
+dataset: Leukemia_3c1
+experiment_prefix: final_evaluation_all_methods_Leukemia_3c1
+feature_count: 50
+logreg_max_iter: 4000
+python_version: 3.12.12
+pandas_version: 3.0.1
+sklearn_version: 1.8.0
+
+ARTIFACTS
+plot_path: results/Leukemia_3c1/evaluation/plots/final_evaluation_all_methods_leukemia_3c1_Leukemia_3c1.png
+report_path: results/Leukemia_3c1/evaluation/reports/final_evaluation_all_methods_leukemia_3c1_Leukemia_3c1.txt
+
+EXECUTIVE SUMMARY
+best_configuration: method=ANOVA_F_TEST, model=LogReg, mean_accuracy=0.9724, std=0.0379, folds=5
+total_configurations: 20 | total_fold_evaluations: 100
+
+CROSS-VALIDATION SUMMARY (ranked)
+------------------------------------------------------------------------------------------------------------------------
+ rank             Method  Model  mean_accuracy  std_accuracy  median_accuracy  min_accuracy  max_accuracy  n_folds  cv_stability
+    1       ANOVA_F_TEST LogReg         0.9724        0.0379           1.0000        0.9286           1.0        5        0.9621
+    1        CHI_SQUARED LogReg         0.9724        0.0379           1.0000        0.9286           1.0        5        0.9621
+    1 MUTUAL_INFORMATION LogReg         0.9724        0.0379           1.0000        0.9286           1.0        5        0.9621
+    2     Seeded_SFS_Raw   Tree         0.9600        0.0894           1.0000        0.8000           1.0        5        0.9106
+    2  Sklearn_SFS_Union   Tree         0.9600        0.0894           1.0000        0.8000           1.0        5        0.9106
+    2   Seeded_SFS_Union   Tree         0.9600        0.0894           1.0000        0.8000           1.0        5        0.9106
+    2    Sklearn_SFS_Raw   Tree         0.9600        0.0894           1.0000        0.8000           1.0        5        0.9106
+    3        CORRELATION LogReg         0.9590        0.0602           1.0000        0.8667           1.0        5        0.9398
+    4               None LogReg         0.9457        0.0871           1.0000        0.8000           1.0        5        0.9129
+    5           VARIANCE LogReg         0.9448        0.0564           0.9286        0.8667           1.0        5        0.9436
+    6           VARIANCE   Tree         0.9171        0.0883           0.9286        0.8000           1.0        5        0.9117
+    7   Seeded_SFS_Union LogReg         0.8781        0.1084           0.9286        0.7333           1.0        5        0.8916
+    7  Sklearn_SFS_Union LogReg         0.8781        0.1084           0.9286        0.7333           1.0        5        0.8916
+    7     Seeded_SFS_Raw LogReg         0.8781        0.1084           0.9286        0.7333           1.0        5        0.8916
+    7    Sklearn_SFS_Raw LogReg         0.8781        0.1084           0.9286        0.7333           1.0        5        0.8916
+    8        CORRELATION   Tree         0.8610        0.1116           0.8571        0.7143           1.0        5        0.8884
+    9 MUTUAL_INFORMATION   Tree         0.8476        0.1240           0.8571        0.7143           1.0        5        0.8760
+    9        CHI_SQUARED   Tree         0.8476        0.1132           0.7857        0.7333           1.0        5        0.8868
+   10       ANOVA_F_TEST   Tree         0.8467        0.1368           0.8571        0.6429           1.0        5        0.8632
+   11               None   Tree         0.8200        0.1424           0.7857        0.6667           1.0        5        0.8576
+
+FOLD-LEVEL RESULTS (for auditability)
+------------------------------------------------------------------------------------------------------------------------
+ Method: ANOVA_F_TEST 
+ Model  Fold    Acc
+LogReg     1 0.9333
+LogReg     2 1.0000
+LogReg     3 1.0000
+LogReg     4 1.0000
+LogReg     5 0.9286
+  Tree     1 0.8000
+  Tree     2 0.9333
+  Tree     3 0.6429
+  Tree     4 1.0000
+  Tree     5 0.8571
+
+ Method: CHI_SQUARED 
+ Model  Fold    Acc
+LogReg     1 0.9333
+LogReg     2 1.0000
+LogReg     3 1.0000
+LogReg     4 1.0000
+LogReg     5 0.9286
+  Tree     1 0.7333
+  Tree     2 0.9333
+  Tree     3 0.7857
+  Tree     4 1.0000
+  Tree     5 0.7857
+
+ Method: CORRELATION 
+ Model  Fold    Acc
+LogReg     1 0.8667
+LogReg     2 1.0000
+LogReg     3 1.0000
+LogReg     4 1.0000
+LogReg     5 0.9286
+  Tree     1 0.8000
+  Tree     2 0.9333
+  Tree     3 0.7143
+  Tree     4 1.0000
+  Tree     5 0.8571
+
+ Method: MUTUAL_INFORMATION 
+ Model  Fold    Acc
+LogReg     1 0.9333
+LogReg     2 1.0000
+LogReg     3 1.0000
+LogReg     4 1.0000
+LogReg     5 0.9286
+  Tree     1 0.7333
+  Tree     2 0.9333
+  Tree     3 0.7143
+  Tree     4 1.0000
+  Tree     5 0.8571
+
+ Method: None 
+ Model  Fold    Acc
+LogReg     1 0.8000
+LogReg     2 1.0000
+LogReg     3 1.0000
+LogReg     4 1.0000
+LogReg     5 0.9286
+  Tree     1 0.6667
+  Tree     2 0.9333
+  Tree     3 0.7143
+  Tree     4 1.0000
+  Tree     5 0.7857
+
+ Method: Seeded_SFS_Raw 
+ Model  Fold    Acc
+LogReg     1 0.7333
+LogReg     2 0.8000
+LogReg     3 1.0000
+LogReg     4 0.9286
+LogReg     5 0.9286
+  Tree     1 0.8000
+  Tree     2 1.0000
+  Tree     3 1.0000
+  Tree     4 1.0000
+  Tree     5 1.0000
+
+ Method: Seeded_SFS_Union 
+ Model  Fold    Acc
+LogReg     1 0.7333
+LogReg     2 0.8000
+LogReg     3 1.0000
+LogReg     4 0.9286
+LogReg     5 0.9286
+  Tree     1 0.8000
+  Tree     2 1.0000
+  Tree     3 1.0000
+  Tree     4 1.0000
+  Tree     5 1.0000
+
+ Method: Sklearn_SFS_Raw 
+ Model  Fold    Acc
+LogReg     1 0.7333
+LogReg     2 0.8000
+LogReg     3 1.0000
+LogReg     4 0.9286
+LogReg     5 0.9286
+  Tree     1 0.8000
+  Tree     2 1.0000
+  Tree     3 1.0000
+  Tree     4 1.0000
+  Tree     5 1.0000
+
+ Method: Sklearn_SFS_Union 
+ Model  Fold    Acc
+LogReg     1 0.7333
+LogReg     2 0.8000
+LogReg     3 1.0000
+LogReg     4 0.9286
+LogReg     5 0.9286
+  Tree     1 0.8000
+  Tree     2 1.0000
+  Tree     3 1.0000
+  Tree     4 1.0000
+  Tree     5 1.0000
+
+ Method: VARIANCE 
+ Model  Fold    Acc
+LogReg     1 0.8667
+LogReg     2 1.0000
+LogReg     3 0.9286
+LogReg     4 0.9286
+LogReg     5 1.0000
+  Tree     1 0.8000
+  Tree     2 1.0000
+  Tree     3 0.9286
+  Tree     4 1.0000
+  Tree     5 0.8571
+
+
+------------------------------------------------------------------------------------------------------------------------
