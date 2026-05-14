@@ -1,0 +1,9 @@
+{
+  "dataset": "Breast2classes",
+  "dataset_variant": "union",
+  "n_features_selected": 5,
+  "global_best_score": 0.82,
+  "total_fit_time_ms": 17069.623190007405,
+  "run_root": "results/Breast2classes/wrapper/union/sklearnsfsselector/run_20260515_002917",
+  "engine": "sklearn"
+}

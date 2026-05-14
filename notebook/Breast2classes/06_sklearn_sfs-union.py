@@ -48,9 +48,7 @@ def main():
     df_final = wrapper.run_sfs(
         df=df,
         max_features="auto",
-        patience=3,
-        n_seeds=1,
-        model="logistic",
+        model="dt",
         scoring="accuracy",
         engine="sklearn",
         cv=5,
