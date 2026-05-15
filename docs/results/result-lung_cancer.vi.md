@@ -129,3 +129,31 @@ _Đọc bản tiếng Anh tại [result-lung_cancer.md](result-lung_cancer.md)_
 - **Quan sát:** Các lần chạy union thường nhanh hơn raw trên hầu hết phương pháp wrapper.
 - **Giải thích:** Union làm giảm không gian ứng viên, từ đó giảm tổng số lần fit mô hình.
 - **Kết luận:** Dùng union để lặp thử nhanh; dùng raw khi cần tối đa hóa wrapper score.
+
+
+## 10) Đánh Giá Cuối Cùng (So Sánh Tất Cả Phương Pháp)
+
+- Điểm vào notebook:
+- `notebook/Lung_cancer/10_final_evaluate.ipynb`
+- Báo cáo: `results/Lung_cancer/evaluation/reports/final_evaluation_all_methods_lung_cancer_Lung_cancer.txt`
+
+[Biểu Đồ: Đánh Giá Cuối Cùng - Tất Cả Phương Pháp]
+![Lung_cancer Final Evaluation](../../results/Lung_cancer/evaluation/plots/final_evaluation_all_methods_lung_cancer_Lung_cancer.png)
+
+**Chú Thích:**
+- Mục đích: So sánh tất cả phương pháp lựa chọn đặc trưng (Filter, Ensemble, Sklearn SFS, Seeded SFS) với cả hai mô hình LogReg và Tree.
+- Cách đọc:
+  - Trục X liệt kê tất cả các kết hợp phương pháp/mô hình (ví dụ: "Sklearn_SFS_Raw + LogReg").
+  - Trục Y hiển thị độ chính xác cross-validation; các cột cao hơn cho biết hiệu suất tốt hơn.
+  - Các thanh lỗi dọc hiển thị độ lệch chuẩn (Std) trên các fold; các thanh ngắn hơn chỉ ra mô hình ổn định hơn.
+
+| Xếp Hạng | Phương Pháp + Mô Hình | CV Fold | Accuracy Trung Bình | Std | Median | Min | Max |
+|---|---|---:|---:|---:|---:|---:|---:|
+| 1 | CHI_SQUARED + LogReg | 5 | 0.9784 | 0.0102 | 0.9712 | 0.9712 | 0.9928 |
+| 2 | CORRELATION + LogReg | 5 | 0.9770 | 0.0200 | 0.9856 | 0.9496 | 1.0000 |
+| 3 | ANOVA_F_TEST + LogReg | 5 | 0.9741 | 0.0173 | 0.9784 | 0.9496 | 0.9928 |
+
+**Quan Sát Chính:**
+- Cấu hình tốt nhất: CHI_SQUARED + LogReg với độ chính xác 0.9784 (σ=0.0102)
+- Xếp thứ hai: CORRELATION + LogReg với độ chính xác 0.9770
+- Khuyến nghị: Xem so sánh chi tiết trong biểu đồ và tệp báo cáo ở trên.

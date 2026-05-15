@@ -126,3 +126,31 @@
 - **Observation:** Union runs are generally faster than raw runs across wrapper methods.
 - **Explanation:** Union reduces candidate-space size, reducing total model-fit operations.
 - **Takeaway:** Use union for rapid iteration; use raw when chasing peak wrapper score.
+
+
+## 10) Final Evaluation (All Methods Comparison)
+
+- Notebook entry point(s):
+- `notebook/Leukemia_3c1/10_final_evaluate.ipynb`
+- Report artifact: `results/Leukemia_3c1/evaluation/reports/final_evaluation_all_methods_leukemia_3c1_Leukemia_3c1.txt`
+
+[Insert Chart: Final Evaluation - All Methods]
+![Leukemia_3c1 Final Evaluation](../../results/Leukemia_3c1/evaluation/plots/final_evaluation_all_methods_leukemia_3c1_Leukemia_3c1.png)
+
+**Caption:**
+- Purpose: Compare all feature selection methods (Filter, Ensemble, Sklearn SFS, Seeded SFS) with both LogReg and Tree models.
+- How to read:
+  - The x-axis lists all method/model combinations (e.g., "Sklearn_SFS_Raw + LogReg").
+  - The y-axis shows cross-validation accuracy; higher bars indicate better performance.
+  - Vertical error bars show Standard Deviation across folds; shorter bars indicate more stable models.
+
+| Rank | Method + Model | CV Folds | Mean Accuracy | Std | Median | Min | Max |
+|---|---|---:|---:|---:|---:|---:|---:|
+| 1 | ANOVA_F_TEST + LogReg | 5 | 0.9724 | 0.0379 | 1.0000 | 0.9286 | 1.0000 |
+| 2 | CHI_SQUARED + LogReg | 5 | 0.9724 | 0.0379 | 1.0000 | 0.9286 | 1.0000 |
+| 3 | MUTUAL_INFORMATION + LogReg | 5 | 0.9724 | 0.0379 | 1.0000 | 0.9286 | 1.0000 |
+
+**Key Observations:**
+- Best configuration: ANOVA_F_TEST + LogReg with 0.9724 accuracy (σ=0.0379)
+- Second best: CHI_SQUARED + LogReg with 0.9724 accuracy
+- Recommendation: See detailed comparison in the plot and report file above.

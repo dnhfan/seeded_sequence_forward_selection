@@ -128,3 +128,31 @@ _Đọc bản tiếng Anh tại [result-nci.md](result-nci.md)_
 - **Quan sát:** Các lần chạy union thường nhanh hơn raw trên hầu hết phương pháp wrapper.
 - **Giải thích:** Union làm giảm không gian ứng viên, từ đó giảm tổng số lần fit mô hình.
 - **Kết luận:** Dùng union để lặp thử nhanh; dùng raw khi cần tối đa hóa wrapper score.
+
+
+## 10) Đánh Giá Cuối Cùng (So Sánh Tất Cả Phương Pháp)
+
+- Điểm vào notebook:
+- `notebook/NCI/10_final_evaluate.ipynb`
+- Báo cáo: `results/NCI/evaluation/reports/final_evaluation_all_methods_nci_NCI.txt`
+
+[Biểu Đồ: Đánh Giá Cuối Cùng - Tất Cả Phương Pháp]
+![NCI Final Evaluation](../../results/NCI/evaluation/plots/final_evaluation_all_methods_nci_NCI.png)
+
+**Chú Thích:**
+- Mục đích: So sánh tất cả phương pháp lựa chọn đặc trưng (Filter, Ensemble, Sklearn SFS, Seeded SFS) với cả hai mô hình LogReg và Tree.
+- Cách đọc:
+  - Trục X liệt kê tất cả các kết hợp phương pháp/mô hình (ví dụ: "Sklearn_SFS_Raw + LogReg").
+  - Trục Y hiển thị độ chính xác cross-validation; các cột cao hơn cho biết hiệu suất tốt hơn.
+  - Các thanh lỗi dọc hiển thị độ lệch chuẩn (Std) trên các fold; các thanh ngắn hơn chỉ ra mô hình ổn định hơn.
+
+| Xếp Hạng | Phương Pháp + Mô Hình | CV Fold | Accuracy Trung Bình | Std | Median | Min | Max |
+|---|---|---:|---:|---:|---:|---:|---:|
+| 1 | MUTUAL_INFORMATION + LogReg | 5 | 0.8692 | 0.0733 | 0.9167 | 0.7500 | 0.9167 |
+| 2 | ANOVA_F_TEST + LogReg | 5 | 0.8526 | 0.0692 | 0.8462 | 0.7500 | 0.9167 |
+| 3 | CORRELATION + LogReg | 5 | 0.8359 | 0.0835 | 0.8462 | 0.7500 | 0.9167 |
+
+**Quan Sát Chính:**
+- Cấu hình tốt nhất: MUTUAL_INFORMATION + LogReg với độ chính xác 0.8692 (σ=0.0733)
+- Xếp thứ hai: ANOVA_F_TEST + LogReg với độ chính xác 0.8526
+- Khuyến nghị: Xem so sánh chi tiết trong biểu đồ và tệp báo cáo ở trên.

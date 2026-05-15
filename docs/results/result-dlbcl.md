@@ -139,3 +139,31 @@
 - **Observation:** Union runs are generally faster than raw runs across wrapper methods.
 - **Explanation:** Union reduces candidate-space size, reducing total model-fit operations.
 - **Takeaway:** Use union for rapid iteration; use raw when chasing peak wrapper score.
+
+
+## 10) Final Evaluation (All Methods Comparison)
+
+- Notebook entry point(s):
+- `notebook/DLBCL/10_final_evaluate.ipynb`
+- Report artifact: `results/DLBCL/evaluation/reports/final_evaluation_all_methods_dlbcl_DLBCL.txt`
+
+[Insert Chart: Final Evaluation - All Methods]
+![DLBCL Final Evaluation](../../results/DLBCL/evaluation/plots/final_evaluation_all_methods_dlbcl_DLBCL.png)
+
+**Caption:**
+- Purpose: Compare all feature selection methods (Filter, Ensemble, Sklearn SFS, Seeded SFS) with both LogReg and Tree models.
+- How to read:
+  - The x-axis lists all method/model combinations (e.g., "Sklearn_SFS_Raw + LogReg").
+  - The y-axis shows cross-validation accuracy; higher bars indicate better performance.
+  - Vertical error bars show Standard Deviation across folds; shorter bars indicate more stable models.
+
+| Rank | Method + Model | CV Folds | Mean Accuracy | Std | Median | Min | Max |
+|---|---|---:|---:|---:|---:|---:|---:|
+| 1 | MUTUAL_INFORMATION + LogReg | 5 | 0.9875 | 0.0280 | 1.0000 | 0.9375 | 1.0000 |
+| 2 | Seeded_SFS_Raw + LogReg | 5 | 0.9867 | 0.0298 | 1.0000 | 0.9333 | 1.0000 |
+| 3 | None + LogReg | 5 | 0.9733 | 0.0596 | 1.0000 | 0.8667 | 1.0000 |
+
+**Key Observations:**
+- Best configuration: MUTUAL_INFORMATION + LogReg with 0.9875 accuracy (σ=0.0280)
+- Second best: Seeded_SFS_Raw + LogReg with 0.9867 accuracy
+- Recommendation: See detailed comparison in the plot and report file above.

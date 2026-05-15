@@ -126,3 +126,31 @@
 - **Observation:** Union runs are generally faster than raw runs across wrapper methods.
 - **Explanation:** Union reduces candidate-space size, reducing total model-fit operations.
 - **Takeaway:** Use union for rapid iteration; use raw when chasing peak wrapper score.
+
+
+## 10) Final Evaluation (All Methods Comparison)
+
+- Notebook entry point(s):
+- `notebook/NCI/10_final_evaluate.ipynb`
+- Report artifact: `results/NCI/evaluation/reports/final_evaluation_all_methods_nci_NCI.txt`
+
+[Insert Chart: Final Evaluation - All Methods]
+![NCI Final Evaluation](../../results/NCI/evaluation/plots/final_evaluation_all_methods_nci_NCI.png)
+
+**Caption:**
+- Purpose: Compare all feature selection methods (Filter, Ensemble, Sklearn SFS, Seeded SFS) with both LogReg and Tree models.
+- How to read:
+  - The x-axis lists all method/model combinations (e.g., "Sklearn_SFS_Raw + LogReg").
+  - The y-axis shows cross-validation accuracy; higher bars indicate better performance.
+  - Vertical error bars show Standard Deviation across folds; shorter bars indicate more stable models.
+
+| Rank | Method + Model | CV Folds | Mean Accuracy | Std | Median | Min | Max |
+|---|---|---:|---:|---:|---:|---:|---:|
+| 1 | MUTUAL_INFORMATION + LogReg | 5 | 0.8692 | 0.0733 | 0.9167 | 0.7500 | 0.9167 |
+| 2 | ANOVA_F_TEST + LogReg | 5 | 0.8526 | 0.0692 | 0.8462 | 0.7500 | 0.9167 |
+| 3 | CORRELATION + LogReg | 5 | 0.8359 | 0.0835 | 0.8462 | 0.7500 | 0.9167 |
+
+**Key Observations:**
+- Best configuration: MUTUAL_INFORMATION + LogReg with 0.8692 accuracy (σ=0.0733)
+- Second best: ANOVA_F_TEST + LogReg with 0.8526 accuracy
+- Recommendation: See detailed comparison in the plot and report file above.

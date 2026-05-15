@@ -125,3 +125,31 @@
 - **Observation:** Union runs are generally faster than raw runs across wrapper methods.
 - **Explanation:** Union reduces candidate-space size, reducing total model-fit operations.
 - **Takeaway:** Use union for rapid iteration; use raw when chasing peak wrapper score.
+
+
+## 10) Final Evaluation (All Methods Comparison)
+
+- Notebook entry point(s):
+- `notebook/Tumors9/10_final_evaluate.ipynb`
+- Report artifact: `results/Tumors9/evaluation/reports/final_evaluation_all_methods_tumors9_Tumors9.txt`
+
+[Insert Chart: Final Evaluation - All Methods]
+![Tumors9 Final Evaluation](../../results/Tumors9/evaluation/plots/final_evaluation_all_methods_tumors9_Tumors9.png)
+
+**Caption:**
+- Purpose: Compare all feature selection methods (Filter, Ensemble, Sklearn SFS, Seeded SFS) with both LogReg and Tree models.
+- How to read:
+  - The x-axis lists all method/model combinations (e.g., "Sklearn_SFS_Raw + LogReg").
+  - The y-axis shows cross-validation accuracy; higher bars indicate better performance.
+  - Vertical error bars show Standard Deviation across folds; shorter bars indicate more stable models.
+
+| Rank | Method + Model | CV Folds | Mean Accuracy | Std | Median | Min | Max |
+|---|---|---:|---:|---:|---:|---:|---:|
+| 1 | Seeded_SFS_Union + LogReg | 4 | 0.7333 | 0.0385 | 0.7333 | 0.7000 | 0.7667 |
+| 2 | MUTUAL_INFORMATION + LogReg | 2 | 0.7333 | 0.0471 | 0.7333 | 0.7000 | 0.7667 |
+| 3 | ANOVA_F_TEST + LogReg | 2 | 0.6667 | 0.0471 | 0.6667 | 0.6333 | 0.7000 |
+
+**Key Observations:**
+- Best configuration: Seeded_SFS_Union + LogReg with 0.7333 accuracy (σ=0.0385)
+- Second best: MUTUAL_INFORMATION + LogReg with 0.7333 accuracy
+- Recommendation: See detailed comparison in the plot and report file above.

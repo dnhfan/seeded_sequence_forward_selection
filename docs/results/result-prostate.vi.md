@@ -129,3 +129,31 @@ _Đọc bản tiếng Anh tại [result-prostate.md](result-prostate.md)_
 - **Quan sát:** Các lần chạy union thường nhanh hơn raw trên hầu hết phương pháp wrapper.
 - **Giải thích:** Union làm giảm không gian ứng viên, từ đó giảm tổng số lần fit mô hình.
 - **Kết luận:** Dùng union để lặp thử nhanh; dùng raw khi cần tối đa hóa wrapper score.
+
+
+## 10) Đánh Giá Cuối Cùng (So Sánh Tất Cả Phương Pháp)
+
+- Điểm vào notebook:
+- `notebook/Prostate/10_final_evaluate.ipynb`
+- Báo cáo: `results/Prostate/evaluation/reports/final_evaluation_all_methods_prostate_Prostate.txt`
+
+[Biểu Đồ: Đánh Giá Cuối Cùng - Tất Cả Phương Pháp]
+![Prostate Final Evaluation](../../results/Prostate/evaluation/plots/final_evaluation_all_methods_prostate_Prostate.png)
+
+**Chú Thích:**
+- Mục đích: So sánh tất cả phương pháp lựa chọn đặc trưng (Filter, Ensemble, Sklearn SFS, Seeded SFS) với cả hai mô hình LogReg và Tree.
+- Cách đọc:
+  - Trục X liệt kê tất cả các kết hợp phương pháp/mô hình (ví dụ: "Sklearn_SFS_Raw + LogReg").
+  - Trục Y hiển thị độ chính xác cross-validation; các cột cao hơn cho biết hiệu suất tốt hơn.
+  - Các thanh lỗi dọc hiển thị độ lệch chuẩn (Std) trên các fold; các thanh ngắn hơn chỉ ra mô hình ổn định hơn.
+
+| Xếp Hạng | Phương Pháp + Mô Hình | CV Fold | Accuracy Trung Bình | Std | Median | Min | Max |
+|---|---|---:|---:|---:|---:|---:|---:|
+| 1 | Seeded_SFS_Raw + LogReg | 10 | 0.9714 | 0.0602 | 1.0000 | 0.8571 | 1.0000 |
+| 2 | Seeded_SFS_Union + LogReg | 10 | 0.9614 | 0.0586 | 1.0000 | 0.8571 | 1.0000 |
+| 3 | CHI_SQUARED + LogReg | 5 | 0.9514 | 0.0583 | 0.9500 | 0.8571 | 1.0000 |
+
+**Quan Sát Chính:**
+- Cấu hình tốt nhất: Seeded_SFS_Raw + LogReg với độ chính xác 0.9714 (σ=0.0602)
+- Xếp thứ hai: Seeded_SFS_Union + LogReg với độ chính xác 0.9614
+- Khuyến nghị: Xem so sánh chi tiết trong biểu đồ và tệp báo cáo ở trên.

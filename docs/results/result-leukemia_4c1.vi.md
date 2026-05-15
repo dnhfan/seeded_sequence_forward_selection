@@ -128,3 +128,31 @@ _Đọc bản tiếng Anh tại [result-leukemia_4c1.md](result-leukemia_4c1.md)
 - **Quan sát:** Các lần chạy union thường nhanh hơn raw trên hầu hết phương pháp wrapper.
 - **Giải thích:** Union làm giảm không gian ứng viên, từ đó giảm tổng số lần fit mô hình.
 - **Kết luận:** Dùng union để lặp thử nhanh; dùng raw khi cần tối đa hóa wrapper score.
+
+
+## 10) Đánh Giá Cuối Cùng (So Sánh Tất Cả Phương Pháp)
+
+- Điểm vào notebook:
+- `notebook/Leukemia_4c1/10_final_evaluate.ipynb`
+- Báo cáo: `results/Leukemia_4c1/evaluation/reports/final_evaluation_all_methods_leukemia_4c1_Leukemia_4c1.txt`
+
+[Biểu Đồ: Đánh Giá Cuối Cùng - Tất Cả Phương Pháp]
+![Leukemia_4c1 Final Evaluation](../../results/Leukemia_4c1/evaluation/plots/final_evaluation_all_methods_leukemia_4c1_Leukemia_4c1.png)
+
+**Chú Thích:**
+- Mục đích: So sánh tất cả phương pháp lựa chọn đặc trưng (Filter, Ensemble, Sklearn SFS, Seeded SFS) với cả hai mô hình LogReg và Tree.
+- Cách đọc:
+  - Trục X liệt kê tất cả các kết hợp phương pháp/mô hình (ví dụ: "Sklearn_SFS_Raw + LogReg").
+  - Trục Y hiển thị độ chính xác cross-validation; các cột cao hơn cho biết hiệu suất tốt hơn.
+  - Các thanh lỗi dọc hiển thị độ lệch chuẩn (Std) trên các fold; các thanh ngắn hơn chỉ ra mô hình ổn định hơn.
+
+| Xếp Hạng | Phương Pháp + Mô Hình | CV Fold | Accuracy Trung Bình | Std | Median | Min | Max |
+|---|---|---:|---:|---:|---:|---:|---:|
+| 1 | Sklearn_SFS_Raw + Tree | 4 | 0.9722 | 0.0321 | 0.9722 | 0.9444 | 1.0000 |
+| 2 | Sklearn_SFS_Union + Tree | 4 | 0.9722 | 0.0321 | 0.9722 | 0.9444 | 1.0000 |
+| 3 | ANOVA_F_TEST + LogReg | 4 | 0.9583 | 0.0278 | 0.9444 | 0.9444 | 1.0000 |
+
+**Quan Sát Chính:**
+- Cấu hình tốt nhất: Sklearn_SFS_Raw + Tree với độ chính xác 0.9722 (σ=0.0321)
+- Xếp thứ hai: Sklearn_SFS_Union + Tree với độ chính xác 0.9722
+- Khuyến nghị: Xem so sánh chi tiết trong biểu đồ và tệp báo cáo ở trên.

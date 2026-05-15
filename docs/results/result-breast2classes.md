@@ -132,3 +132,31 @@
 - **Observation:** Union runs are generally faster than raw runs across wrapper methods.
 - **Explanation:** Union reduces candidate-space size, reducing total model-fit operations.
 - **Takeaway:** Use union for rapid iteration; use raw when chasing peak wrapper score.
+
+
+## 10) Final Evaluation (All Methods Comparison)
+
+- Notebook entry point(s):
+- `notebook/Breast2classes/10_final_evaluate.ipynb`
+- Report artifact: `results/Breast2classes/evaluation/reports/final_evaluation_all_methods_breast2classes_Breast2classes.txt`
+
+[Insert Chart: Final Evaluation - All Methods]
+![Breast2classes Final Evaluation](../../results/Breast2classes/evaluation/plots/final_evaluation_all_methods_breast2classes_Breast2classes.png)
+
+**Caption:**
+- Purpose: Compare all feature selection methods (Filter, Ensemble, Sklearn SFS, Seeded SFS) with both LogReg and Tree models.
+- How to read:
+  - The x-axis lists all method/model combinations (e.g., "Sklearn_SFS_Raw + LogReg").
+  - The y-axis shows cross-validation accuracy; higher bars indicate better performance.
+  - Vertical error bars show Standard Deviation across folds; shorter bars indicate more stable models.
+
+| Rank | Method + Model | CV Folds | Mean Accuracy | Std | Median | Min | Max |
+|---|---|---:|---:|---:|---:|---:|---:|
+| 1 | Seeded_SFS_Raw + LogReg | 5 | 0.9083 | 0.0381 | 0.9333 | 0.8667 | 0.9375 |
+| 2 | Sklearn_SFS_Raw + LogReg | 5 | 0.8833 | 0.0724 | 0.8750 | 0.8000 | 1.0000 |
+| 3 | Sklearn_SFS_Union + LogReg | 5 | 0.8058 | 0.1377 | 0.8000 | 0.6667 | 1.0000 |
+
+**Key Observations:**
+- Best configuration: Seeded_SFS_Raw + LogReg with 0.9083 accuracy (σ=0.0381)
+- Second best: Sklearn_SFS_Raw + LogReg with 0.8833 accuracy
+- Recommendation: See detailed comparison in the plot and report file above.

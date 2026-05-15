@@ -129,3 +129,31 @@ _Đọc bản tiếng Anh tại [result-brain.md](result-brain.md)_
 - **Quan sát:** Các lần chạy union thường nhanh hơn raw trên hầu hết phương pháp wrapper.
 - **Giải thích:** Union làm giảm không gian ứng viên, từ đó giảm tổng số lần fit mô hình.
 - **Kết luận:** Dùng union để lặp thử nhanh; dùng raw khi cần tối đa hóa wrapper score.
+
+
+## 10) Đánh Giá Cuối Cùng (So Sánh Tất Cả Phương Pháp)
+
+- Điểm vào notebook:
+- `notebook/Brain/10_final_evaluate.ipynb`
+- Báo cáo: `results/Brain/evaluation/reports/final_evaluation_all_methods_brain_Brain.txt`
+
+[Biểu Đồ: Đánh Giá Cuối Cùng - Tất Cả Phương Pháp]
+![Brain Final Evaluation](../../results/Brain/evaluation/plots/final_evaluation_all_methods_brain_Brain.png)
+
+**Chú Thích:**
+- Mục đích: So sánh tất cả phương pháp lựa chọn đặc trưng (Filter, Ensemble, Sklearn SFS, Seeded SFS) với cả hai mô hình LogReg và Tree.
+- Cách đọc:
+  - Trục X liệt kê tất cả các kết hợp phương pháp/mô hình (ví dụ: "Sklearn_SFS_Raw + LogReg").
+  - Trục Y hiển thị độ chính xác cross-validation; các cột cao hơn cho biết hiệu suất tốt hơn.
+  - Các thanh lỗi dọc hiển thị độ lệch chuẩn (Std) trên các fold; các thanh ngắn hơn chỉ ra mô hình ổn định hơn.
+
+| Xếp Hạng | Phương Pháp + Mô Hình | CV Fold | Accuracy Trung Bình | Std | Median | Min | Max |
+|---|---|---:|---:|---:|---:|---:|---:|
+| 1 | ANOVA_F_TEST + LogReg | 4 | 0.9523 | 0.0552 | 0.9545 | 0.9000 | 1.0000 |
+| 2 | CORRELATION + LogReg | 4 | 0.9523 | 0.0552 | 0.9545 | 0.9000 | 1.0000 |
+| 3 | Sklearn_SFS_Raw + Tree | 4 | 0.9295 | 0.0472 | 0.9091 | 0.9000 | 1.0000 |
+
+**Quan Sát Chính:**
+- Cấu hình tốt nhất: ANOVA_F_TEST + LogReg với độ chính xác 0.9523 (σ=0.0552)
+- Xếp thứ hai: CORRELATION + LogReg với độ chính xác 0.9523
+- Khuyến nghị: Xem so sánh chi tiết trong biểu đồ và tệp báo cáo ở trên.

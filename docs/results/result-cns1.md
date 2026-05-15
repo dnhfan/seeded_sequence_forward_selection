@@ -126,3 +126,31 @@
 - **Observation:** Union runs are generally faster than raw runs across wrapper methods.
 - **Explanation:** Union reduces candidate-space size, reducing total model-fit operations.
 - **Takeaway:** Use union for rapid iteration; use raw when chasing peak wrapper score.
+
+
+## 10) Final Evaluation (All Methods Comparison)
+
+- Notebook entry point(s):
+- `notebook/CNS1/10_final_evaluate.ipynb`
+- Report artifact: `results/CNS1/evaluation/reports/final_evaluation_all_methods_cns1_CNS1.txt`
+
+[Insert Chart: Final Evaluation - All Methods]
+![CNS1 Final Evaluation](../../results/CNS1/evaluation/plots/final_evaluation_all_methods_cns1_CNS1.png)
+
+**Caption:**
+- Purpose: Compare all feature selection methods (Filter, Ensemble, Sklearn SFS, Seeded SFS) with both LogReg and Tree models.
+- How to read:
+  - The x-axis lists all method/model combinations (e.g., "Sklearn_SFS_Raw + LogReg").
+  - The y-axis shows cross-validation accuracy; higher bars indicate better performance.
+  - Vertical error bars show Standard Deviation across folds; shorter bars indicate more stable models.
+
+| Rank | Method + Model | CV Folds | Mean Accuracy | Std | Median | Min | Max |
+|---|---|---:|---:|---:|---:|---:|---:|
+| 1 | ANOVA_F_TEST + LogReg | 5 | 0.9083 | 0.1387 | 0.9375 | 0.6667 | 1.0000 |
+| 2 | CORRELATION + LogReg | 5 | 0.9083 | 0.1387 | 0.9375 | 0.6667 | 1.0000 |
+| 3 | Sklearn_SFS_Union + LogReg | 5 | 0.8833 | 0.0950 | 0.9167 | 0.7500 | 1.0000 |
+
+**Key Observations:**
+- Best configuration: ANOVA_F_TEST + LogReg with 0.9083 accuracy (σ=0.1387)
+- Second best: CORRELATION + LogReg with 0.9083 accuracy
+- Recommendation: See detailed comparison in the plot and report file above.

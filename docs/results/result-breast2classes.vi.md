@@ -134,3 +134,31 @@ _Đọc bản tiếng Anh tại [result-breast2classes.md](result-breast2classes
 - **Quan sát:** Các lần chạy union thường nhanh hơn raw trên hầu hết phương pháp wrapper.
 - **Giải thích:** Union làm giảm không gian ứng viên, từ đó giảm tổng số lần fit mô hình.
 - **Kết luận:** Dùng union để lặp thử nhanh; dùng raw khi cần tối đa hóa wrapper score.
+
+
+## 10) Đánh Giá Cuối Cùng (So Sánh Tất Cả Phương Pháp)
+
+- Điểm vào notebook:
+- `notebook/Breast2classes/10_final_evaluate.ipynb`
+- Báo cáo: `results/Breast2classes/evaluation/reports/final_evaluation_all_methods_breast2classes_Breast2classes.txt`
+
+[Biểu Đồ: Đánh Giá Cuối Cùng - Tất Cả Phương Pháp]
+![Breast2classes Final Evaluation](../../results/Breast2classes/evaluation/plots/final_evaluation_all_methods_breast2classes_Breast2classes.png)
+
+**Chú Thích:**
+- Mục đích: So sánh tất cả phương pháp lựa chọn đặc trưng (Filter, Ensemble, Sklearn SFS, Seeded SFS) với cả hai mô hình LogReg và Tree.
+- Cách đọc:
+  - Trục X liệt kê tất cả các kết hợp phương pháp/mô hình (ví dụ: "Sklearn_SFS_Raw + LogReg").
+  - Trục Y hiển thị độ chính xác cross-validation; các cột cao hơn cho biết hiệu suất tốt hơn.
+  - Các thanh lỗi dọc hiển thị độ lệch chuẩn (Std) trên các fold; các thanh ngắn hơn chỉ ra mô hình ổn định hơn.
+
+| Xếp Hạng | Phương Pháp + Mô Hình | CV Fold | Accuracy Trung Bình | Std | Median | Min | Max |
+|---|---|---:|---:|---:|---:|---:|---:|
+| 1 | Seeded_SFS_Raw + LogReg | 5 | 0.9083 | 0.0381 | 0.9333 | 0.8667 | 0.9375 |
+| 2 | Sklearn_SFS_Raw + LogReg | 5 | 0.8833 | 0.0724 | 0.8750 | 0.8000 | 1.0000 |
+| 3 | Sklearn_SFS_Union + LogReg | 5 | 0.8058 | 0.1377 | 0.8000 | 0.6667 | 1.0000 |
+
+**Quan Sát Chính:**
+- Cấu hình tốt nhất: Seeded_SFS_Raw + LogReg với độ chính xác 0.9083 (σ=0.0381)
+- Xếp thứ hai: Sklearn_SFS_Raw + LogReg với độ chính xác 0.8833
+- Khuyến nghị: Xem so sánh chi tiết trong biểu đồ và tệp báo cáo ở trên.
