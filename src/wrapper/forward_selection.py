@@ -55,6 +55,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         cv_stratified: bool = True,
         max_features: Optional[int] = 100,
         patience: Optional[int] = 5,
+        tol: float = 0.0,
         random_state: int = 42,
         verbose: int = 2,
         n_jobs: int = -1,
@@ -71,6 +72,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         self.cv_stratified = cv_stratified
         self.max_features = max_features
         self.patience = patience
+        self.tol = tol
         self.random_state = random_state
         self.verbose = verbose
         self.n_jobs = n_jobs
@@ -270,7 +272,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
             False -> no improvement
         """
 
-        is_new_peak = best_score > state.global_best_score
+        is_new_peak = best_score > state.global_best_score > self.tol
 
         # Update global best and patience counter.
         if is_new_peak:
@@ -522,6 +524,7 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         lines.append(f"  {'CV Stratified:':<20} {self.cv_stratified}")
         lines.append(f"  {'Max Features:':<20} {self.max_features}")
         lines.append(f"  {'Patience:':<20} {self.patience}")
+        lines.append(f"  {'Tolerance:':<20} {self.tol}")
         lines.append(f"  {'N Seeds:':<20} {self.n_seeds}")
         lines.append(f"  {'Random State:':<20} {self.random_state}")
         lines.append(f"  {'N Jobs:':<20} {self.n_jobs}")
