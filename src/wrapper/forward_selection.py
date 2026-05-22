@@ -517,7 +517,13 @@ class SeededForwardSelection(BaseEstimator, MetaEstimatorMixin, SelectorMixin):
         lines.append("-" * 40)
         lines.append(" CONFIGURATION")
         lines.append("-" * 40)
-        lines.append(f"  {'Model:':<20} {get_model(model_name=self.model).__class__.__name__}")  # type: ignore
+        model_instance = get_model(model_name=self.model)
+        if hasattr(model_instance, "steps"):
+            model_class_name = model_instance.steps[-1][1].__class__.__name__
+        else:
+            model_class_name = model_instance.__class__.__name__
+
+        lines.append(f"  {'Model:':<20} {model_class_name}")
         lines.append(f"  {'Scoring:':<20} {self.scoring}")
         lines.append(f"  {'CV Folds:':<20} {self.cv}")
         lines.append(f"  {'CV Shuffle:':<20} {self.cv_shuffle}")

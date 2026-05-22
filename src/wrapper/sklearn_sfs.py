@@ -43,7 +43,10 @@ class SklearnSFSSelector(BaseWrapperSelector):
 
         # get the model + max_features
         estimator: BaseEstimator = self.estimator or get_model(model_name)
-        sfs_params["model"] = estimator.__class__.__name__
+        if hasattr(estimator, "steps"):
+            sfs_params["model"] = estimator.steps[-1][1].__class__.__name__
+        else:
+            sfs_params["model"] = estimator.__class__.__name__
 
         if max_features == "auto":
             n_features_to_select = "auto"

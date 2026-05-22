@@ -135,6 +135,7 @@ class BaseWrapperSelector(ABC):
                 "feature": result.selected_features,
                 "dataset": self.data_name,
                 "dataset_variant": self.dataset_variant,
+            "model_sfs": sfs_params.get("model", "unknown").upper(),
                 "algorithm": self.algorithm_name,
             }
         )
@@ -145,6 +146,7 @@ class BaseWrapperSelector(ABC):
         metrics = {
             "dataset": self.data_name,
             "dataset_variant": self.dataset_variant,
+            "model_sfs": sfs_params.get("model", "unknown").upper(),
             "n_features_selected": len(result.selected_features),
             "global_best_score": result.global_best_score,
             "total_fit_time_ms": result.total_fit_time_ms,
