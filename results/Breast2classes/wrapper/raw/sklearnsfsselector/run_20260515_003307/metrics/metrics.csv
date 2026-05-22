@@ -1,2 +1,2 @@
-dataset,dataset_variant,n_features_selected,global_best_score,total_fit_time_ms,run_root
-Breast2classes,raw,4,0.8583333333333332,320154.1565069929,results/Breast2classes/wrapper/raw/sklearnsfsselector/run_20260515_003307
+dataset,dataset_variant,model_sfs,n_features_selected,global_best_score,total_fit_time_ms,run_root
+Breast2classes,raw,unknown,4,0.8583333333333332,320154.1565069929,results/Breast2classes/wrapper/raw/sklearnsfsselector/run_20260515_003307

@@ -6,5 +6,6 @@
   "total_fit_time_ms": 67354.20615399926,
   "run_root": "results/Brain/wrapper/raw/seededsfsselector/run_20260410_001112_new_suffix_2seeds",
   "patience": 5,
-  "n_seeds": 2
+  "n_seeds": 2,
+  "model_sfs": "unknown"
 }

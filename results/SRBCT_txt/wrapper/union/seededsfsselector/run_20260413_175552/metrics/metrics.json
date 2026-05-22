@@ -6,5 +6,6 @@
   "total_fit_time_ms": 4076.9627370000308,
   "run_root": "results/SRBCT_txt/wrapper/union/seededsfsselector/run_20260413_175552",
   "patience": 3,
-  "n_seeds": 1
+  "n_seeds": 1,
+  "model_sfs": "unknown"
 }

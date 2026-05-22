@@ -6,5 +6,6 @@
   "total_fit_time_ms": 258032.04443999857,
   "run_root": "results/adenocarcinoma/wrapper/raw/seededsfsselector/run_20260414_094845",
   "patience": 3,
-  "n_seeds": 1
+  "n_seeds": 1,
+  "model_sfs": "unknown"
 }

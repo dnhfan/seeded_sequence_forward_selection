@@ -7,5 +7,6 @@
   "run_root": "results/Breast2classes/wrapper/union/sklearnsfsselector/run_20260414_151525",
   "patience": 3,
   "n_seeds": 1,
-  "engine": "sklearn"
+  "engine": "sklearn",
+  "model_sfs": "unknown"
 }

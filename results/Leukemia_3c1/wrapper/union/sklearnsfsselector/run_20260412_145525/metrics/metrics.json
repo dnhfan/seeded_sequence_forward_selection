@@ -4,5 +4,6 @@
   "n_features_selected": 2,
   "global_best_score": 0.96,
   "total_fit_time_ms": 9501.163980000456,
-  "run_root": "results/Leukemia_3c1/wrapper/union/sklearnsfsselector/run_20260412_145525"
+  "run_root": "results/Leukemia_3c1/wrapper/union/sklearnsfsselector/run_20260412_145525",
+  "model_sfs": "unknown"
 }

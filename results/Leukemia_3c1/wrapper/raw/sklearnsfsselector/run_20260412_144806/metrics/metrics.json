@@ -7,5 +7,6 @@
   "run_root": "results/Leukemia_3c1/wrapper/raw/sklearnsfsselector/run_20260412_144806",
   "patience": 3,
   "n_seeds": 1,
-  "engine": "sklearn"
+  "engine": "sklearn",
+  "model_sfs": "unknown"
 }

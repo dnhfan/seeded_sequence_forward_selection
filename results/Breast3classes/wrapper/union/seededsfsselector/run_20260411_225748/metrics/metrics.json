@@ -6,5 +6,6 @@
   "total_fit_time_ms": 13782.187306000196,
   "run_root": "results/Breast3classes/wrapper/union/seededsfsselector/run_20260411_225748",
   "patience": 5,
-  "n_seeds": 1
+  "n_seeds": 1,
+  "model_sfs": "unknown"
 }

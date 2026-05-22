@@ -6,5 +6,6 @@
   "total_fit_time_ms": 2849.9799519995577,
   "run_root": "results/Leukemia_3c1/wrapper/union/seededsfsselector/run_20260412_145650",
   "patience": 5,
-  "n_seeds": 1
+  "n_seeds": 1,
+  "model_sfs": "unknown"
 }

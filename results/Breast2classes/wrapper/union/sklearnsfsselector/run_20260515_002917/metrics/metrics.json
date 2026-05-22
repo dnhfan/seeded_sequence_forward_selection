@@ -5,5 +5,6 @@
   "global_best_score": 0.82,
   "total_fit_time_ms": 17069.623190007405,
   "run_root": "results/Breast2classes/wrapper/union/sklearnsfsselector/run_20260515_002917",
-  "engine": "sklearn"
+  "engine": "sklearn",
+  "model_sfs": "unknown"
 }

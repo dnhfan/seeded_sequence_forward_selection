@@ -4,5 +4,6 @@
   "n_features_selected": 4,
   "global_best_score": 0.8583333333333332,
   "total_fit_time_ms": 315016.00558399514,
-  "run_root": "results/Breast2classes/wrapper/raw/sklearnsfsselector/run_20260410_143045"
+  "run_root": "results/Breast2classes/wrapper/raw/sklearnsfsselector/run_20260410_143045",
+  "model_sfs": "unknown"
 }

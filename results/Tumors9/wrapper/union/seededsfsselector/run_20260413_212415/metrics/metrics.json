@@ -6,5 +6,6 @@
   "total_fit_time_ms": 4536.403287002031,
   "run_root": "results/Tumors9/wrapper/union/seededsfsselector/run_20260413_212415",
   "patience": 3,
-  "n_seeds": 1
+  "n_seeds": 1,
+  "model_sfs": "unknown"
 }
