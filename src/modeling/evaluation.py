@@ -226,6 +226,17 @@ class ModelEvaluator:
         n_methods = fold_level_df["Method"].nunique()
         use_horizontal = horizontal if horizontal is not None else (n_methods > 6)
 
+        # 1.1 Tính mean accuracy bằng agg để chắc chắn trả về DataFrame
+        mean_acc_df = fold_level_df.groupby("Method", as_index=False).agg(
+            mean_acc=("Acc", "mean")
+        )
+        # 1.2 Ép kiểu tường minh để Pyright không thể nhầm lẫn
+        mean_acc_df = cast(pd.DataFrame, mean_acc_df)
+        # 1.3 Sort trực tiếp trên DataFrame (Pyright hoàn toàn nhận diện được overload này)
+        mean_acc_df = mean_acc_df.sort_values(by="mean_acc", ascending=False)
+        # 1.4 Lấy danh sách method
+        method_order = mean_acc_df["Method"].tolist()
+
         # Auto-size figsize if not provided
         if figsize is None:
             if use_horizontal:
@@ -243,12 +254,18 @@ class ModelEvaluator:
                 hue="Model",
                 palette="pastel",
                 orient="h",
+                order=method_order,
             )
             x_label = "Accuracy Score"
             y_label = "Feature Selection Method"
         else:
             ax = sns.barplot(
-                data=fold_level_df, x="Method", y="Acc", hue="Model", palette="pastel"
+                data=fold_level_df,
+                x="Method",
+                y="Acc",
+                hue="Model",
+                palette="pastel",
+                order=method_order,
             )
             x_label = "Feature Selection Method"
             y_label = "Accuracy Score"
