@@ -1,0 +1,7 @@
+feature,dataset,dataset_variant,model_sfs,algorithm
+V1893,Brain,union,DT,seededsfsselector
+V523,Brain,union,DT,seededsfsselector
+V541,Brain,union,DT,seededsfsselector
+V1219,Brain,union,DT,seededsfsselector
+V4081,Brain,union,DT,seededsfsselector
+V2849,Brain,union,DT,seededsfsselector

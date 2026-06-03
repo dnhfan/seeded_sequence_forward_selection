@@ -1,0 +1,11 @@
+{
+  "dataset": "Brain",
+  "dataset_variant": "raw",
+  "n_features_selected": 11,
+  "global_best_score": 1.0,
+  "total_fit_time_ms": 120189.44878199909,
+  "run_root": "results/Brain/wrapper/raw/seededsfsselector/run_20260522_065431_benchmark_svm_1seeds",
+  "n_seeds": 1,
+  "patience": 5,
+  "model_sfs": "SVM"
+}
