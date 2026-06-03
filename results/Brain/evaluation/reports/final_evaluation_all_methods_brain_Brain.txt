@@ -1,6 +1,6 @@
 MODEL EVALUATION REPORT
-generated_at: 2026-05-15 00:14:46
-experiment_id: final_evaluation_all_methods_brain_Brain_20260515
+generated_at: 2026-06-03 22:18:51
+experiment_id: final_evaluation_all_methods_brain_Brain_20260603
 dataset: Brain
 experiment_prefix: final_evaluation_all_methods_Brain
 feature_count: 50
@@ -14,32 +14,32 @@ plot_path: results/Brain/evaluation/plots/final_evaluation_all_methods_brain_Bra
 report_path: results/Brain/evaluation/reports/final_evaluation_all_methods_brain_Brain.txt
 
 EXECUTIVE SUMMARY
-best_configuration: method=ANOVA_F_TEST, model=LogReg, mean_accuracy=0.9523, std=0.0552, folds=4
+best_configuration: method=Seeded_SFS_Union, model=LogReg, mean_accuracy=0.9773, std=0.0455, folds=4
 total_configurations: 20 | total_fold_evaluations: 80
 
 CROSS-VALIDATION SUMMARY (ranked)
 ------------------------------------------------------------------------------------------------------------------------
  rank             Method  Model  mean_accuracy  std_accuracy  median_accuracy  min_accuracy  max_accuracy  n_folds  cv_stability
-    1       ANOVA_F_TEST LogReg         0.9523        0.0552           0.9545        0.9000        1.0000        4        0.9448
-    1        CORRELATION LogReg         0.9523        0.0552           0.9545        0.9000        1.0000        4        0.9448
-    2    Sklearn_SFS_Raw   Tree         0.9295        0.0472           0.9091        0.9000        1.0000        4        0.9528
-    3     Seeded_SFS_Raw LogReg         0.9273        0.0487           0.9045        0.9000        1.0000        4        0.9513
-    3 MUTUAL_INFORMATION LogReg         0.9273        0.0487           0.9045        0.9000        1.0000        4        0.9513
-    4        CHI_SQUARED LogReg         0.9045        0.0744           0.9000        0.8182        1.0000        4        0.9256
-    5   Seeded_SFS_Union LogReg         0.8795        0.0532           0.9045        0.8000        0.9091        4        0.9468
-    5  Sklearn_SFS_Union   Tree         0.8795        0.0532           0.9045        0.8000        0.9091        4        0.9468
-    6   Seeded_SFS_Union   Tree         0.8773        0.1265           0.9045        0.7000        1.0000        4        0.8735
-    7     Seeded_SFS_Raw   Tree         0.8591        0.0943           0.8182        0.8000        1.0000        4        0.9057
-    8  Sklearn_SFS_Union LogReg         0.8568        0.0557           0.8591        0.8000        0.9091        4        0.9443
-    9    Sklearn_SFS_Raw LogReg         0.8318        0.0522           0.8091        0.8000        0.9091        4        0.9478
-   10               None LogReg         0.8068        0.0857           0.8091        0.7000        0.9091        4        0.9143
-   11               None   Tree         0.7568        0.1711           0.7136        0.6000        1.0000        4        0.8289
-   12           VARIANCE LogReg         0.7386        0.1232           0.7273        0.6000        0.9000        4        0.8768
-   13       ANOVA_F_TEST   Tree         0.7114        0.0898           0.7136        0.6000        0.8182        4        0.9102
+    1   Seeded_SFS_Union LogReg         0.9773        0.0455           1.0000        0.9091        1.0000        4        0.9545
+    1     Seeded_SFS_Raw LogReg         0.9773        0.0455           1.0000        0.9091        1.0000        4        0.9545
+    2       ANOVA_F_TEST LogReg         0.9523        0.0552           0.9545        0.9000        1.0000        4        0.9448
+    2        CORRELATION LogReg         0.9523        0.0552           0.9545        0.9000        1.0000        4        0.9448
+    3    Sklearn_SFS_Raw   Tree         0.9295        0.0472           0.9091        0.9000        1.0000        4        0.9528
+    4 MUTUAL_INFORMATION LogReg         0.9273        0.0487           0.9045        0.9000        1.0000        4        0.9513
+    5        CHI_SQUARED LogReg         0.9045        0.0744           0.9000        0.8182        1.0000        4        0.9256
+    6  Sklearn_SFS_Union   Tree         0.8795        0.0532           0.9045        0.8000        0.9091        4        0.9468
+    7  Sklearn_SFS_Union LogReg         0.8568        0.0557           0.8591        0.8000        0.9091        4        0.9443
+    8    Sklearn_SFS_Raw LogReg         0.8318        0.0522           0.8091        0.8000        0.9091        4        0.9478
+    9               None LogReg         0.8068        0.0857           0.8091        0.7000        0.9091        4        0.9143
+   10               None   Tree         0.7568        0.1711           0.7136        0.6000        1.0000        4        0.8289
+   11           VARIANCE LogReg         0.7386        0.1232           0.7273        0.6000        0.9000        4        0.8768
+   12       ANOVA_F_TEST   Tree         0.7114        0.0898           0.7136        0.6000        0.8182        4        0.9102
+   13     Seeded_SFS_Raw   Tree         0.6841        0.1765           0.6636        0.5000        0.9091        4        0.8235
    14        CORRELATION   Tree         0.6636        0.1326           0.6682        0.5000        0.8182        4        0.8674
    15 MUTUAL_INFORMATION   Tree         0.6227        0.1861           0.5455        0.5000        0.9000        4        0.8139
    16        CHI_SQUARED   Tree         0.6205        0.0649           0.6182        0.5455        0.7000        4        0.9351
-   17           VARIANCE   Tree         0.4682        0.2234           0.4727        0.2000        0.7273        4        0.7766
+   17   Seeded_SFS_Union   Tree         0.5682        0.1813           0.6364        0.3000        0.7000        4        0.8187
+   18           VARIANCE   Tree         0.4682        0.2234           0.4727        0.2000        0.7273        4        0.7766
 
 FOLD-LEVEL RESULTS (for auditability)
 ------------------------------------------------------------------------------------------------------------------------
@@ -102,23 +102,23 @@ LogReg     4 0.7000
  Model  Fold    Acc
 LogReg     1 0.9091
 LogReg     2 1.0000
-LogReg     3 0.9000
-LogReg     4 0.9000
-  Tree     1 0.8182
-  Tree     2 0.8182
-  Tree     3 0.8000
-  Tree     4 1.0000
+LogReg     3 1.0000
+LogReg     4 1.0000
+  Tree     1 0.7273
+  Tree     2 0.9091
+  Tree     3 0.5000
+  Tree     4 0.6000
 
  Method: Seeded_SFS_Union 
  Model  Fold    Acc
 LogReg     1 0.9091
-LogReg     2 0.9091
-LogReg     3 0.9000
-LogReg     4 0.8000
-  Tree     1 1.0000
-  Tree     2 0.9091
-  Tree     3 0.7000
-  Tree     4 0.9000
+LogReg     2 1.0000
+LogReg     3 1.0000
+LogReg     4 1.0000
+  Tree     1 0.6364
+  Tree     2 0.6364
+  Tree     3 0.3000
+  Tree     4 0.7000
 
  Method: Sklearn_SFS_Raw 
  Model  Fold    Acc
