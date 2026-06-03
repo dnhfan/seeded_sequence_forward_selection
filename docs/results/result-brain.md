@@ -11,6 +11,7 @@
 ![Brain EDA](../../results/Brain/eda/plot/countplot.png)
 
 **Caption:**
+
 - Purpose: Check whether the dataset is imbalanced.
 - How to read: The x-axis (V1) shows class labels (0 and 1), and the y-axis (count) shows the number of samples in each class.
 
@@ -24,20 +25,37 @@
 
 - Notebook entry point(s):
 - `notebook/Brain/02_Filter_selection.ipynb`
-- Report artifact: `results/Brain/filter/reports/filter_compare_50features_Brain.txt`
-
-[Insert Chart: Filter Selection Comparison]
-![Brain Filter Selection](../../results/Brain/filter/plots/filter_compare_50features_Brain.png)
-
-**Caption:**
-- Purpose: Compare filter-method performance to select the best feature set for the next stage.
-- How to read: The x-axis lists filter methods, and the y-axis shows evaluation scores; higher bars/scores indicate better methods.
+- Result data: `data/processed/filter`
 
 ## 4) Modeling (Filter-stage comparison)
 
 - Notebook entry point(s):
 - `notebook/Brain/03_Modeling.ipynb`
-- Modeling outputs are tracked under `results/Brain/filter/` when available.
+- Report artifact: `results/Brain/filter/reports/filter_compare_50features_Brain.txt`
+
+CROSS-VALIDATION SUMMARY (ranked)
+| rank | Method| Model| mean_accuracy|
+|-|-|-|-|
+| 1| ANOVA_F_TEST| LogReg| 0.9523|  
+| 1| CORRELATION| LogReg| 0.9523|  
+| 2| MUTUAL_INFORMATION| LogReg| 0.9273|  
+| 3| CHI_SQUARED| LogReg| 0.9045|  
+| 4| None| LogReg| 0.8068|  
+| 5| None| Tree| 0.7568|  
+| 6| VARIANCE| LogReg| 0.7386|  
+| 7| ANOVA_F_TEST| Tree| 0.7114|  
+| 8| CORRELATION| Tree| 0.6636|  
+| 9| MUTUAL_INFORMATION| Tree| 0.6227|  
+| 10| CHI_SQUARED| Tree| 0.6205|  
+| 11| VARIANCE| Tree| 0.4682|
+
+[Insert Chart: Filter Selection Comparison]
+![Brain Filter Selection](../../results/Brain/filter/plots/filter_compare_50features_Brain.png)
+
+**Caption:**
+
+- Purpose: Compare filter-method performance to select the best feature set for the next stage.
+- How to read: The x-axis lists filter methods, and the y-axis shows evaluation scores; higher bars/scores indicate better methods.
 
 ## 5) Ensemble Filter (Voting + union feature set)
 
@@ -52,6 +70,7 @@
 ![Brain Ensemble Voting](../../results/Brain/ensemble/plot/top50_features_voting.png)
 
 **Caption:**
+
 - Purpose: Show agreement among filter methods when voting for features.
 - How to read: The x-axis lists feature names, and the y-axis shows vote counts; features with higher votes are prioritized.
 
@@ -62,20 +81,24 @@
 - `notebook/Brain/06_sklearn_sfs-union.py`
 
 | Variant | Sklearn Selected | Sklearn Global Best | Sklearn Fit Time (ms) |
-|---|---:|---:|---:|
-| Raw | 6 | 0.9295 | 732,895 |
-| Union | 4 | 0.8795 | 13,169 |
+| ------- | ---------------: | ------------------: | --------------------: |
+| Raw     |                6 |              0.9295 |               732,895 |
+| Union   |                4 |              0.8795 |                13,169 |
 
 ## 7) Wrapper: Seeded SFS (Raw vs Union execution)
 
-- Script entry point(s):
-- `notebook/Brain/07_sfs-raw.py`
-- `notebook/Brain/07_sfs-union.py`
+- Runing SFS with:
+  - logistic regressions core
+  - 1 seeds
 
-| Variant | Seeded Selected | Seeded Global Best | Seeded Fit Time (ms) |
-|---|---:|---:|---:|
-| Raw | 11 | 0.9295 | 112,591 |
-| Union | 6 | 0.9 | 3,555 |
+- Script entry point(s):
+  - `notebook/Brain/07_sfs-raw.py`
+  - `notebook/Brain/07_sfs-union.py`
+
+| Variant | Seeded Selected | Seeded Global Best | Seeded Fit Time (s) |
+| ------- | --------------: | -----------------: | ------------------: |
+| Raw     |               6 |           0.977273 |          152.933121 |
+| Union   |               6 |           0.977273 |            5.791480 |
 
 ## 8) Accuracy Evaluation (Comparing Raw vs Union)
 
@@ -84,16 +107,19 @@
 - `notebook/Brain/08_accuracy_evaluate_union.ipynb`
 
 [Insert Chart: Accuracy Comparison Raw vs Union]
-![Brain Accuracy Evaluation](../../results/Brain/evaluation/plots/evaluation_Brain.png)
+![Brain Accuracy Evaluation](../../results/Brain/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_Brain.png)
 
 **Caption:**
+
 - Purpose: Compare accuracy across wrapper configurations (Sklearn SFS and Seeded SFS) for each data variant.
 - How to read:
   - The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
   - Vertical black lines (error bars) show Standard Deviation across cross-validation folds. Shorter bars indicate more stable model performance.
-![Brain Accuracy Evaluation](../../results/Brain/evaluation/plots/wrapper_sfs_comparison_union_Brain.png)
+
+![Brain Accuracy Evaluation](../../results/Brain/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_Brain.png)
 
 **Caption:**
+
 - Purpose: Compare accuracy across wrapper configurations (Sklearn SFS and Seeded SFS) for each data variant.
 - How to read:
   - The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
@@ -114,21 +140,22 @@
 - `notebook/Brain/9_time_evaluate_union.ipynb`
 
 [Insert Chart: Time Comparison Raw vs Union]
-![Brain Time Evaluation](../../results/Brain/evaluation/plots/time_comparison_seeded3_vs_sklearn_brain.png)
+![Brain Time Evaluation](../../results/Brain/evaluation/plots/time_comparison_raw_seeded_vs_raw_sklearn.png)
 
 **Caption:**
+
 - Purpose: Compare training-time cost across wrapper methods on the same dataset.
 - How to read: The x-axis shows methods/configurations, and the y-axis shows total fit time (ms); lower bars mean faster runtime.
-![Brain Time Evaluation](../../results/Brain/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
+  ![Brain Time Evaluation](../../results/Brain/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
 
 **Caption:**
+
 - Purpose: Compare training-time cost across wrapper methods on the same dataset.
 - How to read: The x-axis shows methods/configurations, and the y-axis shows total fit time (ms); lower bars mean faster runtime.
 
 - **Observation:** Union runs are generally faster than raw runs across wrapper methods.
 - **Explanation:** Union reduces candidate-space size, reducing total model-fit operations.
 - **Takeaway:** Use union for rapid iteration; use raw when chasing peak wrapper score.
-
 
 ## 10) Final Evaluation (All Methods Comparison)
 
@@ -140,19 +167,15 @@
 ![Brain Final Evaluation](../../results/Brain/evaluation/plots/final_evaluation_all_methods_brain_Brain.png)
 
 **Caption:**
+
 - Purpose: Compare all feature selection methods (Filter, Ensemble, Sklearn SFS, Seeded SFS) with both LogReg and Tree models.
 - How to read:
   - The x-axis lists all method/model combinations (e.g., "Sklearn_SFS_Raw + LogReg").
   - The y-axis shows cross-validation accuracy; higher bars indicate better performance.
   - Vertical error bars show Standard Deviation across folds; shorter bars indicate more stable models.
 
-| Rank | Method + Model | CV Folds | Mean Accuracy | Std | Median | Min | Max |
-|---|---|---:|---:|---:|---:|---:|---:|
-| 1 | ANOVA_F_TEST + LogReg | 4 | 0.9523 | 0.0552 | 0.9545 | 0.9000 | 1.0000 |
-| 2 | CORRELATION + LogReg | 4 | 0.9523 | 0.0552 | 0.9545 | 0.9000 | 1.0000 |
-| 3 | Sklearn_SFS_Raw + Tree | 4 | 0.9295 | 0.0472 | 0.9091 | 0.9000 | 1.0000 |
-
 **Key Observations:**
+
 - Best configuration: ANOVA_F_TEST + LogReg with 0.9523 accuracy (σ=0.0552)
 - Second best: CORRELATION + LogReg with 0.9523 accuracy
 - Recommendation: See detailed comparison in the plot and report file above.
