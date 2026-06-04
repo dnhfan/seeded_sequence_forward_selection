@@ -1,7 +1,7 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
-from typing import Literal
+from typing import Literal, Optional
 
 
 @dataclass
@@ -14,11 +14,22 @@ class ProjectPath:
 
     def __post_init__(self):
         """Auto-run right after dataclass initialization"""
+        if self.base_dir is None:
+            self.base_dir = self._find_project_root()
         self.ensure_dirs()
 
     data_name: str
     n_features: int = 50
-    base_dir: Path = Path(".")
+    base_dir: Optional[Path] = field(default=None)
+
+    @staticmethod
+    def _find_project_root() -> Path:
+        """Walk up from CWD until finding .git to locate project root."""
+        cwd = Path.cwd().resolve()
+        for parent in [cwd] + list(cwd.parents):
+            if (parent / ".git").exists():
+                return parent
+        return cwd
 
     @property
     def raw_path(self) -> Path:
