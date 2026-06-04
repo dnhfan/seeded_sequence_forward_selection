@@ -7,6 +7,8 @@
 - Notebook entry point(s):
 - `notebook/Brain/01_eda.ipynb`
 
+- Shape: (42, 5598)
+
 [Insert Chart: EDA Summary]
 ![Brain EDA](../../results/Brain/eda/plot/countplot.png)
 

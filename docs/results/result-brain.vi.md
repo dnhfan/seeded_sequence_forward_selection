@@ -8,6 +8,7 @@ _Đọc bản tiếng Anh tại [result-brain.md](result-brain.md)_
 
 - Điểm vào notebook:
 - `notebook/Brain/01_eda.ipynb`
+- Shape: (42, 5598)
 
 [Chèn biểu đồ: Tổng quan EDA]
 ![Brain EDA](../../results/Brain/eda/plot/countplot.png)
@@ -94,9 +95,9 @@ TỔNG QUAN VALIDATION CHÉO (xếp hạng)
 - `notebook/Brain/07_sfs-union.py`
 
 | Biến thể | Seeded Số đặc trưng chọn | Seeded Global Best | Seeded Thời gian fit (s) |
-| -------- | -----------------------: | -----------------: | ------------------------: |
-| Raw      |                        6 |            0.977273 |                152.933121 |
-| Union    |                        6 |            0.977273 |                  5.791480 |
+| -------- | -----------------------: | -----------------: | -----------------------: |
+| Raw      |                        6 |           0.977273 |               152.933121 |
+| Union    |                        6 |           0.977273 |                 5.791480 |
 
 ## 8) Đánh giá Accuracy (so sánh Raw vs Union)
 
@@ -113,7 +114,7 @@ TỔNG QUAN VALIDATION CHÉO (xếp hạng)
 - Cách đọc:
   - Trục hoành là từng cấu hình/phương pháp, trục tung là accuracy; giá trị cao hơn thể hiện hiệu năng tốt hơn.
   - Vạch đen thẳng đứng (Error bar): Thể hiện độ lệch chuẩn (Standard Deviation) qua các fold cross-validation. Vạch này càng ngắn chứng tỏ mô hình dự đoán càng ổn định, ít biến động.
-![Brain Accuracy Evaluation](../../results/Brain/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_Brain.png)
+    ![Brain Accuracy Evaluation](../../results/Brain/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_Brain.png)
 
 **Chú thích:**
 
@@ -154,7 +155,6 @@ TỔNG QUAN VALIDATION CHÉO (xếp hạng)
 - **Giải thích:** Union làm giảm không gian ứng viên, từ đó giảm tổng số lần fit mô hình.
 - **Kết luận:** Dùng union để lặp thử nhanh; dùng raw khi cần tối đa hóa wrapper score.
 
-
 ## 10) Đánh Giá Cuối Cùng (So Sánh Tất Cả Phương Pháp)
 
 - Điểm vào notebook:
@@ -165,6 +165,7 @@ TỔNG QUAN VALIDATION CHÉO (xếp hạng)
 ![Brain Final Evaluation](../../results/Brain/evaluation/plots/final_evaluation_all_methods_brain_Brain.png)
 
 **Chú Thích:**
+
 - Mục đích: So sánh tất cả phương pháp lựa chọn đặc trưng (Filter, Ensemble, Sklearn SFS, Seeded SFS) với cả hai mô hình LogReg và Tree.
 - Cách đọc:
   - Trục X liệt kê tất cả các kết hợp phương pháp/mô hình (ví dụ: "Sklearn_SFS_Raw + LogReg").
@@ -172,6 +173,8 @@ TỔNG QUAN VALIDATION CHÉO (xếp hạng)
   - Các thanh lỗi dọc hiển thị độ lệch chuẩn (Std) trên các fold; các thanh ngắn hơn chỉ ra mô hình ổn định hơn.
 
 **Quan Sát Chính:**
+
 - Cấu hình tốt nhất: ANOVA_F_TEST + LogReg với độ chính xác 0.9523 (σ=0.0552)
 - Xếp thứ hai: CORRELATION + LogReg với độ chính xác 0.9523
 - Khuyến nghị: Xem so sánh chi tiết trong biểu đồ và tệp báo cáo ở trên.
+
