@@ -6,7 +6,7 @@ Generated: 2026-05-22 06:09:59
 ----------------------------------------
  CONFIGURATION
 ----------------------------------------
-  Model:               Pipeline
+  Model:               LogisticRegression
   Scoring:             accuracy
   CV Folds:            4
   CV Shuffle:          True
