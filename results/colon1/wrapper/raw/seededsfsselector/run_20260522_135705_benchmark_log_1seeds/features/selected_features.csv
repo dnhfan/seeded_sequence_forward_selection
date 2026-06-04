@@ -1,0 +1,5 @@
+feature,dataset,dataset_variant,model_sfs,algorithm
+T95018,colon1,raw,LOG,seededsfsselector
+H20709,colon1,raw,LOG,seededsfsselector
+D12686,colon1,raw,LOG,seededsfsselector
+T55131,colon1,raw,LOG,seededsfsselector

@@ -1,6 +1,6 @@
 MODEL EVALUATION REPORT
-generated_at: 2026-04-15 00:20:19
-experiment_id: wrapper_sfs_comparison_sk_union_seeded_union_colon1_20260415
+generated_at: 2026-06-05 01:35:47
+experiment_id: wrapper_sfs_comparison_sk_union_seeded_union_colon1_20260605
 dataset: colon1
 experiment_prefix: wrapper_sfs_comparison_sk_union_seeded_union
 feature_count: 50
@@ -10,48 +10,48 @@ pandas_version: 3.0.1
 sklearn_version: 1.8.0
 
 ARTIFACTS
-plot_path: results/colon1/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_colon1.png
-report_path: results/colon1/evaluation/reports/wrapper_sfs_comparison_sk_union_seeded_union_colon1.txt
+plot_path: /home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/colon1/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_colon1.png
+report_path: /home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/colon1/evaluation/reports/wrapper_sfs_comparison_sk_union_seeded_union_colon1.txt
 
 EXECUTIVE SUMMARY
-best_configuration: method=seeded, model=LogReg, mean_accuracy=0.8872, std=0.0436, folds=5
+best_configuration: method=seeded, model=LogReg, mean_accuracy=0.9346, std=0.0694, folds=5
 total_configurations: 4 | total_fold_evaluations: 20
 
 CROSS-VALIDATION SUMMARY (ranked)
 ------------------------------------------------------------------------------------------------------------------------
  rank  Method  Model  mean_accuracy  std_accuracy  median_accuracy  min_accuracy  max_accuracy  n_folds  cv_stability
-    1  seeded LogReg         0.8872        0.0436           0.9167        0.8333        0.9231        5        0.9564
-    1 sklearn LogReg         0.8872        0.0733           0.8462        0.8333        1.0000        5        0.9267
-    2 sklearn   Tree         0.8513        0.1097           0.8333        0.7500        1.0000        5        0.8903
-    3  seeded   Tree         0.8205        0.0729           0.8333        0.7500        0.9231        5        0.9271
+    1  seeded LogReg         0.9346        0.0694           0.9231        0.8333        1.0000        5        0.9306
+    2 sklearn LogReg         0.8872        0.0733           0.8462        0.8333        1.0000        5        0.9267
+    3 sklearn   Tree         0.8513        0.1097           0.8333        0.7500        1.0000        5        0.8903
+    4  seeded   Tree         0.7897        0.0751           0.8333        0.6667        0.8462        5        0.9249
 
 FOLD-LEVEL RESULTS (for auditability)
 ------------------------------------------------------------------------------------------------------------------------
- Method: seeded 
+ Method: seeded 
  Model  Fold    Acc
-LogReg   1.0 0.9231
-LogReg   2.0 0.8462
-LogReg   3.0 0.8333
-LogReg   4.0 0.9167
-LogReg   5.0 0.9167
-  Tree   1.0 0.9231
-  Tree   2.0 0.8462
-  Tree   3.0 0.8333
-  Tree   4.0 0.7500
-  Tree   5.0 0.7500
+LogReg     1 1.0000
+LogReg     2 0.9231
+LogReg     3 0.8333
+LogReg     4 0.9167
+LogReg     5 1.0000
+  Tree     1 0.8462
+  Tree     2 0.7692
+  Tree     3 0.6667
+  Tree     4 0.8333
+  Tree     5 0.8333
 
- Method: sklearn 
+ Method: sklearn 
  Model  Fold    Acc
-LogReg   1.0 0.9231
-LogReg   2.0 0.8462
-LogReg   3.0 0.8333
-LogReg   4.0 0.8333
-LogReg   5.0 1.0000
-  Tree   1.0 1.0000
-  Tree   2.0 0.9231
-  Tree   3.0 0.7500
-  Tree   4.0 0.7500
-  Tree   5.0 0.8333
+LogReg     1 0.9231
+LogReg     2 0.8462
+LogReg     3 0.8333
+LogReg     4 0.8333
+LogReg     5 1.0000
+  Tree     1 1.0000
+  Tree     2 0.9231
+  Tree     3 0.7500
+  Tree     4 0.7500
+  Tree     5 0.8333
 
 
 ------------------------------------------------------------------------------------------------------------------------

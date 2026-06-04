@@ -1,0 +1,6 @@
+feature,dataset,dataset_variant,model_sfs,algorithm
+T95018,colon1,raw,SVM,seededsfsselector
+H20709,colon1,raw,SVM,seededsfsselector
+X66975,colon1,raw,SVM,seededsfsselector
+T72863,colon1,raw,SVM,seededsfsselector
+X15882,colon1,raw,SVM,seededsfsselector

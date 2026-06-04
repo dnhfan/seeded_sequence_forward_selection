@@ -1,0 +1,4 @@
+feature,dataset,dataset_variant,model_sfs,algorithm
+R38758,colon1,union,DECISIONTREECLASSIFIER,sklearnsfsselector
+T49423,colon1,union,DECISIONTREECLASSIFIER,sklearnsfsselector
+T92451,colon1,union,DECISIONTREECLASSIFIER,sklearnsfsselector

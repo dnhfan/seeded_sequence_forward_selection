@@ -1,0 +1,2 @@
+dataset,dataset_variant,model_sfs,n_features_selected,global_best_score,total_fit_time_ms,run_root
+colon1,union,DECISIONTREECLASSIFIER,3,0.9032258064516129,13929.50602498604,/home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/colon1/wrapper/union/sklearnsfsselector/run_20260605_012502

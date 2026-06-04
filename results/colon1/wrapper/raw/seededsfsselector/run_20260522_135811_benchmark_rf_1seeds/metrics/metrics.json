@@ -1,0 +1,11 @@
+{
+  "dataset": "colon1",
+  "dataset_variant": "raw",
+  "model_sfs": "RF",
+  "n_features_selected": 4,
+  "global_best_score": 0.9346153846153846,
+  "total_fit_time_ms": 955245.2157080043,
+  "run_root": "results/colon1/wrapper/raw/seededsfsselector/run_20260522_135811_benchmark_rf_1seeds",
+  "n_seeds": 1,
+  "patience": 5
+}

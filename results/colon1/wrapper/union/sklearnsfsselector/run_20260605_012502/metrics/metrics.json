@@ -1,0 +1,9 @@
+{
+  "dataset": "colon1",
+  "dataset_variant": "union",
+  "model_sfs": "DECISIONTREECLASSIFIER",
+  "n_features_selected": 3,
+  "global_best_score": 0.9032258064516129,
+  "total_fit_time_ms": 13929.50602498604,
+  "run_root": "/home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/colon1/wrapper/union/sklearnsfsselector/run_20260605_012502"
+}

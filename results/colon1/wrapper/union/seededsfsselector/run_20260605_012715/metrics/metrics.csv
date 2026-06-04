@@ -1,0 +1,2 @@
+dataset,dataset_variant,model_sfs,n_features_selected,global_best_score,total_fit_time_ms,run_root,patience,n_seeds
+colon1,union,LOG,5,0.9346153846153846,5149.6795560233295,/home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/colon1/wrapper/union/seededsfsselector/run_20260605_012715,5,1
