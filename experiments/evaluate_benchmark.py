@@ -12,7 +12,7 @@ from src.config import ProjectPath
 from src.modeling.evaluation import ModelEvaluator
 
 
-def evaluate_benchmark(data_name: str, variant: str = "raw"):
+def evaluate_benchmark(data_name: str, variant: str = "raw", cv_split: int = 4):
     """
     Benchmark evaluation: read the metrics from the benchmark runs and aggregate them for comparison and visualization.
     """
@@ -22,7 +22,7 @@ def evaluate_benchmark(data_name: str, variant: str = "raw"):
     evaluator = ModelEvaluator(data_name=data_name, custom_base_dir=path.evaluation_dir)
 
     print("\nPHASE 1: EVALUATING BASELINE (All Features)")
-    evaluator.evaluate_baseline(str(path.raw_path), n_splits=4)
+    evaluator.evaluate_baseline(str(path.raw_path), n_splits=cv_split)
 
     models = ["log", "dt", "rf", "svm"]
     df_metrics_list = []
@@ -68,14 +68,16 @@ def evaluate_benchmark(data_name: str, variant: str = "raw"):
 
         # --- 2. Nạp dữ liệu đặc trưng đã qua SFS để chấm điểm chéo độc lập ---
         data_pattern = f"*{model.lower()}*_1seeds*{variant}.csv"
-        data_files = sorted(list((path.wrapper_dir / variant / "seededsfsselector").glob(data_pattern)))
+        data_files = sorted(
+            list((path.wrapper_dir / variant / "seededsfsselector").glob(data_pattern))
+        )
 
         if data_files:
             latest_data_file = data_files[-1]
             evaluator.evaluate_custom_file(
                 file_path=str(latest_data_file),
                 method_label=f"SFS_{model.upper()}",
-                n_splits=4,
+                n_splits=cv_split,
             )
             print(f"✓ Successfully loaded features dataset for {model.upper()}")
         else:
@@ -102,7 +104,13 @@ def evaluate_benchmark(data_name: str, variant: str = "raw"):
 
         # Biểu đồ 1: Fit Time
         sns.barplot(
-            data=df_metrics, x="model_name", y="Time (s)", ax=axes[0], palette="pastel", hue="model_name", legend=False
+            data=df_metrics,
+            x="model_name",
+            y="Time (s)",
+            ax=axes[0],
+            palette="pastel",
+            hue="model_name",
+            legend=False,
         )
         axes[0].set_title(
             f"SFS Fit Time Comparison - {data_name}", fontsize=12, fontweight="bold"
@@ -120,7 +128,7 @@ def evaluate_benchmark(data_name: str, variant: str = "raw"):
             ax=axes[1],
             palette="pastel",
             hue="model_name",
-            legend=False
+            legend=False,
         )
         axes[1].set_title(
             f"Number of Selected Features - {data_name}", fontsize=12, fontweight="bold"
@@ -189,6 +197,17 @@ if __name__ == "__main__":
         help="Dataset variant to evaluate (default: 'raw')",
     )
 
+    parser.add_argument(
+        "-c",
+        "--cv",
+        type=int,
+        help="Number of folds for Cross Validation(default=4)",
+        default=4,
+    )
+
     args = parser.parse_args()
 
-    evaluate_benchmark(data_name=args.dataset, variant=args.variant)
+    if args.cv < 2:
+        parser.error("Minimum number of CV folds must be 2 or greater.")
+
+    evaluate_benchmark(data_name=args.dataset, variant=args.variant, cv_split=args.cv)
