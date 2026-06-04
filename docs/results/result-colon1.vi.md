@@ -8,6 +8,7 @@ _Đọc bản tiếng Anh tại [result-colon1.md](result-colon1.md)_
 
 - Điểm vào notebook:
 - `notebook/colon1/01_eda.ipynb`
+- Shape: (62, 2001)
 
 [Chèn biểu đồ: Tổng quan EDA]
 ![colon1 EDA](../../results/colon1/eda/plot/countplot.png)
@@ -28,18 +29,34 @@ _Đọc bản tiếng Anh tại [result-colon1.md](result-colon1.md)_
 - `notebook/colon1/03_filter_selection.ipynb`
 - Tệp báo cáo: `results/colon1/filter/reports/evaluation_colon1.txt`
 
-[Chèn biểu đồ: So sánh Filter Selection]
-![colon1 Filter Selection](../../results/colon1/filter/plots/evaluation_colon1.png)
-
-**Chú thích:**
-- Mục đích: So sánh hiệu năng các phương pháp filter để chọn ra nhóm đặc trưng tốt nhất cho bước tiếp theo.
-- Cách đọc: Trục hoành là các phương pháp filter, trục tung là điểm đánh giá; cột/điểm càng cao thì phương pháp càng tốt.
-
 ## 4) Mô hình hóa (so sánh ở giai đoạn filter)
 
 - Điểm vào notebook:
 - `notebook/colon1/04_modeling.ipynb`
 - Kết quả modeling được lưu dưới `results/colon1/filter/` khi có sẵn.
+
+| Xếp hạng | Phương pháp         | Mô hình | Độ chính xác TB |
+| -------- | ------------------- | ------- | --------------- |
+| 1        | CHI_SQUARED         | LogReg  | 0.8872          |
+| 2        | MUTUAL_INFORMATION  | LogReg  | 0.8859          |
+| 3        | None                | LogReg  | 0.8718          |
+| 4        | ANOVA_F_TEST        | LogReg  | 0.8551          |
+| 4        | CORRELATION         | LogReg  | 0.8551          |
+| 5        | VARIANCE            | LogReg  | 0.8538          |
+| 6        | ANOVA_F_TEST        | Tree    | 0.7897          |
+| 7        | CORRELATION         | Tree    | 0.7577          |
+| 8        | CHI_SQUARED         | Tree    | 0.7564          |
+| 9        | MUTUAL_INFORMATION  | Tree    | 0.7449          |
+| 10       | None                | Tree    | 0.7410          |
+| 11       | VARIANCE            | Tree    | 0.6769          |
+
+[Chèn biểu đồ: So sánh Filter Selection]
+![colon1 Filter Selection](../../results/colon1/filter/plots/evaluation_colon1.png)
+
+**Chú thích:**
+
+- Mục đích: So sánh hiệu năng các phương pháp filter để chọn ra nhóm đặc trưng tốt nhất cho bước tiếp theo.
+- Cách đọc: Trục hoành là các phương pháp filter, trục tung là điểm đánh giá; cột/điểm càng cao thì phương pháp càng tốt.
 
 ## 5) Ensemble Filter (Bỏ phiếu + tập đặc trưng union)
 

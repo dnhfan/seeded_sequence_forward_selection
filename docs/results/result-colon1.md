@@ -6,11 +6,13 @@
 
 - Notebook entry point(s):
 - `notebook/colon1/01_eda.ipynb`
+- Shape: (62, 2001)
 
 [Insert Chart: EDA Summary]
 ![colon1 EDA](../../results/colon1/eda/plot/countplot.png)
 
 **Caption:**
+
 - Purpose: Check whether the dataset is imbalanced.
 - How to read: The x-axis (V1) shows class labels (0 and 1), and the y-axis (count) shows the number of samples in each class.
 
@@ -26,18 +28,34 @@
 - `notebook/colon1/03_filter_selection.ipynb`
 - Report artifact: `results/colon1/filter/reports/evaluation_colon1.txt`
 
-[Insert Chart: Filter Selection Comparison]
-![colon1 Filter Selection](../../results/colon1/filter/plots/evaluation_colon1.png)
-
-**Caption:**
-- Purpose: Compare filter-method performance to select the best feature set for the next stage.
-- How to read: The x-axis lists filter methods, and the y-axis shows evaluation scores; higher bars/scores indicate better methods.
-
 ## 4) Modeling (Filter-stage comparison)
 
 - Notebook entry point(s):
 - `notebook/colon1/04_modeling.ipynb`
 - Modeling outputs are tracked under `results/colon1/filter/` when available.
+
+| rank | Method             | Model  | mean_accuracy |
+| ---- | ------------------ | ------ | ------------- |
+| 1    | CHI_SQUARED        | LogReg | 0.8872        |
+| 2    | MUTUAL_INFORMATION | LogReg | 0.8859        |
+| 3    | None               | LogReg | 0.8718        |
+| 4    | ANOVA_F_TEST       | LogReg | 0.8551        |
+| 4    | CORRELATION        | LogReg | 0.8551        |
+| 5    | VARIANCE           | LogReg | 0.8538        |
+| 6    | ANOVA_F_TEST       | Tree   | 0.7897        |
+| 7    | CORRELATION        | Tree   | 0.7577        |
+| 8    | CHI_SQUARED        | Tree   | 0.7564        |
+| 9    | MUTUAL_INFORMATION | Tree   | 0.7449        |
+| 10   | None               | Tree   | 0.7410        |
+| 11   | VARIANCE           | Tree   | 0.6769        |
+
+[Insert Chart: Filter Selection Comparison]
+![colon1 Filter Selection](../../results/colon1/filter/plots/evaluation_colon1.png)
+
+**Caption:**
+
+- Purpose: Compare filter-method performance to select the best feature set for the next stage.
+- How to read: The x-axis lists filter methods, and the y-axis shows evaluation scores; higher bars/scores indicate better methods.
 
 ## 5) Ensemble Filter (Voting + union feature set)
 
@@ -51,6 +69,7 @@
 ![colon1 Ensemble Voting](../../results/colon1/ensemble/plots/top50_features_voting.png)
 
 **Caption:**
+
 - Purpose: Show agreement among filter methods when voting for features.
 - How to read: The x-axis lists feature names, and the y-axis shows vote counts; features with higher votes are prioritized.
 
@@ -61,9 +80,9 @@
 - `notebook/colon1/06_sklearn_sfs-union.py`
 
 | Variant | Sklearn Selected | Sklearn Global Best | Sklearn Fit Time (ms) |
-|---|---:|---:|---:|
-| Raw | 4 | 0.9513 | 193,300 |
-| Union | 3 | 0.9032 | 13,822 |
+| ------- | ---------------: | ------------------: | --------------------: |
+| Raw     |                4 |              0.9513 |               193,300 |
+| Union   |                3 |              0.9032 |                13,822 |
 
 ## 7) Wrapper: Seeded SFS (Raw vs Union execution)
 
@@ -72,9 +91,9 @@
 - `notebook/colon1/07_sfs-union.py`
 
 | Variant | Seeded Selected | Seeded Global Best | Seeded Fit Time (ms) |
-|---|---:|---:|---:|
-| Raw | 8 | 0.9346 | 188,278 |
-| Union | 5 | 0.9359 | 7,700 |
+| ------- | --------------: | -----------------: | -------------------: |
+| Raw     |               8 |             0.9346 |              188,278 |
+| Union   |               5 |             0.9359 |                7,700 |
 
 ## 8) Accuracy Evaluation (Comparing Raw vs Union)
 
@@ -86,13 +105,16 @@
 ![colon1 Accuracy Evaluation](../../results/colon1/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_colon1.png)
 
 **Caption:**
+
 - Purpose: Compare accuracy across wrapper configurations (Sklearn SFS and Seeded SFS) for each data variant.
 - How to read:
   - The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
   - Vertical black lines (error bars) show Standard Deviation across cross-validation folds. Shorter bars indicate more stable model performance.
+
 ![colon1 Accuracy Evaluation](../../results/colon1/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_colon1.png)
 
 **Caption:**
+
 - Purpose: Compare accuracy across wrapper configurations (Sklearn SFS and Seeded SFS) for each data variant.
 - How to read:
   - The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
@@ -117,18 +139,19 @@
 ![colon1 Time Evaluation](../../results/colon1/evaluation/plots/time_comparison_raw_seeded_vs_raw_sklearn.png)
 
 **Caption:**
+
 - Purpose: Compare training-time cost across wrapper methods on the same dataset.
 - How to read: The x-axis shows methods/configurations, and the y-axis shows total fit time (ms); lower bars mean faster runtime.
-![colon1 Time Evaluation](../../results/colon1/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
+  ![colon1 Time Evaluation](../../results/colon1/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
 
 **Caption:**
+
 - Purpose: Compare training-time cost across wrapper methods on the same dataset.
 - How to read: The x-axis shows methods/configurations, and the y-axis shows total fit time (ms); lower bars mean faster runtime.
 
 - **Observation:** Union runs are generally faster than raw runs across wrapper methods.
 - **Explanation:** Union reduces candidate-space size, reducing total model-fit operations.
 - **Takeaway:** Use union for rapid iteration; use raw when chasing peak wrapper score.
-
 
 ## 10) Final Evaluation (All Methods Comparison)
 
@@ -140,19 +163,10 @@
 ![colon1 Final Evaluation](../../results/colon1/evaluation/plots/final_evaluation_all_methods_colon1_colon1.png)
 
 **Caption:**
+
 - Purpose: Compare all feature selection methods (Filter, Ensemble, Sklearn SFS, Seeded SFS) with both LogReg and Tree models.
 - How to read:
   - The x-axis lists all method/model combinations (e.g., "Sklearn_SFS_Raw + LogReg").
   - The y-axis shows cross-validation accuracy; higher bars indicate better performance.
   - Vertical error bars show Standard Deviation across folds; shorter bars indicate more stable models.
 
-| Rank | Method + Model | CV Folds | Mean Accuracy | Std | Median | Min | Max |
-|---|---|---:|---:|---:|---:|---:|---:|
-| 1 | Seeded_SFS_Raw + LogReg | 10 | 0.9179 | 0.0963 | 0.9231 | 0.7500 | 1.0000 |
-| 2 | Sklearn_SFS_Raw + LogReg | 5 | 0.9026 | 0.0706 | 0.9231 | 0.8333 | 1.0000 |
-| 3 | CHI_SQUARED + LogReg | 5 | 0.8872 | 0.0436 | 0.9167 | 0.8333 | 0.9231 |
-
-**Key Observations:**
-- Best configuration: Seeded_SFS_Raw + LogReg with 0.9179 accuracy (σ=0.0963)
-- Second best: Sklearn_SFS_Raw + LogReg with 0.9026 accuracy
-- Recommendation: See detailed comparison in the plot and report file above.
