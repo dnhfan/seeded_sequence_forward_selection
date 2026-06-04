@@ -1,6 +1,6 @@
 # Brain Results and Evaluation
 
-[Back to index](../results.md)
+[Back to index](./README.md)
 
 ## 1) EDA (Exploratory Data Analysis)
 

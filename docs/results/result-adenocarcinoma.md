@@ -1,6 +1,6 @@
 # adenocarcinoma Results and Evaluation
 
-[Back to index](../results.md)
+[Back to index](./README.md)
 
 ## 1) EDA (Exploratory Data Analysis)
 
@@ -11,6 +11,7 @@
 ![adenocarcinoma EDA](../../results/adenocarcinoma/eda/plot/countplot.png)
 
 **Caption:**
+
 - Purpose: Check whether the dataset is imbalanced.
 - How to read: The x-axis (V1) shows class labels (0 and 1), and the y-axis (count) shows the number of samples in each class.
 
@@ -30,6 +31,7 @@
 ![adenocarcinoma Filter Selection](../../results/adenocarcinoma/filter/plots/evaluation_adenocarcinoma.png)
 
 **Caption:**
+
 - Purpose: Compare filter-method performance to select the best feature set for the next stage.
 - How to read: The x-axis lists filter methods, and the y-axis shows evaluation scores; higher bars/scores indicate better methods.
 
@@ -51,6 +53,7 @@
 ![adenocarcinoma Ensemble Voting](../../results/adenocarcinoma/ensemble/plots/top50_features_voting.png)
 
 **Caption:**
+
 - Purpose: Show agreement among filter methods when voting for features.
 - How to read: The x-axis lists feature names, and the y-axis shows vote counts; features with higher votes are prioritized.
 
@@ -61,9 +64,9 @@
 - `notebook/adenocarcinoma/06_sklearn_sfs-union.py`
 
 | Variant | Sklearn Selected | Sklearn Global Best | Sklearn Fit Time (ms) |
-|---|---:|---:|---:|
-| Raw | 3 | 0.9733 | 644,417 |
-| Union | 2 | 0.9474 | 13,152 |
+| ------- | ---------------: | ------------------: | --------------------: |
+| Raw     |                3 |              0.9733 |               644,417 |
+| Union   |                2 |              0.9474 |                13,152 |
 
 ## 7) Wrapper: Seeded SFS (Raw vs Union execution)
 
@@ -72,9 +75,9 @@
 - `notebook/adenocarcinoma/07_sfs-union.py`
 
 | Variant | Seeded Selected | Seeded Global Best | Seeded Fit Time (ms) |
-|---|---:|---:|---:|
-| Raw | 3 | 0.9608 | 258,032 |
-| Union | 6 | 0.9608 | 13,509 |
+| ------- | --------------: | -----------------: | -------------------: |
+| Raw     |               3 |             0.9608 |              258,032 |
+| Union   |               6 |             0.9608 |               13,509 |
 
 ## 8) Accuracy Evaluation (Comparing Raw vs Union)
 
@@ -86,13 +89,15 @@
 ![adenocarcinoma Accuracy Evaluation](../../results/adenocarcinoma/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_adenocarcinoma.png)
 
 **Caption:**
+
 - Purpose: Compare accuracy across wrapper configurations (Sklearn SFS and Seeded SFS) for each data variant.
 - How to read:
   - The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
   - Vertical black lines (error bars) show Standard Deviation across cross-validation folds. Shorter bars indicate more stable model performance.
-![adenocarcinoma Accuracy Evaluation](../../results/adenocarcinoma/evaluation/plots/wrapper_sfs_comparison_skraw_seededraw_adenocarcinoma.png)
+    ![adenocarcinoma Accuracy Evaluation](../../results/adenocarcinoma/evaluation/plots/wrapper_sfs_comparison_skraw_seededraw_adenocarcinoma.png)
 
 **Caption:**
+
 - Purpose: Compare accuracy across wrapper configurations (Sklearn SFS and Seeded SFS) for each data variant.
 - How to read:
   - The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
@@ -115,18 +120,19 @@
 ![adenocarcinoma Time Evaluation](../../results/adenocarcinoma/evaluation/plots/time_comparison_raw_seeded_vs_raw_sklearn.png)
 
 **Caption:**
+
 - Purpose: Compare training-time cost across wrapper methods on the same dataset.
 - How to read: The x-axis shows methods/configurations, and the y-axis shows total fit time (ms); lower bars mean faster runtime.
-![adenocarcinoma Time Evaluation](../../results/adenocarcinoma/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
+  ![adenocarcinoma Time Evaluation](../../results/adenocarcinoma/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
 
 **Caption:**
+
 - Purpose: Compare training-time cost across wrapper methods on the same dataset.
 - How to read: The x-axis shows methods/configurations, and the y-axis shows total fit time (ms); lower bars mean faster runtime.
 
 - **Observation:** Union runs are generally faster than raw runs across wrapper methods.
 - **Explanation:** Union reduces candidate-space size, reducing total model-fit operations.
 - **Takeaway:** Use union for rapid iteration; use raw when chasing peak wrapper score.
-
 
 ## 10) Final Evaluation (All Methods Comparison)
 
@@ -138,19 +144,21 @@
 ![adenocarcinoma Final Evaluation](../../results/adenocarcinoma/evaluation/plots/final_evaluation_all_methods_adenocarcinoma_adenocarcinoma.png)
 
 **Caption:**
+
 - Purpose: Compare all feature selection methods (Filter, Ensemble, Sklearn SFS, Seeded SFS) with both LogReg and Tree models.
 - How to read:
   - The x-axis lists all method/model combinations (e.g., "Sklearn_SFS_Raw + LogReg").
   - The y-axis shows cross-validation accuracy; higher bars indicate better performance.
   - Vertical error bars show Standard Deviation across folds; shorter bars indicate more stable models.
 
-| Rank | Method + Model | CV Folds | Mean Accuracy | Std | Median | Min | Max |
-|---|---|---:|---:|---:|---:|---:|---:|
-| 1 | Sklearn_SFS_Raw + LogReg | 5 | 0.9600 | 0.0365 | 0.9333 | 0.9333 | 1.0000 |
-| 2 | Sklearn_SFS_Union + LogReg | 5 | 0.9467 | 0.0298 | 0.9333 | 0.9333 | 1.0000 |
-| 3 | Seeded_SFS_Union + LogReg | 10 | 0.9350 | 0.0417 | 0.9333 | 0.8750 | 1.0000 |
+| Rank | Method + Model             | CV Folds | Mean Accuracy |    Std | Median |    Min |    Max |
+| ---- | -------------------------- | -------: | ------------: | -----: | -----: | -----: | -----: |
+| 1    | Sklearn_SFS_Raw + LogReg   |        5 |        0.9600 | 0.0365 | 0.9333 | 0.9333 | 1.0000 |
+| 2    | Sklearn_SFS_Union + LogReg |        5 |        0.9467 | 0.0298 | 0.9333 | 0.9333 | 1.0000 |
+| 3    | Seeded_SFS_Union + LogReg  |       10 |        0.9350 | 0.0417 | 0.9333 | 0.8750 | 1.0000 |
 
 **Key Observations:**
+
 - Best configuration: Sklearn_SFS_Raw + LogReg with 0.9600 accuracy (σ=0.0365)
 - Second best: Sklearn_SFS_Union + LogReg with 0.9467 accuracy
 - Recommendation: See detailed comparison in the plot and report file above.
