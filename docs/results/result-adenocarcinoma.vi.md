@@ -8,6 +8,7 @@ _Đọc bản tiếng Anh tại [result-adenocarcinoma.md](result-adenocarcinoma
 
 - Điểm vào notebook:
 - `notebook/adenocarcinoma/01_eda.ipynb`
+- Kích thước: (76, 9869)
 
 [Chèn biểu đồ: Tổng quan EDA]
 ![adenocarcinoma EDA](../../results/adenocarcinoma/eda/plot/countplot.png)
@@ -27,10 +28,6 @@ _Đọc bản tiếng Anh tại [result-adenocarcinoma.md](result-adenocarcinoma
 
 - Điểm vào notebook:
 - `notebook/adenocarcinoma/03_filter_selection.ipynb`
-- Tệp báo cáo: `results/adenocarcinoma/filter/reports/evaluation_adenocarcinoma.txt`
-
-[Chèn biểu đồ: So sánh Filter Selection]
-![adenocarcinoma Filter Selection](../../results/adenocarcinoma/filter/plots/evaluation_adenocarcinoma.png)
 
 **Chú thích:**
 
@@ -41,7 +38,27 @@ _Đọc bản tiếng Anh tại [result-adenocarcinoma.md](result-adenocarcinoma
 
 - Điểm vào notebook:
 - `notebook/adenocarcinoma/04_modeling.ipynb`
-- Kết quả modeling được lưu dưới `results/adenocarcinoma/filter/` khi có sẵn.
+- Kết quả modeling được theo dõi dưới `results/adenocarcinoma/filter/` khi có sẵn.
+
+TỔNG QUAN VALIDATION CHÉO (xếp hạng)
+| Hạng | Phương pháp | Mô hình | accuracy_tb |
+|-|-|-|-|
+|1| ANOVA_F_TEST| LogReg| 0.9342|
+| 1| CORRELATION| LogReg| 0.9342|
+| 2| None| LogReg| 0.8808|
+| 2| ANOVA_F_TEST| Tree| 0.8808|
+| 3| CHI_SQUARED| LogReg| 0.8692|
+| 4| VARIANCE| LogReg| 0.8558|
+| 5| MUTUAL_INFORMATION| Tree| 0.8425|
+| 6| CORRELATION| Tree| 0.8417|
+| 7| MUTUAL_INFORMATION| LogReg| 0.8292|
+| 8| VARIANCE| Tree| 0.7883|
+| 9| None| Tree| 0.7500|
+| 10| CHI_SQUARED| Tree| 0.7367|
+
+- Báo cáo: `results/adenocarcinoma/filter/reports/evaluation_adenocarcinoma.txt`
+  [Chèn biểu đồ: So sánh Filter Selection]
+  ![adenocarcinoma Filter Selection](../../results/adenocarcinoma/filter/plots/evaluation_adenocarcinoma.png)
 
 ## 5) Ensemble Filter (Bỏ phiếu + tập đặc trưng union)
 
@@ -78,7 +95,7 @@ _Đọc bản tiếng Anh tại [result-adenocarcinoma.md](result-adenocarcinoma
 
 | Biến thể | Seeded Số đặc trưng chọn | Seeded Global Best | Seeded Thời gian fit (ms) |
 | -------- | -----------------------: | -----------------: | ------------------------: |
-| Raw      |                        3 |             0.9608 |                   258,032 |
+| Raw      |                        3 |            1.000000 |                   190.425 |
 | Union    |                        6 |             0.9608 |                    13,509 |
 
 ## 8) Đánh giá Accuracy (so sánh Raw vs Union)
@@ -96,7 +113,7 @@ _Đọc bản tiếng Anh tại [result-adenocarcinoma.md](result-adenocarcinoma
 - Cách đọc:
   - Trục hoành là từng cấu hình/phương pháp, trục tung là accuracy; giá trị cao hơn thể hiện hiệu năng tốt hơn.
   - Vạch đen thẳng đứng (Error bar): Thể hiện độ lệch chuẩn (Standard Deviation) qua các fold cross-validation. Vạch này càng ngắn chứng tỏ mô hình dự đoán càng ổn định, ít biến động.
-![adenocarcinoma Accuracy Evaluation](../../results/adenocarcinoma/evaluation/plots/wrapper_sfs_comparison_skraw_seededraw_adenocarcinoma.png)
+![adenocarcinoma Accuracy Evaluation](../../results/adenocarcinoma/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_adenocarcinoma.png)
 
 **Chú thích:**
 
@@ -105,8 +122,12 @@ _Đọc bản tiếng Anh tại [result-adenocarcinoma.md](result-adenocarcinoma
   - Trục hoành là từng cấu hình/phương pháp, trục tung là accuracy; giá trị cao hơn thể hiện hiệu năng tốt hơn.
   - Vạch đen thẳng đứng (Error bar): Thể hiện độ lệch chuẩn (Standard Deviation) qua các fold cross-validation. Vạch này càng ngắn chứng tỏ mô hình dự đoán càng ổn định, ít biến động.
 
-- Cấu hình tốt nhất (raw): `sklearn + LogReg`, accuracy trung bình 0.9211, std 0.0000 (2-fold)
-- Cấu hình tốt nhất (union): `sklearn + LogReg`, accuracy trung bình **0.9467**, std 0.0298
+- **Quan sát:** Union sklearn tốt nhất trong đánh giá cuối cùng mặc dù điểm wrapper thấp hơn raw sklearn.
+- **Giải thích:** Mục tiêu của wrapper và mục tiêu đánh giá downstream có tương quan nhưng không đồng nhất.
+- **Kết luận:** Sử dụng thứ hạng đánh giá cuối cùng làm tiêu chí chọn mô hình.
+
+- Cấu hình raw tốt nhất: `sklearn + LogReg`, accuracy trung bình 0.9211, std 0.0000 (2-fold)
+- Cấu hình union tốt nhất: `sklearn + LogReg`, accuracy trung bình **0.9467**, std 0.0298
 
 ## 9) Đánh giá thời gian (so sánh thời gian fit Raw vs Union)
 
@@ -148,12 +169,6 @@ _Đọc bản tiếng Anh tại [result-adenocarcinoma.md](result-adenocarcinoma
   - Trục X liệt kê tất cả các kết hợp phương pháp/mô hình (ví dụ: "Sklearn_SFS_Raw + LogReg").
   - Trục Y hiển thị độ chính xác cross-validation; các cột cao hơn cho biết hiệu suất tốt hơn.
   - Các thanh lỗi dọc hiển thị độ lệch chuẩn (Std) trên các fold; các thanh ngắn hơn chỉ ra mô hình ổn định hơn.
-
-| Xếp Hạng | Phương Pháp + Mô Hình | CV Fold | Accuracy Trung Bình | Std | Median | Min | Max |
-|---|---|---:|---:|---:|---:|---:|---:|
-| 1 | Sklearn_SFS_Raw + LogReg | 5 | 0.9600 | 0.0365 | 0.9333 | 0.9333 | 1.0000 |
-| 2 | Sklearn_SFS_Union + LogReg | 5 | 0.9467 | 0.0298 | 0.9333 | 0.9333 | 1.0000 |
-| 3 | Seeded_SFS_Union + LogReg | 10 | 0.9350 | 0.0417 | 0.9333 | 0.8750 | 1.0000 |
 
 **Quan Sát Chính:**
 - Cấu hình tốt nhất: Sklearn_SFS_Raw + LogReg với độ chính xác 0.9600 (σ=0.0365)

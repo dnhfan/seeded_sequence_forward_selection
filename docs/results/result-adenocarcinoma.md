@@ -6,6 +6,7 @@
 
 - Notebook entry point(s):
 - `notebook/adenocarcinoma/01_eda.ipynb`
+- Shape: (76, 9869)
 
 [Insert Chart: EDA Summary]
 ![adenocarcinoma EDA](../../results/adenocarcinoma/eda/plot/countplot.png)
@@ -25,6 +26,30 @@
 
 - Notebook entry point(s):
 - `notebook/adenocarcinoma/03_filter_selection.ipynb`
+- filted data is stored in: `data/processed/adenocarcinoma/02_filter`
+
+## 4) Modeling (Filter-stage comparison)
+
+- Notebook entry point(s):
+- `notebook/adenocarcinoma/04_modeling.ipynb`
+- Modeling outputs are tracked under `results/adenocarcinoma/filter/` when available.
+
+CROSS-VALIDATION SUMMARY (ranked)
+|rank| Method| Model| mean_accuracy|
+|-|-|-|-|
+|1| ANOVA_F_TEST| LogReg| 0.9342|  
+| 1| CORRELATION| LogReg| 0.9342|  
+| 2| None| LogReg| 0.8808|  
+| 2| ANOVA_F_TEST| Tree| 0.8808|  
+| 3| CHI_SQUARED| LogReg| 0.8692|  
+| 4| VARIANCE| LogReg| 0.8558|  
+| 5| MUTUAL_INFORMATION| Tree| 0.8425|  
+| 6| CORRELATION| Tree| 0.8417|  
+| 7| MUTUAL_INFORMATION| LogReg| 0.8292|  
+| 8| VARIANCE| Tree| 0.7883|  
+| 9| None| Tree| 0.7500|  
+| 10| CHI_SQUARED| Tree| 0.7367|
+
 - Report artifact: `results/adenocarcinoma/filter/reports/evaluation_adenocarcinoma.txt`
 
 [Insert Chart: Filter Selection Comparison]
@@ -34,12 +59,6 @@
 
 - Purpose: Compare filter-method performance to select the best feature set for the next stage.
 - How to read: The x-axis lists filter methods, and the y-axis shows evaluation scores; higher bars/scores indicate better methods.
-
-## 4) Modeling (Filter-stage comparison)
-
-- Notebook entry point(s):
-- `notebook/adenocarcinoma/04_modeling.ipynb`
-- Modeling outputs are tracked under `results/adenocarcinoma/filter/` when available.
 
 ## 5) Ensemble Filter (Voting + union feature set)
 
@@ -76,7 +95,7 @@
 
 | Variant | Seeded Selected | Seeded Global Best | Seeded Fit Time (ms) |
 | ------- | --------------: | -----------------: | -------------------: |
-| Raw     |               3 |             0.9608 |              258,032 |
+| Raw     |               3 |           1.000000 |           190.424533 |
 | Union   |               6 |             0.9608 |               13,509 |
 
 ## 8) Accuracy Evaluation (Comparing Raw vs Union)
@@ -94,7 +113,8 @@
 - How to read:
   - The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
   - Vertical black lines (error bars) show Standard Deviation across cross-validation folds. Shorter bars indicate more stable model performance.
-    ![adenocarcinoma Accuracy Evaluation](../../results/adenocarcinoma/evaluation/plots/wrapper_sfs_comparison_skraw_seededraw_adenocarcinoma.png)
+
+![adenocarcinoma Accuracy Evaluation](../../results/adenocarcinoma/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_adenocarcinoma.png)
 
 **Caption:**
 
@@ -150,15 +170,3 @@
   - The x-axis lists all method/model combinations (e.g., "Sklearn_SFS_Raw + LogReg").
   - The y-axis shows cross-validation accuracy; higher bars indicate better performance.
   - Vertical error bars show Standard Deviation across folds; shorter bars indicate more stable models.
-
-| Rank | Method + Model             | CV Folds | Mean Accuracy |    Std | Median |    Min |    Max |
-| ---- | -------------------------- | -------: | ------------: | -----: | -----: | -----: | -----: |
-| 1    | Sklearn_SFS_Raw + LogReg   |        5 |        0.9600 | 0.0365 | 0.9333 | 0.9333 | 1.0000 |
-| 2    | Sklearn_SFS_Union + LogReg |        5 |        0.9467 | 0.0298 | 0.9333 | 0.9333 | 1.0000 |
-| 3    | Seeded_SFS_Union + LogReg  |       10 |        0.9350 | 0.0417 | 0.9333 | 0.8750 | 1.0000 |
-
-**Key Observations:**
-
-- Best configuration: Sklearn_SFS_Raw + LogReg with 0.9600 accuracy (σ=0.0365)
-- Second best: Sklearn_SFS_Union + LogReg with 0.9467 accuracy
-- Recommendation: See detailed comparison in the plot and report file above.
