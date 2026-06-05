@@ -1,0 +1,5 @@
+feature,dataset,dataset_variant,model_sfs,algorithm
+V7301,adenocarcinoma,raw,RF,seededsfsselector
+V2724,adenocarcinoma,raw,RF,seededsfsselector
+V1189,adenocarcinoma,raw,RF,seededsfsselector
+V14,adenocarcinoma,raw,RF,seededsfsselector

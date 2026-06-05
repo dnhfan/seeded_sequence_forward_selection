@@ -1,0 +1,2 @@
+dataset,dataset_variant,model_sfs,n_features_selected,global_best_score,total_fit_time_ms,run_root,patience,n_seeds
+adenocarcinoma,union,LOG,4,0.9733333333333334,5536.6357270104345,/home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/adenocarcinoma/wrapper/union/seededsfsselector/run_20260605_055332,5,1
