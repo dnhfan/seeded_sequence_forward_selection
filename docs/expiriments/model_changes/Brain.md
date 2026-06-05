@@ -2,6 +2,8 @@
 
 ## Report
 
+runing in raw variant
+
 - Fully report is in: `Brain/evaluation/reports/benchmark_accuracy_raw_Brain.txt`
 
 CROSS-VALIDATION SUMMARY (ranked)
