@@ -1,0 +1,11 @@
+{
+  "dataset": "Leukemia_3c1",
+  "dataset_variant": "raw",
+  "model_sfs": "DT",
+  "n_features_selected": 2,
+  "global_best_score": 0.96,
+  "total_fit_time_ms": 55931.750575997285,
+  "run_root": "/home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/Leukemia_3c1/wrapper/raw/seededsfsselector/run_20260611_145147",
+  "patience": 5,
+  "n_seeds": 1
+}

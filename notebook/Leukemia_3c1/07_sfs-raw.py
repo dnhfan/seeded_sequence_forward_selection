@@ -35,9 +35,9 @@ def main():
     df_final = wrapper.run_sfs(
         df=df,
         max_features=20,
-        patience=3,
+        patience=5,
         n_seeds=1,
-        model="dt",
+        model="log",
         scoring="accuracy",
         cv=5,
     )

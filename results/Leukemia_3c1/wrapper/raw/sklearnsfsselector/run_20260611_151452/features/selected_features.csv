@@ -1,0 +1,5 @@
+feature,dataset,dataset_variant,model_sfs,algorithm
+728,Leukemia_3c1,raw,LOGISTICREGRESSION,sklearnsfsselector
+2641,Leukemia_3c1,raw,LOGISTICREGRESSION,sklearnsfsselector
+5542,Leukemia_3c1,raw,LOGISTICREGRESSION,sklearnsfsselector
+6040,Leukemia_3c1,raw,LOGISTICREGRESSION,sklearnsfsselector

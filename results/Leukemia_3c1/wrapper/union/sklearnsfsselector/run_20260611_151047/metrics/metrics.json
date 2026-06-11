@@ -1,0 +1,9 @@
+{
+  "dataset": "Leukemia_3c1",
+  "dataset_variant": "union",
+  "model_sfs": "DECISIONTREECLASSIFIER",
+  "n_features_selected": 2,
+  "global_best_score": 0.96,
+  "total_fit_time_ms": 8882.503076994908,
+  "run_root": "/home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/Leukemia_3c1/wrapper/union/sklearnsfsselector/run_20260611_151047"
+}

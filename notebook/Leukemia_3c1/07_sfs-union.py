@@ -50,7 +50,7 @@ def main():
         max_features=20,
         patience=5,
         n_seeds=1,
-        model="dt",
+        model="log",
         scoring="accuracy",
         cv=5,
     )

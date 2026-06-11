@@ -1,0 +1,102 @@
+MODEL EVALUATION REPORT
+generated_at: 2026-06-11 17:11:47
+experiment_id: benchmark_accuracy_raw_Leukemia_3c1_20260611
+dataset: Leukemia_3c1
+experiment_prefix: benchmark_accuracy_raw
+feature_count: 50
+logreg_max_iter: 4000
+python_version: 3.12.12
+pandas_version: 3.0.0
+sklearn_version: 1.8.0
+
+ARTIFACTS
+plot_path: /home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/Leukemia_3c1/evaluation/plots/benchmark_accuracy_raw_Leukemia_3c1.png
+report_path: /home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/Leukemia_3c1/evaluation/reports/benchmark_accuracy_raw_Leukemia_3c1.txt
+
+EXECUTIVE SUMMARY
+best_configuration: method=SFS_LOG, model=LogReg, mean_accuracy=1.0000, std=0.0000, folds=5
+total_configurations: 10 | total_fold_evaluations: 50
+
+CROSS-VALIDATION SUMMARY (ranked)
+------------------------------------------------------------------------------------------------------------------------
+ rank  Method  Model  mean_accuracy  std_accuracy  median_accuracy  min_accuracy  max_accuracy  n_folds  cv_stability
+    1 SFS_LOG LogReg         1.0000        0.0000           1.0000        1.0000           1.0        5        1.0000
+    2  SFS_DT   Tree         0.9600        0.0894           1.0000        0.8000           1.0        5        0.9106
+    2  SFS_RF   Tree         0.9600        0.0894           1.0000        0.8000           1.0        5        0.9106
+    3    None LogReg         0.9457        0.0871           1.0000        0.8000           1.0        5        0.9129
+    4 SFS_SVM LogReg         0.9448        0.0564           0.9286        0.8667           1.0        5        0.9436
+    5 SFS_SVM   Tree         0.9314        0.0817           0.9286        0.8000           1.0        5        0.9183
+    6 SFS_LOG   Tree         0.9029        0.0765           0.9286        0.8000           1.0        5        0.9235
+    7  SFS_DT LogReg         0.8781        0.1084           0.9286        0.7333           1.0        5        0.8916
+    7  SFS_RF LogReg         0.8781        0.1084           0.9286        0.7333           1.0        5        0.8916
+    8    None   Tree         0.8200        0.1424           0.7857        0.6667           1.0        5        0.8576
+
+FOLD-LEVEL RESULTS (for auditability)
+------------------------------------------------------------------------------------------------------------------------
+ Method: None 
+ Model  Fold    Acc
+LogReg     1 0.8000
+LogReg     2 1.0000
+LogReg     3 1.0000
+LogReg     4 1.0000
+LogReg     5 0.9286
+  Tree     1 0.6667
+  Tree     2 0.9333
+  Tree     3 0.7143
+  Tree     4 1.0000
+  Tree     5 0.7857
+
+ Method: SFS_DT 
+ Model  Fold    Acc
+LogReg     1 0.7333
+LogReg     2 0.8000
+LogReg     3 1.0000
+LogReg     4 0.9286
+LogReg     5 0.9286
+  Tree     1 0.8000
+  Tree     2 1.0000
+  Tree     3 1.0000
+  Tree     4 1.0000
+  Tree     5 1.0000
+
+ Method: SFS_LOG 
+ Model  Fold    Acc
+LogReg     1 1.0000
+LogReg     2 1.0000
+LogReg     3 1.0000
+LogReg     4 1.0000
+LogReg     5 1.0000
+  Tree     1 0.8000
+  Tree     2 1.0000
+  Tree     3 0.8571
+  Tree     4 0.9286
+  Tree     5 0.9286
+
+ Method: SFS_RF 
+ Model  Fold    Acc
+LogReg     1 0.7333
+LogReg     2 0.8000
+LogReg     3 1.0000
+LogReg     4 0.9286
+LogReg     5 0.9286
+  Tree     1 0.8000
+  Tree     2 1.0000
+  Tree     3 1.0000
+  Tree     4 1.0000
+  Tree     5 1.0000
+
+ Method: SFS_SVM 
+ Model  Fold    Acc
+LogReg     1 0.8667
+LogReg     2 1.0000
+LogReg     3 0.9286
+LogReg     4 0.9286
+LogReg     5 1.0000
+  Tree     1 0.8000
+  Tree     2 1.0000
+  Tree     3 0.9286
+  Tree     4 0.9286
+  Tree     5 1.0000
+
+
+------------------------------------------------------------------------------------------------------------------------

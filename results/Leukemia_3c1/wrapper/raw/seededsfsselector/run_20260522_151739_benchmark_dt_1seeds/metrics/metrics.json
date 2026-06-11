@@ -1,0 +1,11 @@
+{
+  "dataset": "Leukemia_3c1",
+  "dataset_variant": "raw",
+  "model_sfs": "DT",
+  "n_features_selected": 2,
+  "global_best_score": 0.96,
+  "total_fit_time_ms": 51710.43778100284,
+  "run_root": "results/Leukemia_3c1/wrapper/raw/seededsfsselector/run_20260522_151739_benchmark_dt_1seeds",
+  "n_seeds": 1,
+  "patience": 5
+}
