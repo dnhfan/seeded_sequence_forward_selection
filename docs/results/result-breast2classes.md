@@ -156,15 +156,15 @@
   - The y-axis shows cross-validation accuracy; higher bars indicate better performance.
   - Vertical error bars show Standard Deviation across folds; shorter bars indicate more stable models.
 
-| Rank | Method + Model               | CV Folds | Mean Accuracy |    Std | Median |    Min |    Max |
-| ---- | ---------------------------- | -------: | ------------: | -----: | -----: | -----: | -----: |
-| 1    | Seeded_SFS_Raw + LogReg      |       10 |        0.9221 | 0.0415 | 0.9333 | 0.8667 | 1.0000 |
-| 2    | Sklearn_SFS_Raw + LogReg     |        5 |        0.8833 | 0.0724 | 0.8750 | 0.8000 | 1.0000 |
-| 3    | Seeded_SFS_Union + LogReg    |        5 |        0.8200 | 0.1188 | 0.8667 | 0.6250 | 0.9333 |
-| 4    | Sklearn_SFS_Union + LogReg   |        5 |        0.8058 | 0.1377 | 0.8000 | 0.6667 | 1.0000 |
+| Rank | Method + Model             | CV Folds | Mean Accuracy |    Std | Median |    Min |    Max |
+| ---- | -------------------------- | -------: | ------------: | -----: | -----: | -----: | -----: |
+| 1    | Seeded_SFS_Raw + LogReg    |        5 |      0.935833 | 0.0443 | 0.9333 | 0.8750 | 1.0000 |
+| 2    | Sklearn_SFS_Raw + LogReg   |        5 |        0.8833 | 0.0724 | 0.8750 | 0.8000 | 1.0000 |
+| 3    | Seeded_SFS_Union + LogReg  |        5 |        0.8200 | 0.1188 | 0.8667 | 0.6250 | 0.9333 |
+| 4    | Sklearn_SFS_Union + LogReg |        5 |        0.8058 | 0.1377 | 0.8000 | 0.6667 | 1.0000 |
 
 **Key Observations:**
 
-- Best configuration: Seeded_SFS_Raw + LogReg with 0.9221 accuracy (σ=0.0415)
+- Best configuration: Seeded_SFS_Raw + LogReg with 0.9358 accuracy (σ=0.0443)
 - Second best: Sklearn_SFS_Raw + LogReg with 0.8833 accuracy
 - Recommendation: See detailed comparison in the plot and report file above.

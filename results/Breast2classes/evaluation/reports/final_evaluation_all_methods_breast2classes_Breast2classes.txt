@@ -1,5 +1,5 @@
 MODEL EVALUATION REPORT
-generated_at: 2026-06-11 08:58:13
+generated_at: 2026-06-11 13:58:05
 experiment_id: final_evaluation_all_methods_breast2classes_Breast2classes_20260611
 dataset: Breast2classes
 experiment_prefix: final_evaluation_all_methods_Breast2classes
@@ -14,13 +14,13 @@ plot_path: /home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/result
 report_path: /home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/Breast2classes/evaluation/reports/final_evaluation_all_methods_breast2classes_Breast2classes.txt
 
 EXECUTIVE SUMMARY
-best_configuration: method=Seeded_SFS_Raw, model=LogReg, mean_accuracy=0.9221, std=0.0415, folds=10
-total_configurations: 20 | total_fold_evaluations: 110
+best_configuration: method=Seeded_SFS_Raw, model=LogReg, mean_accuracy=0.9358, std=0.0443, folds=5
+total_configurations: 20 | total_fold_evaluations: 100
 
 CROSS-VALIDATION SUMMARY (ranked)
 ------------------------------------------------------------------------------------------------------------------------
  rank             Method  Model  mean_accuracy  std_accuracy  median_accuracy  min_accuracy  max_accuracy  n_folds  cv_stability
-    1     Seeded_SFS_Raw LogReg         0.9221        0.0415           0.9333        0.8667        1.0000       10        0.9585
+    1     Seeded_SFS_Raw LogReg         0.9358        0.0443           0.9333        0.8750        1.0000        5        0.9557
     2    Sklearn_SFS_Raw LogReg         0.8833        0.0724           0.8750        0.8000        1.0000        5        0.9276
     3   Seeded_SFS_Union LogReg         0.8200        0.1188           0.8667        0.6250        0.9333        5        0.8812
     4  Sklearn_SFS_Union LogReg         0.8058        0.1377           0.8000        0.6667        1.0000        5        0.8623
@@ -29,8 +29,8 @@ CROSS-VALIDATION SUMMARY (ranked)
     7        CHI_SQUARED LogReg         0.7408        0.1290           0.6667        0.6250        0.9333        5        0.8710
     8       ANOVA_F_TEST   Tree         0.7392        0.0846           0.7500        0.6000        0.8125        5        0.9154
     9        CORRELATION LogReg         0.7383        0.0853           0.7333        0.6667        0.8750        5        0.9147
-   10     Seeded_SFS_Raw   Tree         0.7288        0.1007           0.7104        0.5625        0.9333       10        0.8993
-   11 MUTUAL_INFORMATION   Tree         0.7242        0.1147           0.6667        0.6000        0.8750        5        0.8853
+   10 MUTUAL_INFORMATION   Tree         0.7242        0.1147           0.6667        0.6000        0.8750        5        0.8853
+   11     Seeded_SFS_Raw   Tree         0.7158        0.1016           0.7500        0.5625        0.8000        5        0.8984
    12 MUTUAL_INFORMATION LogReg         0.7117        0.1249           0.7333        0.5333        0.8750        5        0.8751
    13        CHI_SQUARED   Tree         0.7017        0.0535           0.7333        0.6250        0.7500        5        0.9465
    14    Sklearn_SFS_Raw   Tree         0.6883        0.0925           0.6667        0.5625        0.8125        5        0.9075
@@ -110,25 +110,15 @@ LogReg     5 0.6000
 
  Method: Seeded_SFS_Raw 
  Model  Fold    Acc
-LogReg     1 0.9375
 LogReg     1 0.8750
 LogReg     2 0.9375
-LogReg     2 0.9375
-LogReg     3 0.8667
 LogReg     3 1.0000
 LogReg     4 0.9333
-LogReg     4 0.9333
-LogReg     5 0.8667
 LogReg     5 0.9333
-  Tree     1 0.6875
   Tree     1 0.7500
-  Tree     2 0.6875
   Tree     2 0.5625
-  Tree     3 0.7333
   Tree     3 0.8000
-  Tree     4 0.9333
   Tree     4 0.6667
-  Tree     5 0.6667
   Tree     5 0.8000
 
  Method: Seeded_SFS_Union 
