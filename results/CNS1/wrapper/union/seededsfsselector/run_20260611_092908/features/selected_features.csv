@@ -1,0 +1,8 @@
+feature,dataset,dataset_variant,model_sfs,algorithm
+1053,CNS1,union,LOG,seededsfsselector
+3935,CNS1,union,LOG,seededsfsselector
+2031,CNS1,union,LOG,seededsfsselector
+2239,CNS1,union,LOG,seededsfsselector
+6522,CNS1,union,LOG,seededsfsselector
+5967,CNS1,union,LOG,seededsfsselector
+2902,CNS1,union,LOG,seededsfsselector

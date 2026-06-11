@@ -1,0 +1,11 @@
+{
+  "dataset": "CNS1",
+  "dataset_variant": "raw",
+  "n_features_selected": 6,
+  "global_best_score": 0.8833333333333334,
+  "total_fit_time_ms": 4188399.078866001,
+  "run_root": "results/CNS1/wrapper/raw/seededsfsselector/run_20260522_100232_benchmark_rf_1seeds",
+  "n_seeds": 1,
+  "patience": 5,
+  "model_sfs": "RF"
+}
