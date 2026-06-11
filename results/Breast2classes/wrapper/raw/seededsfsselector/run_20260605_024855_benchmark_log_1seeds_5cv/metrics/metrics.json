@@ -1,0 +1,11 @@
+{
+  "dataset": "Breast2classes",
+  "dataset_variant": "raw",
+  "model_sfs": "LOG",
+  "n_features_selected": 9,
+  "global_best_score": 0.9358333333333334,
+  "total_fit_time_ms": 139027.34391699778,
+  "run_root": "/home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/Breast2classes/wrapper/raw/seededsfsselector/run_20260605_024855_benchmark_log_1seeds_5cv",
+  "n_seeds": 1,
+  "patience": 5
+}

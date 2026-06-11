@@ -1,0 +1,2 @@
+dataset,dataset_variant,model_sfs,n_features_selected,global_best_score,total_fit_time_ms,run_root,n_seeds,patience
+Breast2classes,raw,LOG,9,0.9358333333333334,139027.34391699778,/home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/Breast2classes/wrapper/raw/seededsfsselector/run_20260605_024855_benchmark_log_1seeds_5cv,1,5

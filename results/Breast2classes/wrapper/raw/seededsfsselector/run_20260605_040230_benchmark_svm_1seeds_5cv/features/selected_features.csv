@@ -1,0 +1,14 @@
+feature,dataset,dataset_variant,model_sfs,algorithm
+V2221,Breast2classes,raw,SVM,seededsfsselector
+V1400,Breast2classes,raw,SVM,seededsfsselector
+V4610,Breast2classes,raw,SVM,seededsfsselector
+V2422,Breast2classes,raw,SVM,seededsfsselector
+V333,Breast2classes,raw,SVM,seededsfsselector
+V2028,Breast2classes,raw,SVM,seededsfsselector
+V393,Breast2classes,raw,SVM,seededsfsselector
+V12,Breast2classes,raw,SVM,seededsfsselector
+V2253,Breast2classes,raw,SVM,seededsfsselector
+V23,Breast2classes,raw,SVM,seededsfsselector
+V61,Breast2classes,raw,SVM,seededsfsselector
+V1162,Breast2classes,raw,SVM,seededsfsselector
+V2512,Breast2classes,raw,SVM,seededsfsselector
