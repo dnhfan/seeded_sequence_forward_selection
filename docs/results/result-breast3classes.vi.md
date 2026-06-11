@@ -8,6 +8,7 @@ _Đọc bản tiếng Anh tại [result-breast3classes.md](result-breast3classes
 
 - Điểm vào notebook:
 - `notebook/Breast3classes/01_eda.ipynb`
+- Shape: (95,4870)
 
 [Chèn biểu đồ: Tổng quan EDA]
 ![Breast3classes EDA](../../results/Breast3classes/eda/plot/countplot.png)
@@ -26,20 +27,21 @@ _Đọc bản tiếng Anh tại [result-breast3classes.md](result-breast3classes
 
 - Điểm vào notebook:
 - `notebook/Breast3classes/03_filter_selection.ipynb`
+- Dữ liệu kết quả: `data/processed/Breast3classes/02_filter`
+
+## 4) Mô hình hóa (so sánh ở giai đoạn filter)
+
+- Điểm vào notebook:
+- `notebook/Breast3classes/04_modeling.ipynb`
 - Tệp báo cáo: `results/Breast3classes/filter/reports/filter_compare_50features_Breast3classes.txt`
 
 [Chèn biểu đồ: So sánh Filter Selection]
 ![Breast3classes Filter Selection](../../results/Breast3classes/filter/plots/filter_compare_50features_Breast3classes.png)
 
 **Chú thích:**
+
 - Mục đích: So sánh hiệu năng các phương pháp filter để chọn ra nhóm đặc trưng tốt nhất cho bước tiếp theo.
 - Cách đọc: Trục hoành là các phương pháp filter, trục tung là điểm đánh giá; cột/điểm càng cao thì phương pháp càng tốt.
-
-## 4) Mô hình hóa (so sánh ở giai đoạn filter)
-
-- Điểm vào notebook:
-- `notebook/Breast3classes/04_modeling.ipynb`
-- Kết quả modeling được lưu dưới `results/Breast3classes/filter/` khi có sẵn.
 
 ## 5) Ensemble Filter (Bỏ phiếu + tập đặc trưng union)
 
@@ -62,10 +64,10 @@ _Đọc bản tiếng Anh tại [result-breast3classes.md](result-breast3classes
 - `notebook/Breast3classes/06_sklearn_sfs-raw.py`
 - `notebook/Breast3classes/06_sklearn_sfs-union.py`
 
-| Biến thể | Sklearn Số đặc trưng chọn | Sklearn Global Best | Sklearn Thời gian fit (ms) |
-|---|---:|---:|---:|
-| Raw | 5 | 0.8 | 370,924 |
-| Union | 6 | 0.8 | 17,883 |
+| Biến thể | Sklearn Số đặc trưng chọn | Sklearn Global Best | Sklearn Thời gian fit (s) |
+| ------- | -----------------------: | ------------------: | -----------------------: |
+| Raw     |                        5 |                 0.8 |                  370.924 |
+| Union   |                        6 |                 0.8 |                   17.883 |
 
 ## 7) Wrapper: Seeded SFS (chạy Raw vs Union)
 
@@ -73,10 +75,10 @@ _Đọc bản tiếng Anh tại [result-breast3classes.md](result-breast3classes
 - `notebook/Breast3classes/07_sfs-raw.py`
 - `notebook/Breast3classes/07_sfs-union.py`
 
-| Biến thể | Seeded Số đặc trưng chọn | Seeded Global Best | Seeded Thời gian fit (ms) |
-|---|---:|---:|---:|
-| Raw | 6 | 0.8105 | 99,465 |
-| Union | 8 | 0.8 | 13,782 |
+| Biến thể | Seeded Số đặc trưng chọn | Seeded Global Best | Seeded Thời gian fit (s) |
+| ------- | -----------------------: | -----------------: | -----------------------: |
+| Raw     |                       17 |           0.884211 |                  322.930 |
+| Union   |                        8 |                0.8 |                   13.782 |
 
 ## 8) Đánh giá Accuracy (so sánh Raw vs Union)
 
@@ -100,12 +102,12 @@ _Đọc bản tiếng Anh tại [result-breast3classes.md](result-breast3classes
   - Trục hoành là từng cấu hình/phương pháp, trục tung là accuracy; giá trị cao hơn thể hiện hiệu năng tốt hơn.
   - Vạch đen thẳng đứng (Error bar): Thể hiện độ lệch chuẩn (Standard Deviation) qua các fold cross-validation. Vạch này càng ngắn chứng tỏ mô hình dự đoán càng ổn định, ít biến động.
 
-- **Quan sát:** Sklearn LogReg xếp hạng cao nhất ở cả đánh giá raw và union.
-- **Giải thích:** Trong bối cảnh đa lớp này, các tập con do sklearn chọn phù hợp hơn với hành vi của bộ phân loại phía sau.
-- **Kết luận:** Dùng baseline sklearn làm cấu hình chính cho bộ dữ liệu này.
+- **Quan sát:** Seeded LogReg xếp hạng cao nhất ở cả đánh giá raw và union.
+- **Giải thích:** Trong bối cảnh đa lớp này, các tập con do seeded chọn phù hợp hơn với hành vi của bộ phân loại phía sau.
+- **Kết luận:** Dùng seeded làm cấu hình chính cho bộ dữ liệu này.
 
-- Cấu hình tốt nhất (raw): `sklearn + LogReg`, accuracy trung bình **0.7684**, std 0.1026
-- Cấu hình tốt nhất (union): `sklearn + LogReg`, accuracy trung bình 0.7368, std 0.1289
+- Cấu hình tốt nhất (raw): `seeded + LogReg`, accuracy trung bình **0.8842**, std 0.0942
+- Cấu hình tốt nhất (union): `seeded + LogReg`, accuracy trung bình **0.7895**, std 0.1441
 
 ## 9) Đánh giá thời gian (so sánh thời gian fit Raw vs Union)
 
@@ -129,7 +131,6 @@ _Đọc bản tiếng Anh tại [result-breast3classes.md](result-breast3classes
 - **Giải thích:** Union làm giảm không gian ứng viên, từ đó giảm tổng số lần fit mô hình.
 - **Kết luận:** Dùng union để lặp thử nhanh; dùng raw khi cần tối đa hóa wrapper score.
 
-
 ## 10) Đánh Giá Cuối Cùng (So Sánh Tất Cả Phương Pháp)
 
 - Điểm vào notebook:
@@ -146,13 +147,14 @@ _Đọc bản tiếng Anh tại [result-breast3classes.md](result-breast3classes
   - Trục Y hiển thị độ chính xác cross-validation; các cột cao hơn cho biết hiệu suất tốt hơn.
   - Các thanh lỗi dọc hiển thị độ lệch chuẩn (Std) trên các fold; các thanh ngắn hơn chỉ ra mô hình ổn định hơn.
 
-| Xếp Hạng | Phương Pháp + Mô Hình | CV Fold | Accuracy Trung Bình | Std | Median | Min | Max |
-|---|---|---:|---:|---:|---:|---:|---:|
-| 1 | Sklearn_SFS_Raw + LogReg | 5 | 0.7684 | 0.1026 | 0.7368 | 0.6316 | 0.8947 |
-| 2 | Seeded_SFS_Raw + LogReg | 5 | 0.7474 | 0.1200 | 0.7368 | 0.6316 | 0.9474 |
-| 3 | Sklearn_SFS_Union + LogReg | 5 | 0.7368 | 0.1289 | 0.7368 | 0.6316 | 0.9474 |
+| Xếp Hạng | Phương Pháp + Mô Hình               | CV Folds | Accuracy Trung Bình |    Std | Median |    Min |    Max |
+| ------- | ----------------------------------- | -------: | ------------------: | -----: | -----: | -----: | -----: |
+| 1       | Seeded_SFS_Raw + LogReg             |        5 |            0.8842 | 0.0942 | 0.8947 | 0.7895 | 1.0000 |
+| 2       | Seeded_SFS_Union + LogReg           |        5 |            0.7895 | 0.1441 | 0.7895 | 0.6316 | 1.0000 |
+| 3       | Sklearn_SFS_Raw + LogReg            |        5 |            0.7684 | 0.1026 | 0.7368 | 0.6316 | 0.8947 |
+| 4       | Sklearn_SFS_Union + LogReg          |        5 |            0.7368 | 0.1289 | 0.7368 | 0.6316 | 0.9474 |
 
 **Quan Sát Chính:**
-- Cấu hình tốt nhất: Sklearn_SFS_Raw + LogReg với độ chính xác 0.7684 (σ=0.1026)
-- Xếp thứ hai: Seeded_SFS_Raw + LogReg với độ chính xác 0.7474
+- Cấu hình tốt nhất: Seeded_SFS_Raw + LogReg với độ chính xác 0.8842 (σ=0.0942)
+- Xếp thứ hai: Seeded_SFS_Union + LogReg với độ chính xác 0.7895
 - Khuyến nghị: Xem so sánh chi tiết trong biểu đồ và tệp báo cáo ở trên.

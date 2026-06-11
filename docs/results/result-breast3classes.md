@@ -6,11 +6,13 @@
 
 - Notebook entry point(s):
 - `notebook/Breast3classes/01_eda.ipynb`
+- Shape: (95,4870)
 
 [Insert Chart: EDA Summary]
 ![Breast3classes EDA](../../results/Breast3classes/eda/plot/countplot.png)
 
 **Caption:**
+
 - Purpose: Check whether the dataset is imbalanced.
 - How to read: The x-axis (V1) shows class labels (0 and 1), and the y-axis (count) shows the number of samples in each class.
 
@@ -24,20 +26,21 @@
 
 - Notebook entry point(s):
 - `notebook/Breast3classes/03_filter_selection.ipynb`
+- Results data: `data/processed/Breast3classes/02_filter`
+
+## 4) Modeling (Filter-stage comparison)
+
+- Notebook entry point(s):
+- `notebook/Breast3classes/04_modeling.ipynb`
 - Report artifact: `results/Breast3classes/filter/reports/filter_compare_50features_Breast3classes.txt`
 
 [Insert Chart: Filter Selection Comparison]
 ![Breast3classes Filter Selection](../../results/Breast3classes/filter/plots/filter_compare_50features_Breast3classes.png)
 
 **Caption:**
+
 - Purpose: Compare filter-method performance to select the best feature set for the next stage.
 - How to read: The x-axis lists filter methods, and the y-axis shows evaluation scores; higher bars/scores indicate better methods.
-
-## 4) Modeling (Filter-stage comparison)
-
-- Notebook entry point(s):
-- `notebook/Breast3classes/04_modeling.ipynb`
-- Modeling outputs are tracked under `results/Breast3classes/filter/` when available.
 
 ## 5) Ensemble Filter (Voting + union feature set)
 
@@ -51,6 +54,7 @@
 ![Breast3classes Ensemble Voting](../../results/Breast3classes/ensemble/plots/top50_features_voting.png)
 
 **Caption:**
+
 - Purpose: Show agreement among filter methods when voting for features.
 - How to read: The x-axis lists feature names, and the y-axis shows vote counts; features with higher votes are prioritized.
 
@@ -60,10 +64,10 @@
 - `notebook/Breast3classes/06_sklearn_sfs-raw.py`
 - `notebook/Breast3classes/06_sklearn_sfs-union.py`
 
-| Variant | Sklearn Selected | Sklearn Global Best | Sklearn Fit Time (ms) |
-|---|---:|---:|---:|
-| Raw | 5 | 0.8 | 370,924 |
-| Union | 6 | 0.8 | 17,883 |
+| Variant | Sklearn Selected | Sklearn Global Best | Sklearn Fit Time (s) |
+| ------- | ---------------: | ------------------: | -------------------: |
+| Raw     |                5 |                 0.8 |              370.924 |
+| Union   |                6 |                 0.8 |               17.883 |
 
 ## 7) Wrapper: Seeded SFS (Raw vs Union execution)
 
@@ -71,10 +75,10 @@
 - `notebook/Breast3classes/07_sfs-raw.py`
 - `notebook/Breast3classes/07_sfs-union.py`
 
-| Variant | Seeded Selected | Seeded Global Best | Seeded Fit Time (ms) |
-|---|---:|---:|---:|
-| Raw | 6 | 0.8105 | 99,465 |
-| Union | 8 | 0.8 | 13,782 |
+| Variant | Seeded Selected | Seeded Global Best | Seeded Fit Time (s) |
+| ------- | --------------: | -----------------: | ------------------: |
+| Raw     |              17 |           0.884211 |             322.930 |
+| Union   |               8 |                0.8 |              13.782 |
 
 ## 8) Accuracy Evaluation (Comparing Raw vs Union)
 
@@ -86,24 +90,27 @@
 ![Breast3classes Accuracy Evaluation](../../results/Breast3classes/evaluation/plots/wrapper_sfs_comparison_sk_raw_seeded_raw_Breast3classes.png)
 
 **Caption:**
+
 - Purpose: Compare accuracy across wrapper configurations (Sklearn SFS and Seeded SFS) for each data variant.
 - How to read:
   - The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
   - Vertical black lines (error bars) show Standard Deviation across cross-validation folds. Shorter bars indicate more stable model performance.
+
 ![Breast3classes Accuracy Evaluation](../../results/Breast3classes/evaluation/plots/wrapper_sfs_comparison_sk_union_seeded_union_Breast3classes.png)
 
 **Caption:**
+
 - Purpose: Compare accuracy across wrapper configurations (Sklearn SFS and Seeded SFS) for each data variant.
 - How to read:
   - The x-axis shows configurations/methods, and the y-axis shows accuracy; higher values indicate better performance.
   - Vertical black lines (error bars) show Standard Deviation across cross-validation folds. Shorter bars indicate more stable model performance.
 
-- **Observation:** Sklearn LogReg ranks first in both raw and union evaluation.
-- **Explanation:** For this multiclass setting, sklearn-selected subsets align better with downstream classifier behavior.
-- **Takeaway:** Use sklearn baseline as primary configuration for this dataset.
+- **Observation:** Seeded LogReg ranks first in both raw and union evaluation.
+- **Explanation:** For this multiclass setting, seeded-selected subsets align better with downstream classifier behavior.
+- **Takeaway:** Use seeded as primary configuration for this dataset.
 
-- Raw best configuration: `sklearn + LogReg`, mean accuracy **0.7684**, std 0.1026
-- Union best configuration: `sklearn + LogReg`, mean accuracy 0.7368, std 0.1289
+- Raw best configuration: `seeded + LogReg`, mean accuracy **0.8842**, std 0.0942
+- Union best configuration: `seeded + LogReg`, mean accuracy **0.7895**, std 0.1441
 
 ## 9) Time Evaluation (Comparing fit times for Raw vs Union)
 
@@ -115,18 +122,20 @@
 ![Breast3classes Time Evaluation](../../results/Breast3classes/evaluation/plots/time_comparison_raw_seeded_vs_raw_sklearn.png)
 
 **Caption:**
+
 - Purpose: Compare training-time cost across wrapper methods on the same dataset.
 - How to read: The x-axis shows methods/configurations, and the y-axis shows total fit time (ms); lower bars mean faster runtime.
+
 ![Breast3classes Time Evaluation](../../results/Breast3classes/evaluation/plots/time_comparison_union_seeded_vs_union_sklearn.png)
 
 **Caption:**
+
 - Purpose: Compare training-time cost across wrapper methods on the same dataset.
 - How to read: The x-axis shows methods/configurations, and the y-axis shows total fit time (ms); lower bars mean faster runtime.
 
 - **Observation:** Union runs are generally faster than raw runs across wrapper methods.
 - **Explanation:** Union reduces candidate-space size, reducing total model-fit operations.
 - **Takeaway:** Use union for rapid iteration; use raw when chasing peak wrapper score.
-
 
 ## 10) Final Evaluation (All Methods Comparison)
 
@@ -138,19 +147,22 @@
 ![Breast3classes Final Evaluation](../../results/Breast3classes/evaluation/plots/final_evaluation_all_methods_breast3classes_Breast3classes.png)
 
 **Caption:**
+
 - Purpose: Compare all feature selection methods (Filter, Ensemble, Sklearn SFS, Seeded SFS) with both LogReg and Tree models.
 - How to read:
   - The x-axis lists all method/model combinations (e.g., "Sklearn_SFS_Raw + LogReg").
   - The y-axis shows cross-validation accuracy; higher bars indicate better performance.
   - Vertical error bars show Standard Deviation across folds; shorter bars indicate more stable models.
 
-| Rank | Method + Model | CV Folds | Mean Accuracy | Std | Median | Min | Max |
-|---|---|---:|---:|---:|---:|---:|---:|
-| 1 | Sklearn_SFS_Raw + LogReg | 5 | 0.7684 | 0.1026 | 0.7368 | 0.6316 | 0.8947 |
-| 2 | Seeded_SFS_Raw + LogReg | 5 | 0.7474 | 0.1200 | 0.7368 | 0.6316 | 0.9474 |
-| 3 | Sklearn_SFS_Union + LogReg | 5 | 0.7368 | 0.1289 | 0.7368 | 0.6316 | 0.9474 |
+| Rank | Method + Model               | CV Folds | Mean Accuracy |    Std | Median |    Min |    Max |
+| ---- | ---------------------------- | -------: | ------------: | -----: | -----: | -----: | -----: |
+| 1    | Seeded_SFS_Raw + LogReg      |        5 |        0.8842 | 0.0942 | 0.8947 | 0.7895 | 1.0000 |
+| 2    | Seeded_SFS_Union + LogReg    |        5 |        0.7895 | 0.1441 | 0.7895 | 0.6316 | 1.0000 |
+| 3    | Sklearn_SFS_Raw + LogReg     |        5 |        0.7684 | 0.1026 | 0.7368 | 0.6316 | 0.8947 |
+| 4    | Sklearn_SFS_Union + LogReg   |        5 |        0.7368 | 0.1289 | 0.7368 | 0.6316 | 0.9474 |
 
 **Key Observations:**
-- Best configuration: Sklearn_SFS_Raw + LogReg with 0.7684 accuracy (σ=0.1026)
-- Second best: Seeded_SFS_Raw + LogReg with 0.7474 accuracy
+
+- Best configuration: Seeded_SFS_Raw + LogReg with 0.8842 accuracy (σ=0.0942)
+- Second best: Seeded_SFS_Union + LogReg with 0.7895 accuracy
 - Recommendation: See detailed comparison in the plot and report file above.
