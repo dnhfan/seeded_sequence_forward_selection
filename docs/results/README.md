@@ -18,6 +18,7 @@ Updated rankings from Final Evaluation (all methods comparison). See Section 10 
 | colon1         |  Seeded_SFS_Raw + LogReg  |              10 |             0.9679 |  30.885568714002147 |
 | adenocarcinoma |  Seeded_SFS_Raw + LogReg  |               4 |             1.0000 |   190.4245332389837 |
 | Breast2classes |  Seeded_SFS_Raw + LogReg  |               9 |            0.93583 |  139.02734391699778 |
+| Breast3classes |  Seeded_SFS_Raw + LogReg  |              17 |             0.8842 |            322.931 |
 | CNS1           |  Seeded_SFS_Raw + LogReg  |               7 |             0.9833 |  175.75089231900347 |
 | Leukemia_3c1   | Seeded_SFS_Union + LogReg |               4 |            1.000000 |              5.384 |
 
