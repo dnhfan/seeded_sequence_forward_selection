@@ -1,0 +1,11 @@
+{
+  "dataset": "Breast3classes",
+  "dataset_variant": "union",
+  "model_sfs": "LOG",
+  "n_features_selected": 10,
+  "global_best_score": 0.7894736842105263,
+  "total_fit_time_ms": 10170.91787001118,
+  "run_root": "/home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/Breast3classes/wrapper/union/seededsfsselector/run_20260611_231829",
+  "patience": 5,
+  "n_seeds": 1
+}
