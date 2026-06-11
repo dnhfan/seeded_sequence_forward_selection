@@ -10,3 +10,4 @@ this will have us find the best model/n_seed that should be use in SFS
 4. [Breast2classes](./Breast2classes.md)
 5. [CNS1](./CNS1.md)
 6. [Leukemia_3c1](./Leukemia_3c1.md)
+7. [Breast3classes](./Breast3classes.md)
