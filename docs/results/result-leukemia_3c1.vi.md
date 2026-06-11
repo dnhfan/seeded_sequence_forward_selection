@@ -8,6 +8,7 @@ _Đọc bản tiếng Anh tại [result-leukemia_3c1.md](result-leukemia_3c1.md)
 
 - Điểm vào notebook:
 - `notebook/Leukemia_3c1/01_eda.ipynb`
+- Shape: (72, 7130)
 
 [Chèn biểu đồ: Tổng quan EDA]
 ![Leukemia_3c1 EDA](../../results/Leukemia_3c1/eda/plot/countplot.png)
@@ -26,12 +27,10 @@ _Đọc bản tiếng Anh tại [result-leukemia_3c1.md](result-leukemia_3c1.md)
 
 - Điểm vào notebook:
 - `notebook/Leukemia_3c1/03_filter_selection.ipynb`
-- Tệp báo cáo: `results/Leukemia_3c1/filter/reports/evaluation_Leukemia_3c1.txt`
-
-[Chèn biểu đồ: So sánh Filter Selection]
-![Leukemia_3c1 Filter Selection](../../results/Leukemia_3c1/filter/plots/evaluation_Leukemia_3c1.png)
+- Dữ liệu kết quả: `data/processed/Leukemia_3c1/02_filter/`
 
 **Chú thích:**
+
 - Mục đích: So sánh hiệu năng các phương pháp filter để chọn ra nhóm đặc trưng tốt nhất cho bước tiếp theo.
 - Cách đọc: Trục hoành là các phương pháp filter, trục tung là điểm đánh giá; cột/điểm càng cao thì phương pháp càng tốt.
 
@@ -39,7 +38,10 @@ _Đọc bản tiếng Anh tại [result-leukemia_3c1.md](result-leukemia_3c1.md)
 
 - Điểm vào notebook:
 - `notebook/Leukemia_3c1/04_modeling.ipynb`
-- Kết quả modeling được lưu dưới `results/Leukemia_3c1/filter/` khi có sẵn.
+- Tệp báo cáo: `results/Leukemia_3c1/filter/reports/evaluation_Leukemia_3c1.txt`
+
+[Chèn biểu đồ: So sánh Filter Selection]
+![Leukemia_3c1 Filter Selection](../../results/Leukemia_3c1/filter/plots/evaluation_Leukemia_3c1.png)
 
 ## 5) Ensemble Filter (Bỏ phiếu + tập đặc trưng union)
 
@@ -62,10 +64,10 @@ _Đọc bản tiếng Anh tại [result-leukemia_3c1.md](result-leukemia_3c1.md)
 - `notebook/Leukemia_3c1/06_sklearn_sfs-raw.py`
 - `notebook/Leukemia_3c1/06_sklearn_sfs-union.py`
 
-| Biến thể | Sklearn Số đặc trưng chọn | Sklearn Global Best | Sklearn Thời gian fit (ms) |
-|---|---:|---:|---:|
-| Raw | 2 | 0.96 | 275,768 |
-| Union | 2 | 0.96 | 9,501 |
+| Biến thể | Sklearn Số đặc trưng chọn | Sklearn Global Best | Sklearn Thời gian fit (s) |
+| ------- | -----------------------: | ------------------: | -----------------------: |
+| Raw     |                        4 |            1.000000 |                  488.009 |
+| Union   |                        3 |            0.985714 |                   10.609 |
 
 ## 7) Wrapper: Seeded SFS (chạy Raw vs Union)
 
@@ -73,10 +75,10 @@ _Đọc bản tiếng Anh tại [result-leukemia_3c1.md](result-leukemia_3c1.md)
 - `notebook/Leukemia_3c1/07_sfs-raw.py`
 - `notebook/Leukemia_3c1/07_sfs-union.py`
 
-| Biến thể | Seeded Số đặc trưng chọn | Seeded Global Best | Seeded Thời gian fit (ms) |
-|---|---:|---:|---:|
-| Raw | 2 | 0.96 | 33,883 |
-| Union | 2 | 0.96 | 2,850 |
+| Biến thể | Seeded Số đặc trưng chọn | Seeded Global Best | Seeded Thời gian fit (s) |
+| ------- | -----------------------: | -----------------: | -----------------------: |
+| Raw     |                        4 |           1.000000 |                  162.259 |
+| Union   |                        4 |           1.000000 |                    5.384 |
 
 ## 8) Đánh giá Accuracy (so sánh Raw vs Union)
 
@@ -104,8 +106,8 @@ _Đọc bản tiếng Anh tại [result-leukemia_3c1.md](result-leukemia_3c1.md)
 - **Giải thích:** Bộ dữ liệu có thể phân tách tốt chỉ với số lượng đặc trưng rất nhỏ.
 - **Kết luận:** Dùng union seeded để đạt hiệu năng tương đương với thời gian nhanh nhất.
 
-- Cấu hình tốt nhất (raw): `seeded + Tree`, accuracy trung bình **0.9600**, std 0.0894
-- Cấu hình tốt nhất (union): `seeded + Tree`, accuracy trung bình **0.9600**, std 0.0894
+- Cấu hình tốt nhất (raw): `seeded + LogReg`, accuracy trung bình **1.0000**, std 0.0000
+- Cấu hình tốt nhất (union): `seeded + LogReg`, accuracy trung bình **1.0000**, std 0.0000
 
 ## 9) Đánh giá thời gian (so sánh thời gian fit Raw vs Union)
 
@@ -129,7 +131,6 @@ _Đọc bản tiếng Anh tại [result-leukemia_3c1.md](result-leukemia_3c1.md)
 - **Giải thích:** Union làm giảm không gian ứng viên, từ đó giảm tổng số lần fit mô hình.
 - **Kết luận:** Dùng union để lặp thử nhanh; dùng raw khi cần tối đa hóa wrapper score.
 
-
 ## 10) Đánh Giá Cuối Cùng (So Sánh Tất Cả Phương Pháp)
 
 - Điểm vào notebook:
@@ -146,13 +147,17 @@ _Đọc bản tiếng Anh tại [result-leukemia_3c1.md](result-leukemia_3c1.md)
   - Trục Y hiển thị độ chính xác cross-validation; các cột cao hơn cho biết hiệu suất tốt hơn.
   - Các thanh lỗi dọc hiển thị độ lệch chuẩn (Std) trên các fold; các thanh ngắn hơn chỉ ra mô hình ổn định hơn.
 
-| Xếp Hạng | Phương Pháp + Mô Hình | CV Fold | Accuracy Trung Bình | Std | Median | Min | Max |
-|---|---|---:|---:|---:|---:|---:|---:|
-| 1 | ANOVA_F_TEST + LogReg | 5 | 0.9724 | 0.0379 | 1.0000 | 0.9286 | 1.0000 |
-| 2 | CHI_SQUARED + LogReg | 5 | 0.9724 | 0.0379 | 1.0000 | 0.9286 | 1.0000 |
-| 3 | MUTUAL_INFORMATION + LogReg | 5 | 0.9724 | 0.0379 | 1.0000 | 0.9286 | 1.0000 |
+| Xếp Hạng | Phương Pháp + Mô Hình                    | CV Folds | Accuracy Trung Bình |    Std | Median |    Min |    Max |
+| ------- | ---------------------------------------- | -------: | ------------------: | -----: | -----: | -----: | -----: |
+| 1       | Seeded_SFS_Union + LogReg                |        5 |            1.0000 | 0.0000 | 1.0000 | 1.0000 | 1.0000 |
+| 1       | Sklearn_SFS_Raw + LogReg                 |        5 |            1.0000 | 0.0000 | 1.0000 | 1.0000 | 1.0000 |
+| 1       | Seeded_SFS_Raw + LogReg                  |        5 |            1.0000 | 0.0000 | 1.0000 | 1.0000 | 1.0000 |
+| 2       | Sklearn_SFS_Union + LogReg               |        5 |            0.9857 | 0.0319 | 1.0000 | 0.9286 | 1.0000 |
+| 3       | ANOVA_F_TEST + LogReg                    |        5 |            0.9724 | 0.0379 | 1.0000 | 0.9286 | 1.0000 |
+| 3       | CHI_SQUARED + LogReg                     |        5 |            0.9724 | 0.0379 | 1.0000 | 0.9286 | 1.0000 |
+| 3       | MUTUAL_INFORMATION + LogReg              |        5 |            0.9724 | 0.0379 | 1.0000 | 0.9286 | 1.0000 |
 
 **Quan Sát Chính:**
-- Cấu hình tốt nhất: ANOVA_F_TEST + LogReg với độ chính xác 0.9724 (σ=0.0379)
-- Xếp thứ hai: CHI_SQUARED + LogReg với độ chính xác 0.9724
+- Cấu hình tốt nhất: Seeded_SFS_Union / Sklearn_SFS_Raw / Seeded_SFS_Raw + LogReg đều đạt 1.0000 accuracy (σ=0.0000)
+- Xếp thứ hai: Sklearn_SFS_Union + LogReg với 0.9857 accuracy
 - Khuyến nghị: Xem so sánh chi tiết trong biểu đồ và tệp báo cáo ở trên.
