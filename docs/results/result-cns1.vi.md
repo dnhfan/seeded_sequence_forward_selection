@@ -8,6 +8,7 @@ _Đọc bản tiếng Anh tại [result-cns1.md](result-cns1.md)_
 
 - Điểm vào notebook:
 - `notebook/CNS1/01_eda.ipynb`
+- Shape: (60, 7130)
 
 [Chèn biểu đồ: Tổng quan EDA]
 ![CNS1 EDA](../../results/CNS1/eda/plot/countplot.png)
@@ -26,12 +27,13 @@ _Đọc bản tiếng Anh tại [result-cns1.md](result-cns1.md)_
 
 - Điểm vào notebook:
 - `notebook/CNS1/03_filter_selection.ipynb`
-- Tệp báo cáo: `results/CNS1/filter/reports/evaluation_CNS1.txt`
+- Dữ liệu kết quả: `data/processed/CNS1/02_filter`
 
 [Chèn biểu đồ: So sánh Filter Selection]
 ![CNS1 Filter Selection](../../results/CNS1/filter/plots/evaluation_CNS1.png)
 
 **Chú thích:**
+
 - Mục đích: So sánh hiệu năng các phương pháp filter để chọn ra nhóm đặc trưng tốt nhất cho bước tiếp theo.
 - Cách đọc: Trục hoành là các phương pháp filter, trục tung là điểm đánh giá; cột/điểm càng cao thì phương pháp càng tốt.
 
@@ -39,7 +41,7 @@ _Đọc bản tiếng Anh tại [result-cns1.md](result-cns1.md)_
 
 - Điểm vào notebook:
 - `notebook/CNS1/04_modeling.ipynb`
-- Kết quả modeling được lưu dưới `results/CNS1/filter/` khi có sẵn.
+- Tệp báo cáo: `results/CNS1/filter/reports/evaluation_CNS1.txt`
 
 ## 5) Ensemble Filter (Bỏ phiếu + tập đặc trưng union)
 
@@ -61,11 +63,12 @@ _Đọc bản tiếng Anh tại [result-cns1.md](result-cns1.md)_
 - Điểm vào script:
 - `notebook/CNS1/06_sklearn_sfs-raw.py`
 - `notebook/CNS1/06_sklearn_sfs-union.py`
+- Chạy với mô hình log
 
-| Biến thể | Sklearn Số đặc trưng chọn | Sklearn Global Best | Sklearn Thời gian fit (ms) |
-|---|---:|---:|---:|
-| Raw | 6 | 0.9167 | 801,554 |
-| Union | 4 | 0.9 | 63,018 |
+| Biến thể | Sklearn Số đặc trưng chọn | Sklearn Global Best | Sklearn Thời gian fit (s) |
+| ------- | -----------------------: | ------------------: | -----------------------: |
+| Raw     |                        6 |              0.9167 |                  801.554 |
+| Union   |                        4 |                 0.9 |                   63.018 |
 
 ## 7) Wrapper: Seeded SFS (chạy Raw vs Union)
 
@@ -73,10 +76,10 @@ _Đọc bản tiếng Anh tại [result-cns1.md](result-cns1.md)_
 - `notebook/CNS1/07_sfs-raw.py`
 - `notebook/CNS1/07_sfs-union.py`
 
-| Biến thể | Seeded Số đặc trưng chọn | Seeded Global Best | Seeded Thời gian fit (ms) |
-|---|---:|---:|---:|
-| Raw | 9 | 0.95 | 484,297 |
-| Union | 5 | 0.9167 | 22,330 |
+| Biến thể | Seeded Số đặc trưng chọn | Seeded Global Best | Seeded Thời gian fit (s) |
+| ------- | -----------------------: | -----------------: | -----------------------: |
+| Raw     |                        7 |           0.983333 |                  175.750 |
+| Union   |                        5 |             0.9167 |                   22.330 |
 
 ## 8) Đánh giá Accuracy (so sánh Raw vs Union)
 
@@ -104,7 +107,7 @@ _Đọc bản tiếng Anh tại [result-cns1.md](result-cns1.md)_
 - **Giải thích:** Tìm kiếm trên raw đánh giá không gian ứng viên lớn hơn union.
 - **Kết luận:** Chọn biến thể theo mục tiêu: raw để tối đa hóa điểm số, union để tối ưu hiệu quả.
 
-- Cấu hình tốt nhất (raw): `sklearn + LogReg`, accuracy trung bình 0.8833, std 0.0456
+- Cấu hình tốt nhất (raw): `seeded + LogReg`, accuracy trung bình **0.9833**, std 0.0373
 - Cấu hình tốt nhất (union): `sklearn + LogReg`, accuracy trung bình 0.8833, std 0.0950
 
 ## 9) Đánh giá thời gian (so sánh thời gian fit Raw vs Union)
@@ -129,7 +132,6 @@ _Đọc bản tiếng Anh tại [result-cns1.md](result-cns1.md)_
 - **Giải thích:** Union làm giảm không gian ứng viên, từ đó giảm tổng số lần fit mô hình.
 - **Kết luận:** Dùng union để lặp thử nhanh; dùng raw khi cần tối đa hóa wrapper score.
 
-
 ## 10) Đánh Giá Cuối Cùng (So Sánh Tất Cả Phương Pháp)
 
 - Điểm vào notebook:
@@ -146,13 +148,16 @@ _Đọc bản tiếng Anh tại [result-cns1.md](result-cns1.md)_
   - Trục Y hiển thị độ chính xác cross-validation; các cột cao hơn cho biết hiệu suất tốt hơn.
   - Các thanh lỗi dọc hiển thị độ lệch chuẩn (Std) trên các fold; các thanh ngắn hơn chỉ ra mô hình ổn định hơn.
 
-| Xếp Hạng | Phương Pháp + Mô Hình | CV Fold | Accuracy Trung Bình | Std | Median | Min | Max |
-|---|---|---:|---:|---:|---:|---:|---:|
-| 1 | ANOVA_F_TEST + LogReg | 5 | 0.9083 | 0.1387 | 0.9375 | 0.6667 | 1.0000 |
-| 2 | CORRELATION + LogReg | 5 | 0.9083 | 0.1387 | 0.9375 | 0.6667 | 1.0000 |
-| 3 | Sklearn_SFS_Union + LogReg | 5 | 0.8833 | 0.0950 | 0.9167 | 0.7500 | 1.0000 |
+| Xếp Hạng | Phương Pháp + Mô Hình               | CV Folds | Accuracy Trung Bình |    Std | Median |    Min |    Max |
+| ------- | ----------------------------------- | -------: | ------------------: | -----: | -----: | -----: | -----: |
+| 1       | Seeded_SFS_Raw + LogReg             |        5 |            0.9833 | 0.0373 | 1.0000 | 0.9167 | 1.0000 |
+| 2       | Seeded_SFS_Union + LogReg           |        5 |            0.9167 | 0.1021 | 0.9167 | 0.7500 | 1.0000 |
+| 3       | ANOVA_F_TEST + LogReg               |        5 |            0.9083 | 0.1387 | 0.9375 | 0.6667 | 1.0000 |
+| 3       | CORRELATION + LogReg                |        5 |            0.9083 | 0.1387 | 0.9375 | 0.6667 | 1.0000 |
+| 4       | Sklearn_SFS_Union + LogReg          |        5 |            0.8833 | 0.0950 | 0.9167 | 0.7500 | 1.0000 |
+| 4       | Sklearn_SFS_Raw + LogReg            |        5 |            0.8833 | 0.0456 | 0.9167 | 0.8333 | 0.9167 |
 
 **Quan Sát Chính:**
-- Cấu hình tốt nhất: ANOVA_F_TEST + LogReg với độ chính xác 0.9083 (σ=0.1387)
-- Xếp thứ hai: CORRELATION + LogReg với độ chính xác 0.9083
+- Cấu hình tốt nhất: Seeded_SFS_Raw + LogReg với độ chính xác 0.9833 (σ=0.0373)
+- Xếp thứ hai: Seeded_SFS_Union + LogReg với độ chính xác 0.9167
 - Khuyến nghị: Xem so sánh chi tiết trong biểu đồ và tệp báo cáo ở trên.
