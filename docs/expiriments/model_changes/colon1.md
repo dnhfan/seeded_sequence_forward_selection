@@ -1,5 +1,7 @@
 # Colon1 Model Changes Expiriments
 
+[goto index](./README.md)
+
 ## Report
 
 - Fully report is in: `results/colon1/evaluation/reports/benchmark_accuracy_raw_colon1.txt`

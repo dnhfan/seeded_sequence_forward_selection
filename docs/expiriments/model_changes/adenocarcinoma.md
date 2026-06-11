@@ -2,6 +2,8 @@
 
 raw benchmark
 
+[goto index](./README.md)
+
 ## Report
 
 - Fully report is in: `results/evaluation/reports/benchmark_accuracy_raw_adenocarcinoma.txt`

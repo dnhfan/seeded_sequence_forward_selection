@@ -1,7 +1,10 @@
 # Brain Model Changes Expiriments
 
+[goto index](./README.md)
+
 ## Report
 
+[goto index](./README.md)
 runing in raw variant
 
 - Fully report is in: `Brain/evaluation/reports/benchmark_accuracy_raw_Brain.txt`
