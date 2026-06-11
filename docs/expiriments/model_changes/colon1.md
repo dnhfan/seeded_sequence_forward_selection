@@ -31,5 +31,6 @@ CROSS-VALIDATION SUMMARY (ranked)
 
 ## Chart
 
-![Acc](../../results/colon1/evaluation/plots/benchmark_accuracy_raw_colon1.png)
-![Rime](../../results/colon1/evaluation/plots/benchmark_time_features_raw_colon1.png)
+![benchmark_accuracy_raw_colon1](../../../results/colon1/evaluation/plots/benchmark_accuracy_raw_colon1.png)
+
+![benchmark_time_features_raw_colon1](../../../results/colon1/evaluation/plots/benchmark_time_features_raw_colon1.png)

@@ -34,6 +34,6 @@ CROSS-VALIDATION SUMMARY (ranked)
 
 ## Chart
 
-![benchmark_accuracy_raw_Brain](../../results/Brain/evaluation/plots/benchmark_accuracy_raw_Brain.png)
+![benchmark_accuracy_raw_Brain](../../../results/Brain/evaluation/plots/benchmark_accuracy_raw_Brain.png)
 
-![time](../../results/Brain/evaluation/plots/benchmark_time_features_raw_Brain.png)
+![benchmark_time_features_raw_Brain](../../../results/Brain/evaluation/plots/benchmark_time_features_raw_Brain.png)
