@@ -1,0 +1,11 @@
+{
+  "dataset": "Leukemia_4c1",
+  "dataset_variant": "raw",
+  "model_sfs": "LOG",
+  "n_features_selected": 6,
+  "global_best_score": 0.9861111111111112,
+  "total_fit_time_ms": 166195.434276,
+  "run_root": "results/Leukemia_4c1/wrapper/raw/seededsfsselector/run_20260523_172503_benchmark_log_1seeds",
+  "n_seeds": 1,
+  "patience": 5
+}

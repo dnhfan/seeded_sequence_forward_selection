@@ -1,0 +1,11 @@
+{
+  "dataset": "Breast3classes",
+  "dataset_variant": "raw",
+  "model_sfs": "SVM",
+  "n_features_selected": 7,
+  "global_best_score": 0.7794384057971014,
+  "total_fit_time_ms": 85297.83948000113,
+  "run_root": "/home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/Breast3classes/wrapper/raw/seededsfsselector/run_20260611_101202_benchmark_svm_1seeds",
+  "n_seeds": 1,
+  "patience": 5
+}

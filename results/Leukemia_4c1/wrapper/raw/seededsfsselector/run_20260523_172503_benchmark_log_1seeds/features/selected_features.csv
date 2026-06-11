@@ -1,0 +1,7 @@
+feature,dataset,dataset_variant,model_sfs,algorithm
+1881,Leukemia_4c1,raw,LOG,seededsfsselector
+4003,Leukemia_4c1,raw,LOG,seededsfsselector
+6509,Leukemia_4c1,raw,LOG,seededsfsselector
+321,Leukemia_4c1,raw,LOG,seededsfsselector
+6085,Leukemia_4c1,raw,LOG,seededsfsselector
+5465,Leukemia_4c1,raw,LOG,seededsfsselector

@@ -1,0 +1,2 @@
+dataset,dataset_variant,model_sfs,n_features_selected,global_best_score,total_fit_time_ms,run_root,n_seeds,patience
+Leukemia_4c1,raw,DT,6,0.9861111111111112,69122.8901919967,results/Leukemia_4c1/wrapper/raw/seededsfsselector/run_20260523_172750_benchmark_dt_1seeds,1,5

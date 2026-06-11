@@ -1,0 +1,11 @@
+{
+  "dataset": "Breast3classes",
+  "dataset_variant": "raw",
+  "model_sfs": "DT",
+  "n_features_selected": 7,
+  "global_best_score": 0.832427536231884,
+  "total_fit_time_ms": 58714.01248199982,
+  "run_root": "/home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/Breast3classes/wrapper/raw/seededsfsselector/run_20260611_091421_benchmark_dt_1seeds",
+  "n_seeds": 1,
+  "patience": 5
+}

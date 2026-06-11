@@ -1,0 +1,8 @@
+feature,dataset,dataset_variant,model_sfs,algorithm
+V3780,Breast3classes,raw,DT,seededsfsselector
+V4844,Breast3classes,raw,DT,seededsfsselector
+V1481,Breast3classes,raw,DT,seededsfsselector
+V2168,Breast3classes,raw,DT,seededsfsselector
+V635,Breast3classes,raw,DT,seededsfsselector
+V135,Breast3classes,raw,DT,seededsfsselector
+V3176,Breast3classes,raw,DT,seededsfsselector
