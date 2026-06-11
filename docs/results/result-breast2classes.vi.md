@@ -8,6 +8,7 @@ _Đọc bản tiếng Anh tại [result-breast2classes.md](result-breast2classes
 
 - Điểm vào notebook:
 - `notebook/Breast2classes/01_eda.ipynb`
+- Shape: (77, 4870)
 
 [Chèn biểu đồ: Tổng quan EDA]
 ![Breast2classes EDA](../../results/Breast2classes/eda/plot/countplot.png)
@@ -26,17 +27,13 @@ _Đọc bản tiếng Anh tại [result-breast2classes.md](result-breast2classes
 
 - Điểm vào notebook:
 - `notebook/Breast2classes/03_filter_selection.ipynb`
-- Tệp báo cáo: `results/Breast2classes/filter/reports/filter_compare_50features_Breast2classes.txt`
+- Dữ liệu kết quả: `data/processed/Breast2classes/02_filter`
 
 [Chèn biểu đồ: So sánh Filter Selection]
 ![Breast2classes Filter Selection](../../results/Breast2classes/filter/plots/filter_compare_50features_Breast2classes.png)
 
 **Chú thích:**
-- Mục đích: So sánh hiệu năng các phương pháp filter để chọn ra nhóm đặc trưng tốt nhất cho bước tiếp theo.
-- Cách đọc: Trục hoành là các phương pháp filter, trục tung là điểm đánh giá; cột/điểm càng cao thì phương pháp càng tốt.
-![Breast2classes Filter Selection](../../results/Breast2classes/filter/plots/model_comparison_top50_2026-04-09.png)
 
-**Chú thích:**
 - Mục đích: So sánh hiệu năng các phương pháp filter để chọn ra nhóm đặc trưng tốt nhất cho bước tiếp theo.
 - Cách đọc: Trục hoành là các phương pháp filter, trục tung là điểm đánh giá; cột/điểm càng cao thì phương pháp càng tốt.
 
@@ -44,7 +41,7 @@ _Đọc bản tiếng Anh tại [result-breast2classes.md](result-breast2classes
 
 - Điểm vào notebook:
 - `notebook/Breast2classes/04_modeling.ipynb`
-- Kết quả modeling được lưu dưới `results/Breast2classes/filter/` khi có sẵn.
+- Tệp báo cáo: `results/Breast2classes/filter/reports/filter_compare_50features_Breast2classes.txt`
 
 ## 5) Ensemble Filter (Bỏ phiếu + tập đặc trưng union)
 
@@ -66,22 +63,24 @@ _Đọc bản tiếng Anh tại [result-breast2classes.md](result-breast2classes
 - Điểm vào script:
 - `notebook/Breast2classes/06_sklearn_sfs-raw.py`
 - `notebook/Breast2classes/06_sklearn_sfs-union.py`
+- Chạy với mô hình log
 
-| Biến thể | Sklearn Số đặc trưng chọn | Sklearn Global Best | Sklearn Thời gian fit (ms) |
-|---|---:|---:|---:|
-| Raw | 4 | 0.8583 | 315,016 |
-| Union | 4 | 0.8567 | 13,638 |
+| Biến thể | Sklearn Số đặc trưng chọn | Sklearn Global Best | Sklearn Thời gian fit (s) |
+| ------- | -----------------------: | ------------------: | -----------------------: |
+| Raw     |                        7 |            0.922500 |                  733.129 |
+| Union   |                        4 |              0.8567 |                   13.638 |
 
 ## 7) Wrapper: Seeded SFS (chạy Raw vs Union)
 
 - Điểm vào script:
 - `notebook/Breast2classes/07_sfs-raw.py`
 - `notebook/Breast2classes/07_sfs-union.py`
+- Chạy với mô hình log
 
-| Biến thể | Seeded Số đặc trưng chọn | Seeded Global Best | Seeded Thời gian fit (ms) |
-|---|---:|---:|---:|
-| Raw | 11 | 0.935 | 102,179 |
-| Union | 9 | 0.8958 | 5,660 |
+| Biến thể | Seeded Số đặc trưng chọn | Seeded Global Best | Seeded Thời gian fit (s) |
+| ------- | -----------------------: | -----------------: | -----------------------: |
+| Raw     |                        9 |           0.935833 |                  139.027 |
+| Union   |                        9 |           0.895833 |                    6.114 |
 
 ## 8) Đánh giá Accuracy (so sánh Raw vs Union)
 
@@ -109,9 +108,9 @@ _Đọc bản tiếng Anh tại [result-breast2classes.md](result-breast2classes
 - **Giải thích:** Thông tin phân biệt có vẻ trải rộng ra ngoài nhóm ứng viên bị giới hạn bởi union.
 - **Kết luận:** Giữ raw seeded làm mặc định để đạt hiệu năng dự đoán tốt nhất.
 
-- Cấu hình tốt nhất (raw): `seeded + LogReg`, accuracy trung bình **0.9083**, std 0.0381
+- Cấu hình tốt nhất (raw): `seeded + LogReg`, accuracy trung bình **0.9358**, std 0.0443
 - Cấu hình tốt nhất (union): `seeded + LogReg`, accuracy trung bình 0.8200, std 0.1188
-- Final selected features (winning setup, raw seeded): 11 features
+- Final selected features (winning setup, raw seeded): 9 features
 
 ## 9) Đánh giá thời gian (so sánh thời gian fit Raw vs Union)
 
@@ -135,7 +134,6 @@ _Đọc bản tiếng Anh tại [result-breast2classes.md](result-breast2classes
 - **Giải thích:** Union làm giảm không gian ứng viên, từ đó giảm tổng số lần fit mô hình.
 - **Kết luận:** Dùng union để lặp thử nhanh; dùng raw khi cần tối đa hóa wrapper score.
 
-
 ## 10) Đánh Giá Cuối Cùng (So Sánh Tất Cả Phương Pháp)
 
 - Điểm vào notebook:
@@ -152,13 +150,14 @@ _Đọc bản tiếng Anh tại [result-breast2classes.md](result-breast2classes
   - Trục Y hiển thị độ chính xác cross-validation; các cột cao hơn cho biết hiệu suất tốt hơn.
   - Các thanh lỗi dọc hiển thị độ lệch chuẩn (Std) trên các fold; các thanh ngắn hơn chỉ ra mô hình ổn định hơn.
 
-| Xếp Hạng | Phương Pháp + Mô Hình | CV Fold | Accuracy Trung Bình | Std | Median | Min | Max |
-|---|---|---:|---:|---:|---:|---:|---:|
-| 1 | Seeded_SFS_Raw + LogReg | 5 | 0.9083 | 0.0381 | 0.9333 | 0.8667 | 0.9375 |
-| 2 | Sklearn_SFS_Raw + LogReg | 5 | 0.8833 | 0.0724 | 0.8750 | 0.8000 | 1.0000 |
-| 3 | Sklearn_SFS_Union + LogReg | 5 | 0.8058 | 0.1377 | 0.8000 | 0.6667 | 1.0000 |
+| Xếp Hạng | Phương Pháp + Mô Hình               | CV Folds | Accuracy Trung Bình |    Std | Median |    Min |    Max |
+| ------- | ----------------------------------- | -------: | ------------------: | -----: | -----: | -----: | -----: |
+| 1       | Seeded_SFS_Raw + LogReg             |       10 |            0.9221 | 0.0415 | 0.9333 | 0.8667 | 1.0000 |
+| 2       | Sklearn_SFS_Raw + LogReg            |        5 |            0.8833 | 0.0724 | 0.8750 | 0.8000 | 1.0000 |
+| 3       | Seeded_SFS_Union + LogReg           |        5 |            0.8200 | 0.1188 | 0.8667 | 0.6250 | 0.9333 |
+| 4       | Sklearn_SFS_Union + LogReg          |        5 |            0.8058 | 0.1377 | 0.8000 | 0.6667 | 1.0000 |
 
 **Quan Sát Chính:**
-- Cấu hình tốt nhất: Seeded_SFS_Raw + LogReg với độ chính xác 0.9083 (σ=0.0381)
+- Cấu hình tốt nhất: Seeded_SFS_Raw + LogReg với độ chính xác 0.9221 (σ=0.0415)
 - Xếp thứ hai: Sklearn_SFS_Raw + LogReg với độ chính xác 0.8833
 - Khuyến nghị: Xem so sánh chi tiết trong biểu đồ và tệp báo cáo ở trên.
