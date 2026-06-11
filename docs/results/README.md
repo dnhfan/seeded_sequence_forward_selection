@@ -5,20 +5,23 @@ _Read this in [Vietnamese](README.vi.md)_
 This index splits the previous monolithic report into one file per dataset.
 You can find out how we evaluate in [5.Evaluation](../pipelines/05_evaluation_metrics.md)
 
+SFS Results for this report is using logistic reg.
+If you wanna see a benchmark where i ran SFS for all model pls go [SFS Benchmark](../expiriments/model_changes/README.md)
+
 ## Executive Summary
 
 Updated rankings from Final Evaluation (all methods comparison). See Section 10 in individual dataset reports for detailed method breakdowns.
 
-| DataSet        | Top 1 Methods/variant | Seeded Selected | Seeded Global Best | Seeded Fit Time (s) |
-| :------------- | :-------------------: | --------------: | -----------------: | ------------------: |
-| Brain          |    SFS_LOG(Union)     |               6 |           0.977273 |            5.791480 |
-| colon1         |      SFS_DT(Raw)      |              10 |             0.9679 |  30.885568714002147 |
-| adenocarcinoma |     SFS_LOG(Raw)      |               4 |             1.0000 |   190.4245332389837 |
-| a              |                       |                 |                    |                     |
-| a              |                       |                 |                    |                     |
-| a              |                       |                 |                    |                     |
-| a              |                       |                 |                    |                     |
-| a              |                       |                 |                    |                     |
+| DataSet        |   Top 1 Methods/variant   | Seeded Selected | Seeded Global Best | Seeded Fit Time (s) |
+| :------------- | :-----------------------: | --------------: | -----------------: | ------------------: |
+| Brain          | Seeded_SFS_Union + LogReg |               6 |           0.977273 |            5.791480 |
+| colon1         |  Seeded_SFS_Raw + LogReg  |              10 |             0.9679 |  30.885568714002147 |
+| adenocarcinoma |  Seeded_SFS_Raw + LogReg  |               4 |             1.0000 |   190.4245332389837 |
+| Breast2classes |  Seeded_SFS_Raw + LogReg  |               9 |            0.93583 |  139.02734391699778 |
+| CNS1           |  Seeded_SFS_Raw + LogReg  |               7 |             0.9833 |  175.75089231900347 |
+| a              |                           |                 |                    |                     |
+| a              |                           |                 |                    |                     |
+| a              |                           |                 |                    |                     |
 
 ## Dataset Reports
 
