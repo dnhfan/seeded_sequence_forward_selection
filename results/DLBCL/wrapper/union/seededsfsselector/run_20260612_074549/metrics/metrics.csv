@@ -1,0 +1,2 @@
+dataset,dataset_variant,model_sfs,n_features_selected,global_best_score,total_fit_time_ms,run_root,patience,n_seeds
+DLBCL,union,LOG,8,1.0,6418.748918018537,/home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/DLBCL/wrapper/union/seededsfsselector/run_20260612_074549,5,1

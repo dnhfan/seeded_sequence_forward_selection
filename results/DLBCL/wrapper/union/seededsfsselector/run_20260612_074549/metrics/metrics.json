@@ -1,0 +1,11 @@
+{
+  "dataset": "DLBCL",
+  "dataset_variant": "union",
+  "model_sfs": "LOG",
+  "n_features_selected": 8,
+  "global_best_score": 1.0,
+  "total_fit_time_ms": 6418.748918018537,
+  "run_root": "/home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/DLBCL/wrapper/union/seededsfsselector/run_20260612_074549",
+  "patience": 5,
+  "n_seeds": 1
+}

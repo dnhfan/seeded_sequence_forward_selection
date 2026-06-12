@@ -1,0 +1,11 @@
+{
+  "dataset": "DLBCL",
+  "dataset_variant": "raw",
+  "model_sfs": "SVM",
+  "n_features_selected": 8,
+  "global_best_score": 1.0,
+  "total_fit_time_ms": 146039.29167898605,
+  "run_root": "/home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/DLBCL/wrapper/raw/seededsfsselector/run_20260611_231243_benchmark_svm_1seeds",
+  "n_seeds": 1,
+  "patience": 5
+}
