@@ -1,0 +1,2 @@
+dataset,dataset_variant,model_sfs,n_features_selected,global_best_score,total_fit_time_ms,run_root
+Leukemia_4c1,raw,LOGISTICREGRESSION,5,1.0,587822.9656250041,/home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/Leukemia_4c1/wrapper/raw/sklearnsfsselector/run_20260611_235828

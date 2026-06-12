@@ -1,0 +1,9 @@
+{
+  "dataset": "Leukemia_4c1",
+  "dataset_variant": "union",
+  "model_sfs": "LOGISTICREGRESSION",
+  "n_features_selected": 4,
+  "global_best_score": 0.9861111111111112,
+  "total_fit_time_ms": 11934.004833019571,
+  "run_root": "/home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/Leukemia_4c1/wrapper/union/sklearnsfsselector/run_20260612_001747"
+}
