@@ -62,10 +62,10 @@ _Đọc bản tiếng Anh tại [result-leukemia_4c1.md](result-leukemia_4c1.md)
 - `notebook/Leukemia_4c1/06_sklearn_sfs-raw.py`
 - `notebook/Leukemia_4c1/06_sklearn_sfs-union.py`
 
-| Biến thể | Sklearn Số đặc trưng chọn | Sklearn Global Best | Sklearn Thời gian fit (ms) |
-|---|---:|---:|---:|
-| Raw | 3 | 0.9722 | 370,856 |
-| Union | 3 | 0.9722 | 10,241 |
+| Biến thể | Sklearn Số đặc trưng chọn | Sklearn Global Best | Sklearn Thời gian fit (s) |
+| ------- | -----------------------: | ------------------: | -------------------: |
+| Raw     |                        5 |            1.000000 |              587.822 |
+| Union   |                        4 |            0.986111 |               11.934 |
 
 ## 7) Wrapper: Seeded SFS (chạy Raw vs Union)
 
@@ -73,10 +73,10 @@ _Đọc bản tiếng Anh tại [result-leukemia_4c1.md](result-leukemia_4c1.md)
 - `notebook/Leukemia_4c1/07_sfs-raw.py`
 - `notebook/Leukemia_4c1/07_sfs-union.py`
 
-| Biến thể | Seeded Số đặc trưng chọn | Seeded Global Best | Seeded Thời gian fit (ms) |
-|---|---:|---:|---:|
-| Raw | 6 | 0.9861 | 62,965 |
-| Union | 5 | 0.9722 | 3,200 |
+| Biến thể | Seeded Số đặc trưng chọn | Seeded Global Best | Seeded Thời gian fit (s) |
+| ------- | ----------------------: | -----------------: | -----------------------: |
+| Raw     |                       6 |           0.986111 |                  69.081 |
+| Union   |                       8 |           1.000000 |                   6.948 |
 
 ## 8) Đánh giá Accuracy (so sánh Raw vs Union)
 
@@ -100,12 +100,12 @@ _Đọc bản tiếng Anh tại [result-leukemia_4c1.md](result-leukemia_4c1.md)
   - Trục hoành là từng cấu hình/phương pháp, trục tung là accuracy; giá trị cao hơn thể hiện hiệu năng tốt hơn.
   - Vạch đen thẳng đứng (Error bar): Thể hiện độ lệch chuẩn (Standard Deviation) qua các fold cross-validation. Vạch này càng ngắn chứng tỏ mô hình dự đoán càng ổn định, ít biến động.
 
-- **Quan sát:** Phân bố lớp được trực quan hóa rõ ràng trước các bước feature engineering.
-- **Giải thích:** Việc phát hiện mất cân bằng sớm giúp diễn giải độ biến thiên metric phía sau và xu hướng thiên lệch của mô hình.
-- **Kết luận:** Giữ các quyết định đánh giá có xét phân bố lớp nhất quán ở các bước sau.
+- **Quan sát:** Hai cấu hình (seeded SFS Union LogReg và sklearn SFS Raw LogReg) đều đạt accuracy tuyệt đối.
+- **Giải thích:** Cả biến thể raw và union đều tạo ra tập con đặc trưng mạnh cho bộ dữ liệu này; seeded thắng union, sklearn thắng raw.
+- **Kết luận:** Dùng sklearn cho raw, dùng seeded cho union; cả hai đều sẵn sàng cho production.
 
-- Cấu hình tốt nhất (raw): `sklearn + Tree`, accuracy trung bình **0.9722**, std 0.0321
-- Cấu hình tốt nhất (union): `sklearn + Tree`, accuracy trung bình **0.9722**, std 0.0321
+- Cấu hình tốt nhất (raw): `sklearn + LogReg`, accuracy trung bình **1.0000**, std 0.0000
+- Cấu hình tốt nhất (union): `seeded + LogReg`, accuracy trung bình **1.0000**, std 0.0000
 
 ## 9) Đánh giá thời gian (so sánh thời gian fit Raw vs Union)
 
@@ -146,13 +146,15 @@ _Đọc bản tiếng Anh tại [result-leukemia_4c1.md](result-leukemia_4c1.md)
   - Trục Y hiển thị độ chính xác cross-validation; các cột cao hơn cho biết hiệu suất tốt hơn.
   - Các thanh lỗi dọc hiển thị độ lệch chuẩn (Std) trên các fold; các thanh ngắn hơn chỉ ra mô hình ổn định hơn.
 
-| Xếp Hạng | Phương Pháp + Mô Hình | CV Fold | Accuracy Trung Bình | Std | Median | Min | Max |
-|---|---|---:|---:|---:|---:|---:|---:|
-| 1 | Sklearn_SFS_Raw + Tree | 4 | 0.9722 | 0.0321 | 0.9722 | 0.9444 | 1.0000 |
-| 2 | Sklearn_SFS_Union + Tree | 4 | 0.9722 | 0.0321 | 0.9722 | 0.9444 | 1.0000 |
-| 3 | ANOVA_F_TEST + LogReg | 4 | 0.9583 | 0.0278 | 0.9444 | 0.9444 | 1.0000 |
+| Xếp Hạng | Phương Pháp + Mô Hình              | CV Folds | Accuracy Trung Bình |    Std | Median |    Min |    Max |
+| ------- | ----------------------------------- | -------: | ------------------: | -----: | -----: | -----: | -----: |
+| 1       | Seeded_SFS_Union + LogReg           |        4 |            1.0000 | 0.0000 | 1.0000 | 1.0000 | 1.0000 |
+| 1       | Sklearn_SFS_Raw + LogReg            |        4 |            1.0000 | 0.0000 | 1.0000 | 1.0000 | 1.0000 |
+| 2       | Seeded_SFS_Raw + LogReg             |        4 |            0.9861 | 0.0278 | 1.0000 | 0.9444 | 1.0000 |
+| 2       | Sklearn_SFS_Union + LogReg          |        4 |            0.9861 | 0.0278 | 1.0000 | 0.9444 | 1.0000 |
+| 3       | Seeded_SFS_Union + Tree             |        4 |            0.9722 | 0.0321 | 0.9722 | 0.9444 | 1.0000 |
+| 4       | ANOVA_F_TEST + LogReg               |        4 |            0.9583 | 0.0278 | 0.9444 | 0.9444 | 1.0000 |
 
 **Quan Sát Chính:**
-- Cấu hình tốt nhất: Sklearn_SFS_Raw + Tree với độ chính xác 0.9722 (σ=0.0321)
-- Xếp thứ hai: Sklearn_SFS_Union + Tree với độ chính xác 0.9722
-- Khuyến nghị: Xem so sánh chi tiết trong biểu đồ và tệp báo cáo ở trên.
+- Cấu hình tốt nhất: Seeded_SFS_Union + LogReg và Sklearn_SFS_Raw + LogReg đều đạt 1.0000 (σ=0.0000)
+- Biến thể union của seeded tiết kiệm nhất (6.948s so với 587.822s của sklearn raw)

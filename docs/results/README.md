@@ -21,6 +21,7 @@ Updated rankings from Final Evaluation (all methods comparison). See Section 10 
 | Breast3classes |  Seeded_SFS_Raw + LogReg  |              17 |             0.8842 |            322.931 |
 | CNS1           |  Seeded_SFS_Raw + LogReg  |               7 |             0.9833 |  175.75089231900347 |
 | Leukemia_3c1   | Seeded_SFS_Union + LogReg |               4 |            1.000000 |              5.384 |
+| Leukemia_4c1   | Seeded_SFS_Union + LogReg |               8 |            1.000000 |              6.948 |
 
 ## Dataset Reports
 
