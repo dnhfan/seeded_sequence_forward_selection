@@ -1,0 +1,14 @@
+feature,dataset,dataset_variant,model_sfs,algorithm
+V9950,Lung_cancer,raw,LOG,seededsfsselector
+V3192,Lung_cancer,raw,LOG,seededsfsselector
+V12439,Lung_cancer,raw,LOG,seededsfsselector
+V8236,Lung_cancer,raw,LOG,seededsfsselector
+V1493,Lung_cancer,raw,LOG,seededsfsselector
+V5935,Lung_cancer,raw,LOG,seededsfsselector
+V7116,Lung_cancer,raw,LOG,seededsfsselector
+V7481,Lung_cancer,raw,LOG,seededsfsselector
+V1744,Lung_cancer,raw,LOG,seededsfsselector
+V81,Lung_cancer,raw,LOG,seededsfsselector
+V4880,Lung_cancer,raw,LOG,seededsfsselector
+V10248,Lung_cancer,raw,LOG,seededsfsselector
+V329,Lung_cancer,raw,LOG,seededsfsselector

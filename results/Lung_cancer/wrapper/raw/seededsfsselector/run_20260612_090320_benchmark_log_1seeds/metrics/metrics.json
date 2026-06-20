@@ -1,0 +1,11 @@
+{
+  "dataset": "Lung_cancer",
+  "dataset_variant": "raw",
+  "model_sfs": "LOG",
+  "n_features_selected": 13,
+  "global_best_score": 1.0,
+  "total_fit_time_ms": 932588.1617630075,
+  "run_root": "/home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/Lung_cancer/wrapper/raw/seededsfsselector/run_20260612_090320_benchmark_log_1seeds",
+  "n_seeds": 1,
+  "patience": 5
+}

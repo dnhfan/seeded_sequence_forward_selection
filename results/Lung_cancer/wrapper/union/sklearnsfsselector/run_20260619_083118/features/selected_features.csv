@@ -1,0 +1,8 @@
+feature,dataset,dataset_variant,model_sfs,algorithm
+V10893,Lung_cancer,union,LOGISTICREGRESSION,sklearnsfsselector
+V12439,Lung_cancer,union,LOGISTICREGRESSION,sklearnsfsselector
+V3192,Lung_cancer,union,LOGISTICREGRESSION,sklearnsfsselector
+V3701,Lung_cancer,union,LOGISTICREGRESSION,sklearnsfsselector
+V3947,Lung_cancer,union,LOGISTICREGRESSION,sklearnsfsselector
+V4526,Lung_cancer,union,LOGISTICREGRESSION,sklearnsfsselector
+V7384,Lung_cancer,union,LOGISTICREGRESSION,sklearnsfsselector

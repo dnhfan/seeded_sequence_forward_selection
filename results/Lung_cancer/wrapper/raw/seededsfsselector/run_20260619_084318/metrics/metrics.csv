@@ -1,0 +1,2 @@
+dataset,dataset_variant,model_sfs,n_features_selected,global_best_score,total_fit_time_ms,run_root,patience,n_seeds
+Lung_cancer,raw,LOG,7,0.9852439024390243,597305.8863809999,/home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/Lung_cancer/wrapper/raw/seededsfsselector/run_20260619_084318,5,1

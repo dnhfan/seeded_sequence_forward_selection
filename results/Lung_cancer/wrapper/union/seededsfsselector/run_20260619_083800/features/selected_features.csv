@@ -1,0 +1,6 @@
+feature,dataset,dataset_variant,model_sfs,algorithm
+V7200,Lung_cancer,union,LOG,seededsfsselector
+V10892,Lung_cancer,union,LOG,seededsfsselector
+V4526,Lung_cancer,union,LOG,seededsfsselector
+V7384,Lung_cancer,union,LOG,seededsfsselector
+V5836,Lung_cancer,union,LOG,seededsfsselector

@@ -1,0 +1,9 @@
+{
+  "dataset": "Lung_cancer",
+  "dataset_variant": "raw",
+  "model_sfs": "LOGISTICREGRESSION",
+  "n_features_selected": 8,
+  "global_best_score": 0.9901219512195123,
+  "total_fit_time_ms": 1929819.526397001,
+  "run_root": "/home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/Lung_cancer/wrapper/raw/sklearnsfsselector/run_20260619_133406"
+}
