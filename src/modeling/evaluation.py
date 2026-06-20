@@ -107,7 +107,7 @@ class ModelEvaluator:
 
         models = {
             "LogReg": logreg_model,
-            "Tree": DecisionTreeClassifier(max_depth=5, random_state=42),
+            "Tree": DecisionTreeClassifier(random_state=42),
         }
 
         # 3. Runing each model
