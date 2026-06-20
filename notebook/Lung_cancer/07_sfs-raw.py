@@ -9,12 +9,13 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")
 from src.config import ProjectPath
 from src.wrapper import SeededSFSSelector
 
+
 def main():
     print("󰜎 Running Wrapper Features Slection..")
 
     # 1. setup conf
     data_name = "Lung_cancer"
-    n_features = 17
+    n_features = 50
 
     path = ProjectPath(data_name=data_name, n_features=n_features)
 
@@ -35,9 +36,9 @@ def main():
     df_final = wrapper.run_sfs(
         df=df,
         max_features=20,
-        patience=3,
+        patience=5,
         n_seeds=1,
-        model="dt",
+        model="log",
         scoring="accuracy",
         cv=5,
     )
@@ -45,6 +46,7 @@ def main():
     # View data
     print("\n󰔂  Preview head of FINAL DATASET:")
     print(df_final.head())
+
 
 if __name__ == "__main__":
     main()

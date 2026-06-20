@@ -8,12 +8,13 @@ from src.config import ProjectPath
 from src.utils import create_union_features
 from src.wrapper import SeededSFSSelector
 
+
 def main():
     print("󰜎 Running Wrapper Features Slection using Union data set..")
 
     # 1. setup conf
     data_name = "Lung_cancer"
-    n_features = 17
+    n_features = 50
 
     valid_methods = [
         "variance",
@@ -49,9 +50,9 @@ def main():
     df_final = wrapper.run_sfs(
         df=df,
         max_features=20,
-        patience=3,
+        patience=5,
         n_seeds=1,
-        model="dt",
+        model="log",
         scoring="accuracy",
         cv=5,
     )
@@ -59,6 +60,7 @@ def main():
     # View data
     print("\n󰔂  Preview head of FINAL DATASET:")
     print(df_final.head())
+
 
 if __name__ == "__main__":
     main()
