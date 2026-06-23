@@ -167,7 +167,7 @@ class ModelEvaluator:
         Args:
             raw_path (str): Path to the raw CSV file.
         """
-        print("\n[2] Training models with baseline data (All features)...")
+        print("\n[*] Training models with baseline data (All features)...")
         try:
             X, y = self._load_data(raw_path)
             self._train_and_evaluate(X, y, method_name="None", n_splits=n_splits)
