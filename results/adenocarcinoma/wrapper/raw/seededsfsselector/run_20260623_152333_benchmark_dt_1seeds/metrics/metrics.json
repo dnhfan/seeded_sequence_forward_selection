@@ -1,0 +1,11 @@
+{
+  "dataset": "adenocarcinoma",
+  "dataset_variant": "raw",
+  "model_sfs": "DT",
+  "n_features_selected": 4,
+  "global_best_score": 0.9866666666666667,
+  "total_fit_time_ms": 95656.14018799897,
+  "run_root": "/home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/adenocarcinoma/wrapper/raw/seededsfsselector/run_20260623_152333_benchmark_dt_1seeds",
+  "n_seeds": 1,
+  "patience": 5
+}

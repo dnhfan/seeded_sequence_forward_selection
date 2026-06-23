@@ -1,0 +1,2 @@
+dataset,dataset_variant,model_sfs,n_features_selected,global_best_score,total_fit_time_ms,run_root,n_seeds,patience
+adenocarcinoma,raw,DT,4,0.9866666666666667,95656.14018799897,/home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/adenocarcinoma/wrapper/raw/seededsfsselector/run_20260623_152333_benchmark_dt_1seeds,1,5

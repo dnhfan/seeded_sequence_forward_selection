@@ -1,6 +1,6 @@
 MODEL EVALUATION REPORT
-generated_at: 2026-06-05 05:49:16
-experiment_id: benchmark_accuracy_raw_adenocarcinoma_20260605
+generated_at: 2026-06-23 15:35:07
+experiment_id: benchmark_accuracy_raw_adenocarcinoma_20260623
 dataset: adenocarcinoma
 experiment_prefix: benchmark_accuracy_raw
 feature_count: 50
@@ -21,8 +21,8 @@ CROSS-VALIDATION SUMMARY (ranked)
 ------------------------------------------------------------------------------------------------------------------------
  rank  Method  Model  mean_accuracy  std_accuracy  median_accuracy  min_accuracy  max_accuracy  n_folds  cv_stability
     1 SFS_LOG LogReg         1.0000        0.0000           1.0000        1.0000        1.0000        5        1.0000
-    2  SFS_DT   Tree         0.9733        0.0365           1.0000        0.9333        1.0000        5        0.9635
-    3 SFS_SVM LogReg         0.9342        0.0472           0.9333        0.8667        1.0000        5        0.9528
+    2 SFS_SVM LogReg         0.9342        0.0472           0.9333        0.8667        1.0000        5        0.9528
+    3  SFS_DT   Tree         0.9225        0.0827           0.9333        0.8125        1.0000        5        0.9173
     4  SFS_DT LogReg         0.9083        0.0583           0.8750        0.8667        1.0000        5        0.9417
     5  SFS_RF   Tree         0.8842        0.1099           0.9333        0.6875        0.9333        5        0.8901
     6  SFS_RF LogReg         0.8817        0.0554           0.8750        0.8000        0.9333        5        0.9446
@@ -53,11 +53,11 @@ LogReg     2 1.0000
 LogReg     3 0.8667
 LogReg     4 0.9333
 LogReg     5 0.8667
-  Tree     1 1.0000
+  Tree     1 0.8125
   Tree     2 1.0000
   Tree     3 0.9333
   Tree     4 1.0000
-  Tree     5 0.9333
+  Tree     5 0.8667
 
  Method: SFS_LOG 
  Model  Fold    Acc
