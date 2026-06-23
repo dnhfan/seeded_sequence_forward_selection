@@ -1,0 +1,11 @@
+{
+  "dataset": "Brain",
+  "dataset_variant": "raw",
+  "model_sfs": "DT",
+  "n_features_selected": 6,
+  "global_best_score": 0.9045454545454545,
+  "total_fit_time_ms": 65059.73384999743,
+  "run_root": "/home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/Brain/wrapper/raw/seededsfsselector/run_20260623_155456_benchmark_dt_1seeds",
+  "n_seeds": 1,
+  "patience": 5
+}

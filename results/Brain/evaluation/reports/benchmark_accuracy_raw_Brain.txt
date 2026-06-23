@@ -1,6 +1,6 @@
 MODEL EVALUATION REPORT
-generated_at: 2026-05-22 16:23:00
-experiment_id: benchmark_accuracy_raw_Brain_20260522
+generated_at: 2026-06-23 16:02:31
+experiment_id: benchmark_accuracy_raw_Brain_20260623
 dataset: Brain
 experiment_prefix: benchmark_accuracy_raw
 feature_count: 50
@@ -10,8 +10,8 @@ pandas_version: 3.0.0
 sklearn_version: 1.8.0
 
 ARTIFACTS
-plot_path: results/Brain/evaluation/plots/benchmark_accuracy_raw_Brain.png
-report_path: results/Brain/evaluation/reports/benchmark_accuracy_raw_Brain.txt
+plot_path: /home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/Brain/evaluation/plots/benchmark_accuracy_raw_Brain.png
+report_path: /home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/Brain/evaluation/reports/benchmark_accuracy_raw_Brain.txt
 
 EXECUTIVE SUMMARY
 best_configuration: method=SFS_LOG, model=LogReg, mean_accuracy=0.9773, std=0.0455, folds=4
