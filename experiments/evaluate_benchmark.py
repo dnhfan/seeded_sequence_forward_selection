@@ -12,15 +12,17 @@ from src.config import ProjectPath
 from src.modeling.evaluation import ModelEvaluator
 
 
-def evaluate_benchmark(data_name: str, variant: str = "raw", cv_split: int = 4):
+def evaluate_benchmark(data_name: str, variant: str = "raw", cv_split: int = 5):
     """
     Benchmark evaluation: read the metrics from the benchmark runs and aggregate them for comparison and visualization.
     """
     print(f" Evaluating benchmark for dataset: {data_name} (Variant: {variant})")
 
+    # init data path + evaluator
     path = ProjectPath(data_name=data_name)
     evaluator = ModelEvaluator(data_name=data_name, custom_base_dir=path.evaluation_dir)
 
+    # evaluate_baseline
     print("\nPHASE 1: EVALUATING BASELINE (All Features)")
     evaluator.evaluate_baseline(str(path.raw_path), n_splits=cv_split)
 
@@ -34,9 +36,10 @@ def evaluate_benchmark(data_name: str, variant: str = "raw", cv_split: int = 4):
         )
         return
 
+    #
     print("PHASE 2: COLLECTING SFS MODELS DATA & METRICS")
-
     for model in models:
+
         # Tìm thư mục run mới nhất của từng model
         pattern = f"*benchmark_{model}_1seeds*"
         run_folders = sorted(list(wrapper_dir.glob(pattern)))
@@ -72,8 +75,10 @@ def evaluate_benchmark(data_name: str, variant: str = "raw", cv_split: int = 4):
             list((path.wrapper_dir / variant / "seededsfsselector").glob(data_pattern))
         )
 
+        # evaluating
         if data_files:
             latest_data_file = data_files[-1]
+
             evaluator.evaluate_custom_file(
                 file_path=str(latest_data_file),
                 method_label=f"SFS_{model.upper()}",
