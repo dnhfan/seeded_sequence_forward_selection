@@ -1,0 +1,11 @@
+{
+  "dataset": "CNS1",
+  "dataset_variant": "raw",
+  "model_sfs": "DT",
+  "n_features_selected": 7,
+  "global_best_score": 0.9166666666666667,
+  "total_fit_time_ms": 108745.83149800015,
+  "run_root": "/home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/CNS1/wrapper/raw/seededsfsselector/run_20260625_075116_benchmark_dt_1seeds",
+  "n_seeds": 1,
+  "patience": 5
+}

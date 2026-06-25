@@ -1,0 +1,2 @@
+dataset,dataset_variant,model_sfs,n_features_selected,global_best_score,total_fit_time_ms,run_root,n_seeds,patience
+CNS1,raw,DT,7,0.9166666666666667,108745.83149800015,/home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/CNS1/wrapper/raw/seededsfsselector/run_20260625_075116_benchmark_dt_1seeds,1,5
