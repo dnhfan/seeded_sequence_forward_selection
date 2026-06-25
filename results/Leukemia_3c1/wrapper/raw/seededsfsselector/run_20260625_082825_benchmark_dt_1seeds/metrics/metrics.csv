@@ -1,0 +1,2 @@
+dataset,dataset_variant,model_sfs,n_features_selected,global_best_score,total_fit_time_ms,run_root,n_seeds,patience
+Leukemia_3c1,raw,DT,2,0.96,58303.209646999676,/home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/Leukemia_3c1/wrapper/raw/seededsfsselector/run_20260625_082825_benchmark_dt_1seeds,1,5
