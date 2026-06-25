@@ -3,7 +3,6 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, cast
 
-import matplotlib.pyplot as plt
 import pandas as pd
 
 from src.config import ProjectPath
@@ -16,6 +15,7 @@ from src.modeling.eval_strategies import (
 from src.modeling.plot_helper import (
     compute_summary_df,
     generate_performance_chart,
+    generate_time_comparison_chart,
     write_evaluation_report,
 )
 from src.utils.models import get_model
@@ -338,67 +338,16 @@ class ModelEvaluator:
         Returns:
             pd.DataFrame: Comparison table with total fit time in milliseconds and seconds.
         """
-        seeded_path = Path(seeded_metrics_path)
-        sklearn_path = Path(sklearn_metrics_path)
-
-        seeded_df = pd.read_csv(seeded_path)
-        sklearn_df = pd.read_csv(sklearn_path)
-
-        required_column = "total_fit_time_ms"
-        if required_column not in seeded_df.columns:
-            raise KeyError(f"Missing column '{required_column}' in: {seeded_path}")
-        if required_column not in sklearn_df.columns:
-            raise KeyError(f"Missing column '{required_column}' in: {sklearn_path}")
-
-        comparison_df = pd.DataFrame(
-            {
-                "algorithm": [algorithm_labels[0], algorithm_labels[1]],
-                "total_fit_time_ms": [
-                    float(seeded_df[required_column].iloc[0]),
-                    float(sklearn_df[required_column].iloc[0]),
-                ],
-            }
+        target_dir = Path(save_dir) if save_dir else self.path.evaluation_dir / "plots"
+        return generate_time_comparison_chart(
+            seeded_metrics_path=seeded_metrics_path,
+            sklearn_metrics_path=sklearn_metrics_path,
+            data_name=self.data_name,
+            output_name=output_name,
+            algorithm_labels=algorithm_labels,
+            save_dir=target_dir,
+            show_plot=show_plot,
         )
-        comparison_df["total_fit_time_sec"] = comparison_df["total_fit_time_ms"] / 1000
-
-        target_plot_dir = (
-            Path(save_dir) if save_dir else self.path.evaluation_dir / "plots"
-        )
-        target_plot_dir.mkdir(parents=True, exist_ok=True)
-        output_path = target_plot_dir / output_name
-
-        plt.style.use("seaborn-v0_8-whitegrid")
-        fig, ax = plt.subplots(figsize=(9, 5))
-        bars = ax.bar(
-            comparison_df["algorithm"],
-            comparison_df["total_fit_time_sec"],
-        )
-
-        ax.set_title(f"{self.data_name} Dataset: Fit Time Comparison", fontsize=14)
-        ax.set_xlabel("Algorithm")
-        ax.set_ylabel("Total Fit Time (seconds)")
-
-        for bar, value in zip(bars, comparison_df["total_fit_time_sec"]):
-            ax.text(
-                bar.get_x() + bar.get_width() / 2,
-                bar.get_height(),
-                f"{value:.2f}s",
-                ha="center",
-                va="bottom",
-                fontsize=10,
-            )
-
-        fig.tight_layout()
-        fig.savefig(output_path, dpi=300, bbox_inches="tight")
-
-        if show_plot:
-            plt.show()
-        else:
-            plt.close(fig)
-
-        print(f" Chart saved at: {output_path}")
-
-        return comparison_df
 
     def clear_results(self) -> None:
         """

@@ -268,3 +268,87 @@ def write_evaluation_report(
 
         f.write("\n" + "-" * 120 + "\n")
     print(f"󰎞 Report saved at: {report_path}")
+
+
+def generate_time_comparison_chart(
+    seeded_metrics_path: str | Path,
+    sklearn_metrics_path: str | Path,
+    data_name: str,
+    output_name: str = "time_comparison_seeded_vs_sklearn.png",
+    algorithm_labels: Tuple[str, str] = ("SeededSFS", "SklearnSFS"),
+    save_dir: str | Path | None = None,
+    show_plot: bool = False,
+) -> pd.DataFrame:
+    """Compare fit time between two algorithms using metrics CSV files.
+
+    Args:
+        seeded_metrics_path: Path to first algorithm's metrics.csv.
+        sklearn_metrics_path: Path to second algorithm's metrics.csv.
+        data_name: Dataset name (used in chart title).
+        output_name: Output filename for the plot image.
+        algorithm_labels: Labels shown on x-axis.
+        save_dir: Directory to save the plot. Defaults to current dir.
+        show_plot: Whether to display the chart after saving.
+
+    Returns:
+        pd.DataFrame: Comparison table with total fit time in ms and seconds.
+    """
+    seeded_path = Path(seeded_metrics_path)
+    sklearn_path = Path(sklearn_metrics_path)
+
+    seeded_df = pd.read_csv(seeded_path)
+    sklearn_df = pd.read_csv(sklearn_path)
+
+    required_column = "total_fit_time_ms"
+    if required_column not in seeded_df.columns:
+        raise KeyError(f"Missing column '{required_column}' in: {seeded_path}")
+    if required_column not in sklearn_df.columns:
+        raise KeyError(f"Missing column '{required_column}' in: {sklearn_path}")
+
+    comparison_df = pd.DataFrame(
+        {
+            "algorithm": [algorithm_labels[0], algorithm_labels[1]],
+            "total_fit_time_ms": [
+                float(seeded_df[required_column].iloc[0]),
+                float(sklearn_df[required_column].iloc[0]),
+            ],
+        }
+    )
+    comparison_df["total_fit_time_sec"] = comparison_df["total_fit_time_ms"] / 1000
+
+    target_plot_dir = Path(save_dir) if save_dir else Path(".")
+    target_plot_dir.mkdir(parents=True, exist_ok=True)
+    output_path = target_plot_dir / output_name
+
+    plt.style.use("seaborn-v0_8-whitegrid")
+    fig, ax = plt.subplots(figsize=(9, 5))
+    bars = ax.bar(
+        comparison_df["algorithm"],
+        comparison_df["total_fit_time_sec"],
+    )
+
+    ax.set_title(f"{data_name} Dataset: Fit Time Comparison", fontsize=14)
+    ax.set_xlabel("Algorithm")
+    ax.set_ylabel("Total Fit Time (seconds)")
+
+    for bar, value in zip(bars, comparison_df["total_fit_time_sec"]):
+        ax.text(
+            bar.get_x() + bar.get_width() / 2,
+            bar.get_height(),
+            f"{value:.2f}s",
+            ha="center",
+            va="bottom",
+            fontsize=10,
+        )
+
+    fig.tight_layout()
+    fig.savefig(output_path, dpi=300, bbox_inches="tight")
+
+    if show_plot:
+        plt.show()
+    else:
+        plt.close(fig)
+
+    print(f" Chart saved at: {output_path}")
+
+    return comparison_df
