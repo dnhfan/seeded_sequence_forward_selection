@@ -121,6 +121,8 @@ class ModelEvaluator:
             self._train_and_evaluate_cv(X, y, method_name, n_splits)
         elif eval_strategy == "tts":
             self._train_and_evaluate_tts(X, y, method_name, n_iter, test_size)
+        elif eval_strategy == "custom_cv":
+            self._train_and_evaluate_custom_cv(X, y, method_name, n_splits)
         else:
             raise ValueError(
                 f"Unknow eval_strategy: {eval_strategy!r}."
@@ -208,6 +210,71 @@ class ModelEvaluator:
             )
 
             # models loop
+            for model_name, model in models.items():
+                model.fit(X_train, y_train)
+                acc = model.score(X_test, y_test)
+                accs[model_name].append(acc)
+
+                self.fold_results.append(
+                    {
+                        "Method": method_name,
+                        "Model": model_name,
+                        "Fold": i + 1,
+                        "Acc": acc,
+                    }
+                )
+
+        # accs loop
+        for model_name, acc_list in accs.items():
+            acc_arr = numpy.array(acc_list)
+            mean_acc = acc_arr.mean()
+
+            self.model_results.append(
+                {
+                    "Method": method_name,
+                    "Model": model_name,
+                    "mean_acc": mean_acc,
+                    "std": acc_arr.std(),
+                    "min": acc_arr.min(),
+                    "max": acc_arr.max(),
+                    "n_folds": len(acc_arr),
+                }
+            )
+
+            print(f"󰄭  [{method_name:<12}] {model_name:<8} | Acc: {mean_acc:.4f} ")
+
+    def _train_and_evaluate_custom_cv(
+        self,
+        X: pd.DataFrame,
+        y: pd.Series,
+        method_name: str,
+        n_splits: int = 5,
+    ) -> None:
+        """
+        [Private] Manual Cross-Validation loop (co `cross_validate`).
+
+        Uses `StratifiedKFold` purely for generating the train test index splits,
+        then manually fits and scores each model per fold.
+        This is functionally equivalent to `_train_and_evaluate_cv` but gives explicit control over the
+        per-fold loop (useful for future per-fold customization/instrumentation).
+        """
+
+        # init the CV
+        skf = StratifiedKFold(n_splits=n_splits, shuffle=True)
+        # build model
+        models = self._build_models()
+        # accuracy dict
+        accs: Dict[str, List[float]] = {name: [] for name in models}
+
+        # reset_index + drop the col name
+        X_arr = X.reset_index(drop=True)
+        y_arr = y.reset_index(drop=True)
+
+        # loop through each fold and evaluate
+        for i, (train_index, test_index) in enumerate(skf.split(X_arr, y_arr)):
+            X_train, X_test = X_arr.iloc[train_index], X_arr.iloc[test_index]
+            y_train, y_test = y_arr.iloc[train_index], y_arr.iloc[test_index]
+
             for model_name, model in models.items():
                 model.fit(X_train, y_train)
                 acc = model.score(X_test, y_test)
