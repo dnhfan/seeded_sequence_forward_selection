@@ -1,0 +1,102 @@
+MODEL EVALUATION REPORT
+generated_at: 2026-06-25 08:12:11
+experiment_id: benchmark_accuracy_raw_DLBCL_20260625
+dataset: DLBCL
+experiment_prefix: benchmark_accuracy_raw
+feature_count: 50
+logreg_max_iter: 4000
+python_version: 3.12.12
+pandas_version: 3.0.0
+sklearn_version: 1.8.0
+
+ARTIFACTS
+plot_path: /home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/DLBCL/evaluation/plots/benchmark_accuracy_raw_DLBCL_50.png
+report_path: /home/andev/Dev/Project/pka/feature_selection/wrapper-w-filter/results/DLBCL/evaluation/reports/benchmark_accuracy_raw_DLBCL_50.txt
+
+EXECUTIVE SUMMARY
+best_configuration: method=SFS_LOG, model=LogReg, mean_accuracy=1.0000, std=0.0000, folds=5
+total_configurations: 10 | total_fold_evaluations: 50
+
+CROSS-VALIDATION SUMMARY (ranked)
+------------------------------------------------------------------------------------------------------------------------
+ rank  Method  Model  mean_accuracy  std_accuracy  median_accuracy  min_accuracy  max_accuracy  n_folds  cv_stability
+    1 SFS_LOG LogReg         1.0000        0.0000           1.0000        1.0000        1.0000        5        1.0000
+    2 SFS_SVM LogReg         0.9742        0.0354           1.0000        0.9333        1.0000        5        0.9646
+    3    None LogReg         0.9733        0.0596           1.0000        0.8667        1.0000        5        0.9404
+    4  SFS_DT   Tree         0.9475        0.0556           0.9375        0.8667        1.0000        5        0.9444
+    5  SFS_RF   Tree         0.9350        0.0023           0.9333        0.9333        0.9375        5        0.9977
+    6  SFS_RF LogReg         0.9217        0.0308           0.9333        0.8667        0.9375        5        0.9692
+    7  SFS_DT LogReg         0.8958        0.0759           0.8750        0.8000        1.0000        5        0.9241
+    8 SFS_LOG   Tree         0.8833        0.0705           0.9333        0.8000        0.9375        5        0.9295
+    9 SFS_SVM   Tree         0.8700        0.0474           0.8750        0.8000        0.9333        5        0.9526
+   10    None   Tree         0.8192        0.1038           0.8667        0.6875        0.9333        5        0.8962
+
+FOLD-LEVEL RESULTS (for auditability)
+------------------------------------------------------------------------------------------------------------------------
+ Method: None 
+ Model  Fold    Acc
+LogReg     1 1.0000
+LogReg     2 1.0000
+LogReg     3 1.0000
+LogReg     4 1.0000
+LogReg     5 0.8667
+  Tree     1 0.6875
+  Tree     2 0.8750
+  Tree     3 0.7333
+  Tree     4 0.9333
+  Tree     5 0.8667
+
+ Method: SFS_DT 
+ Model  Fold    Acc
+LogReg     1 0.9375
+LogReg     2 0.8750
+LogReg     3 0.8000
+LogReg     4 1.0000
+LogReg     5 0.8667
+  Tree     1 0.9375
+  Tree     2 1.0000
+  Tree     3 1.0000
+  Tree     4 0.8667
+  Tree     5 0.9333
+
+ Method: SFS_LOG 
+ Model  Fold    Acc
+LogReg     1 1.0000
+LogReg     2 1.0000
+LogReg     3 1.0000
+LogReg     4 1.0000
+LogReg     5 1.0000
+  Tree     1 0.9375
+  Tree     2 0.8125
+  Tree     3 0.8000
+  Tree     4 0.9333
+  Tree     5 0.9333
+
+ Method: SFS_RF 
+ Model  Fold    Acc
+LogReg     1 0.9375
+LogReg     2 0.9375
+LogReg     3 0.8667
+LogReg     4 0.9333
+LogReg     5 0.9333
+  Tree     1 0.9375
+  Tree     2 0.9375
+  Tree     3 0.9333
+  Tree     4 0.9333
+  Tree     5 0.9333
+
+ Method: SFS_SVM 
+ Model  Fold    Acc
+LogReg     1 1.0000
+LogReg     2 0.9375
+LogReg     3 1.0000
+LogReg     4 1.0000
+LogReg     5 0.9333
+  Tree     1 0.8750
+  Tree     2 0.8750
+  Tree     3 0.9333
+  Tree     4 0.8000
+  Tree     5 0.8667
+
+
+------------------------------------------------------------------------------------------------------------------------
