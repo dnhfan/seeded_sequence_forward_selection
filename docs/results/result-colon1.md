@@ -170,3 +170,12 @@
   - The y-axis shows cross-validation accuracy; higher bars indicate better performance.
   - Vertical error bars show Standard Deviation across folds; shorter bars indicate more stable models.
 
+## 11) Verify the result
+
+- To make sure the evaluate method is not broken, i using 2 more method to verify it:
+  - 70/30 train/test split + 50time -> avg.
+  - built a custom cross-validation function
+
+![Union verify](../../results/colon1/evaluation/plots/strategy_comparison_union_colon1.png)
+![Raw verify](../../results/colon1/evaluation/plots/strategy_comparison_raw_colon1.png)
+

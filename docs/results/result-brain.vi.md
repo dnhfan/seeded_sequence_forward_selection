@@ -178,3 +178,12 @@ TỔNG QUAN VALIDATION CHÉO (xếp hạng)
 - Xếp thứ hai: CORRELATION + LogReg với độ chính xác 0.9523
 - Khuyến nghị: Xem so sánh chi tiết trong biểu đồ và tệp báo cáo ở trên.
 
+## 11) Xác minh kết quả
+
+- Để đảm bảo phương pháp đánh giá không bị lỗi, tác giả sử dụng thêm 2 phương pháp khác để xác minh:
+  - Chia dữ liệu 70/30 train/test + lặp lại 50 lần → lấy trung bình.
+  - Xây dựng hàm cross-validation tùy chỉnh.
+
+![Xác minh Union](../../results/Brain/evaluation/plots/strategy_comparison_union_Brain.png)
+![Xác minh Raw](../../results/Brain/evaluation/plots/strategy_comparison_raw_Brain.png)
+

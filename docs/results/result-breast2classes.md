@@ -168,3 +168,12 @@
 - Best configuration: Seeded_SFS_Raw + LogReg with 0.9358 accuracy (σ=0.0443)
 - Second best: Sklearn_SFS_Raw + LogReg with 0.8833 accuracy
 - Recommendation: See detailed comparison in the plot and report file above.
+
+## 11) Verify the result
+
+- To make sure the evaluate method is not broken, i using 2 more method to verify it:
+  - 70/30 train/test split + 50time -> avg.
+  - built a custom cross-validation function
+
+![Union verify](../../results/Breast2classes/evaluation/plots/strategy_comparison_union_Breast2classes.png)
+![Raw verify](../../results/Breast2classes/evaluation/plots/strategy_comparison_raw_Breast2classes.png)

@@ -168,3 +168,12 @@
 - Best configurations: Seeded_SFS_Union + LogReg and Sklearn_SFS_Raw + LogReg both achieve 1.0000 accuracy (σ=0.0000)
 - Seeded union variant is the most cost-effective (6.948s fit time vs 587.822s for sklearn raw)
 
+## 11) Verify the result
+
+- To make sure the evaluate method is not broken, i using 2 more method to verify it:
+  - 70/30 train/test split + 50time -> avg.
+  - built a custom cross-validation function
+
+![Union verify](../../results/Leukemia_4c1/evaluation/plots/strategy_comparison_union_Leukemia_4c1.png)
+![Raw verify](../../results/Leukemia_4c1/evaluation/plots/strategy_comparison_raw_Leukemia_4c1.png)
+

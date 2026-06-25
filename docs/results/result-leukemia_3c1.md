@@ -154,18 +154,27 @@
   - The y-axis shows cross-validation accuracy; higher bars indicate better performance.
   - Vertical error bars show Standard Deviation across folds; shorter bars indicate more stable models.
 
-| Rank | Method + Model                    | CV Folds | Mean Accuracy |    Std | Median |    Min |    Max |
-| ---- | --------------------------------- | -------: | ------------: | -----: | -----: | -----: | -----: |
-| 1    | Seeded_SFS_Union + LogReg         |        5 |        1.0000 | 0.0000 | 1.0000 | 1.0000 | 1.0000 |
-| 1    | Sklearn_SFS_Raw + LogReg          |        5 |        1.0000 | 0.0000 | 1.0000 | 1.0000 | 1.0000 |
-| 1    | Seeded_SFS_Raw + LogReg           |        5 |        1.0000 | 0.0000 | 1.0000 | 1.0000 | 1.0000 |
-| 2    | Sklearn_SFS_Union + LogReg        |        5 |        0.9857 | 0.0319 | 1.0000 | 0.9286 | 1.0000 |
-| 3    | ANOVA_F_TEST + LogReg             |        5 |        0.9724 | 0.0379 | 1.0000 | 0.9286 | 1.0000 |
-| 3    | CHI_SQUARED + LogReg              |        5 |        0.9724 | 0.0379 | 1.0000 | 0.9286 | 1.0000 |
-| 3    | MUTUAL_INFORMATION + LogReg       |        5 |        0.9724 | 0.0379 | 1.0000 | 0.9286 | 1.0000 |
+| Rank | Method + Model              | CV Folds | Mean Accuracy |    Std | Median |    Min |    Max |
+| ---- | --------------------------- | -------: | ------------: | -----: | -----: | -----: | -----: |
+| 1    | Seeded_SFS_Union + LogReg   |        5 |        1.0000 | 0.0000 | 1.0000 | 1.0000 | 1.0000 |
+| 1    | Sklearn_SFS_Raw + LogReg    |        5 |        1.0000 | 0.0000 | 1.0000 | 1.0000 | 1.0000 |
+| 1    | Seeded_SFS_Raw + LogReg     |        5 |        1.0000 | 0.0000 | 1.0000 | 1.0000 | 1.0000 |
+| 2    | Sklearn_SFS_Union + LogReg  |        5 |        0.9857 | 0.0319 | 1.0000 | 0.9286 | 1.0000 |
+| 3    | ANOVA_F_TEST + LogReg       |        5 |        0.9724 | 0.0379 | 1.0000 | 0.9286 | 1.0000 |
+| 3    | CHI_SQUARED + LogReg        |        5 |        0.9724 | 0.0379 | 1.0000 | 0.9286 | 1.0000 |
+| 3    | MUTUAL_INFORMATION + LogReg |        5 |        0.9724 | 0.0379 | 1.0000 | 0.9286 | 1.0000 |
 
 **Key Observations:**
 
 - Best configuration: Seeded_SFS_Union / Sklearn_SFS_Raw / Seeded_SFS_Raw + LogReg all with 1.0000 accuracy (σ=0.0000)
 - Second best: Sklearn_SFS_Union + LogReg with 0.9857 accuracy
 - Recommendation: See detailed comparison in the plot and report file above.
+
+## 11) Verify the result
+
+- To make sure the evaluate method is not broken, i using 2 more method to verify it:
+  - 70/30 train/test split + 50time -> avg.
+  - built a custom cross-validation function
+
+![Union verify](../../results/Leukemia_3c1/evaluation/plots/strategy_comparison_union_Leukemia_3c1.png)
+![Raw verify](../../results/Leukemia_3c1/evaluation/plots/strategy_comparison_raw_Leukemia_3c1.png)

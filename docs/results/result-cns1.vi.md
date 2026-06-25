@@ -161,3 +161,12 @@ _Đọc bản tiếng Anh tại [result-cns1.md](result-cns1.md)_
 - Cấu hình tốt nhất: Seeded_SFS_Raw + LogReg với độ chính xác 0.9833 (σ=0.0373)
 - Xếp thứ hai: Seeded_SFS_Union + LogReg với độ chính xác 0.9167
 - Khuyến nghị: Xem so sánh chi tiết trong biểu đồ và tệp báo cáo ở trên.
+
+## 11) Xác minh kết quả
+
+- Để đảm bảo phương pháp đánh giá không bị lỗi, tác giả sử dụng thêm 2 phương pháp khác để xác minh:
+  - Chia dữ liệu 70/30 train/test + lặp lại 50 lần → lấy trung bình.
+  - Xây dựng hàm cross-validation tùy chỉnh.
+
+![Xác minh Union](../../results/CNS1/evaluation/plots/strategy_comparison_union_CNS1.png)
+![Xác minh Raw](../../results/CNS1/evaluation/plots/strategy_comparison_raw_CNS1.png)

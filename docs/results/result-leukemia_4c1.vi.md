@@ -158,3 +158,12 @@ _Đọc bản tiếng Anh tại [result-leukemia_4c1.md](result-leukemia_4c1.md)
 **Quan Sát Chính:**
 - Cấu hình tốt nhất: Seeded_SFS_Union + LogReg và Sklearn_SFS_Raw + LogReg đều đạt 1.0000 (σ=0.0000)
 - Biến thể union của seeded tiết kiệm nhất (6.948s so với 587.822s của sklearn raw)
+
+## 11) Xác minh kết quả
+
+- Để đảm bảo phương pháp đánh giá không bị lỗi, tác giả sử dụng thêm 2 phương pháp khác để xác minh:
+  - Chia dữ liệu 70/30 train/test + lặp lại 50 lần → lấy trung bình.
+  - Xây dựng hàm cross-validation tùy chỉnh.
+
+![Xác minh Union](../../results/Leukemia_4c1/evaluation/plots/strategy_comparison_union_Leukemia_4c1.png)
+![Xác minh Raw](../../results/Leukemia_4c1/evaluation/plots/strategy_comparison_raw_Leukemia_4c1.png)

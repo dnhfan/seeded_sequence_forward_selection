@@ -176,3 +176,12 @@ _Đọc bản tiếng Anh tại [result-dlbcl.md](result-dlbcl.md)_
 - Cấu hình tốt nhất: Seeded_SFS_Union + LogReg và Seeded_SFS_Raw + LogReg đều đạt 1.0000 (σ=0.0000)
 - Biến thể union của seeded tiết kiệm nhất (6.418s so với 229.964s của sklearn raw)
 
+## 11) Xác minh kết quả
+
+- Để đảm bảo phương pháp đánh giá không bị lỗi, tác giả sử dụng thêm 2 phương pháp khác để xác minh:
+  - Chia dữ liệu 70/30 train/test + lặp lại 50 lần → lấy trung bình.
+  - Xây dựng hàm cross-validation tùy chỉnh.
+
+![Xác minh Union](../../results/DLBCL/evaluation/plots/strategy_comparison_union_DLBCL.png)
+![Xác minh Raw](../../results/DLBCL/evaluation/plots/strategy_comparison_raw_DLBCL.png)
+

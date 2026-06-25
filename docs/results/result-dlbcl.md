@@ -165,3 +165,12 @@
 
 - Best configuration: Seeded_SFS_Union + LogReg and Seeded_SFS_Raw + LogReg both achieve 1.0000 accuracy (σ=0.0000)
 - Seeded union is the most cost-effective (6.418s fit time vs 229.964s for sklearn raw)
+
+## 11) Verify the result
+
+- To make sure the evaluate method is not broken, i using 2 more method to verify it:
+  - 70/30 train/test split + 50time -> avg.
+  - built a custom cross-validation function
+
+![Union verify](../../results/DLBCL/evaluation/plots/strategy_comparison_union_DLBCL.png)
+![Raw verify](../../results/DLBCL/evaluation/plots/strategy_comparison_raw_DLBCL.png)

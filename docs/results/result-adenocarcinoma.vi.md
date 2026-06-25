@@ -174,3 +174,12 @@ TỔNG QUAN VALIDATION CHÉO (xếp hạng)
 - Cấu hình tốt nhất: Sklearn_SFS_Raw + LogReg với độ chính xác 0.9600 (σ=0.0365)
 - Xếp thứ hai: Sklearn_SFS_Union + LogReg với độ chính xác 0.9467
 - Khuyến nghị: Xem so sánh chi tiết trong biểu đồ và tệp báo cáo ở trên.
+
+## 11) Xác minh kết quả
+
+- Để đảm bảo phương pháp đánh giá không bị lỗi, tác giả sử dụng thêm 2 phương pháp khác để xác minh:
+  - Chia dữ liệu 70/30 train/test + lặp lại 50 lần → lấy trung bình.
+  - Xây dựng hàm cross-validation tùy chỉnh.
+
+![Xác minh Union](../../results/adenocarcinoma/evaluation/plots/strategy_comparison_union_adenocarcinoma.png)
+![Xác minh Raw](../../results/adenocarcinoma/evaluation/plots/strategy_comparison_raw_adenocarcinoma.png)

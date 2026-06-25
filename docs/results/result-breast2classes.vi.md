@@ -161,3 +161,12 @@ _Đọc bản tiếng Anh tại [result-breast2classes.md](result-breast2classes
 - Cấu hình tốt nhất: Seeded_SFS_Raw + LogReg với độ chính xác 0.9221 (σ=0.0415)
 - Xếp thứ hai: Sklearn_SFS_Raw + LogReg với độ chính xác 0.8833
 - Khuyến nghị: Xem so sánh chi tiết trong biểu đồ và tệp báo cáo ở trên.
+
+## 11) Xác minh kết quả
+
+- Để đảm bảo phương pháp đánh giá không bị lỗi, tác giả sử dụng thêm 2 phương pháp khác để xác minh:
+  - Chia dữ liệu 70/30 train/test + lặp lại 50 lần → lấy trung bình.
+  - Xây dựng hàm cross-validation tùy chỉnh.
+
+![Xác minh Union](../../results/Breast2classes/evaluation/plots/strategy_comparison_union_Breast2classes.png)
+![Xác minh Raw](../../results/Breast2classes/evaluation/plots/strategy_comparison_raw_Breast2classes.png)
