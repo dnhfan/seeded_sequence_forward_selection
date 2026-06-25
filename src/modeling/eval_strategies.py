@@ -50,6 +50,7 @@ class EvalStrategy(ABC):
         y: pandas.Series,
         models: Mapping[str, Any],
         method_name: str,
+        strategy_name: str = "",
     ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
         """Execute the strategy and return fold-level + model-level results.
 
@@ -58,6 +59,7 @@ class EvalStrategy(ABC):
             y: Target vector.
             models: ``{model_name: estimator}`` dict.
             method_name: Label used in reporting (e.g. feature-selection method).
+            strategy_name: Label identifying the eval strategy (e.g. "cv", "tts").
 
         Returns:
             ``(fold_rows, model_rows)`` – two lists of dicts compatible with
@@ -76,6 +78,7 @@ class EvalStrategy(ABC):
                         "Model": model_name,
                         "Fold": i + 1,
                         "Acc": acc,
+                        "Strategy": strategy_name,
                     }
                 )
 
@@ -86,6 +89,7 @@ class EvalStrategy(ABC):
                 {
                     "Method": method_name,
                     "Model": model_name,
+                    "Strategy": strategy_name,
                     "mean_acc": mean_acc,
                     "std": acc_arr.std(),
                     "min": acc_arr.min(),
