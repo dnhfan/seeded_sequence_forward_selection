@@ -27,7 +27,6 @@ class ModelEvaluator:
         data_name (str): The name of the dataset (e.g., 'Tumors9', 'Lymphoma').
         valid_methods (List[str]): A list of feature selection methods applied.
         n_features (int): The number of top features selected. Defaults to 50.
-        max_iter (int): Maximum number of iterations for Logistic Regression. Defaults to 4000.
     """
 
     def __init__(
@@ -41,15 +40,11 @@ class ModelEvaluator:
             "anova_f_test",
         ],
         n_features: int = 50,
-        max_iter: int = 4000,
-        use_scaler: bool = True,
         custom_base_dir: Optional[str | Path] = None,
     ) -> None:
         self.data_name = data_name
         self.valid_method = valid_method
         self.n_features = n_features
-        self.max_iter = max_iter
-        self.use_scaler = use_scaler
         self.path = ProjectPath(data_name, n_features)
 
         self.fold_results: List[Dict[str, Any]] = []
@@ -260,7 +255,7 @@ class ModelEvaluator:
         """
 
         # init the CV
-        skf = StratifiedKFold(n_splits=n_splits, shuffle=True)
+        skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=42)
         # build model
         models = self._build_models()
         # accuracy dict
@@ -602,7 +597,6 @@ class ModelEvaluator:
             f.write(f"dataset: {self.data_name}\n")
             f.write(f"experiment_prefix: {experiment_prefix}\n")
             f.write(f"feature_count: {self.n_features}\n")
-            f.write(f"logreg_max_iter: {self.max_iter}\n")
             f.write(f"python_version: {platform.python_version()}\n")
             f.write(f"pandas_version: {pd.__version__}\n")
             f.write(f"sklearn_version: {sklearn.__version__}\n")
