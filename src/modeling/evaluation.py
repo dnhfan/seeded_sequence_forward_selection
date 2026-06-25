@@ -125,7 +125,7 @@ class ModelEvaluator:
             self._train_and_evaluate_custom_cv(X, y, method_name, n_splits)
         else:
             raise ValueError(
-                f"Unknow eval_strategy: {eval_strategy!r}."
+                f"Unknown eval_strategy: {eval_strategy!r}. "
                 "Expected one of: 'cv','custom_cv', 'tts'."
             )
 
@@ -189,14 +189,14 @@ class ModelEvaluator:
         test_size: float = 0.3,
     ) -> None:
         """
-                [Private] Repeated Train/Test split evaluation.
+        [Private] Repeated Train/Test split evaluation.
 
-                Runs `n_iter` independent 70/30 (by default) straified splits,
-                each with a differnent `random_state` (= iteration index) for reproducicility,
-                fits each model on the train protion and scores it on the held-out test portion.
-        1
-                Each iteration is recorded as one "Fold" entry in `self.fold_results`,
-                mirroring the schema produced by the CV-based strategy.
+        Runs `n_iter` independent 70/30 (by default) stratified splits,
+        each with a different `random_state` (= iteration index) for reproducibility,
+        fits each model on the train portion and scores it on the held-out test portion.
+
+        Each iteration is recorded as one "Fold" entry in `self.fold_results`,
+        mirroring the schema produced by the CV-based strategy.
         """
 
         models = self._build_models()
