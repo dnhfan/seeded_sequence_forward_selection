@@ -9,7 +9,7 @@ from sklearn.model_selection import StratifiedKFold, cross_val_score
 
 from src.utils.Timer import TimerContext
 from src.wrapper.base import BaseWrapperSelector
-from src.wrapper.models import get_model
+from src.utils.models import get_model
 from src.wrapper.sfs_result import SFSResult
 
 

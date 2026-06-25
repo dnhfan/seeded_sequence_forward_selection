@@ -14,7 +14,7 @@ from sklearn.utils.validation import check_is_fitted
 from src.utils import load_seed_from_csv, validate_features
 from src.utils.Timer import TimerContext
 
-from .models import get_model
+from src.utils.models import get_model
 
 
 @dataclass
