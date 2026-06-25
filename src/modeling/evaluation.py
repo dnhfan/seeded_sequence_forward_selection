@@ -308,36 +308,74 @@ class ModelEvaluator:
 
             print(f"󰄭  [{method_name:<12}] {model_name:<8} | Acc: {mean_acc:.4f} ")
 
-    def evaluate_filtered_features(self, data_dir: str, n_splits: int = 5) -> None:
+    def evaluate_filtered_features(
+        self,
+        data_dir: str,
+        n_splits: int = 5,
+        eval_strategy: str = "cv",
+        n_iter: int = 100,
+        test_size: float = 0.3,
+    ) -> None:
         """
         Evaluates models on datasets that have undergone Feature Selection.
 
         Args:
             data_dir (str): Path to the directory containing filtered CSV files.
+            n_splits (int): Number of CV folds (for "cv"/"custom_cv" strategies).
+            eval_strategy (str): "cv" (default), "tts", or "custom_cv".
+            n_iter (int): Number of repeats (for "tts" strategy).
+            test_size (float): Held-out fraction (for "tts" strategy).
         """
 
-        print(f"\n[1] Training models with filtered data ({self.data_name})...")
+        print(f"\n[*] Training models with filtered data ({self.data_name})...")
         for m in self.valid_method:
             data_path = f"{data_dir}/{self.data_name}_{m}_{self.n_features}features.csv"
             try:
                 X, y = self._load_data(data_path)
-                self._train_and_evaluate(X, y, m.upper(), n_splits=n_splits)
+                self._train_and_evaluate(
+                    X,
+                    y,
+                    m.upper(),
+                    n_splits=n_splits,
+                    eval_strategy=eval_strategy,
+                    n_iter=n_iter,
+                    test_size=test_size,
+                )
             except FileNotFoundError:
                 print(f" File not found: {data_path}")
 
         pass
 
-    def evaluate_baseline(self, raw_path: str, n_splits=3) -> None:
+    def evaluate_baseline(
+        self,
+        raw_path: str,
+        n_splits: int = 5,
+        eval_strategy: str = "cv",
+        n_iter: int = 100,
+        test_size: float = 0.3,
+    ) -> None:
         """
         Evaluates models on the original (unfiltered) dataset to establish a baseline.
 
         Args:
             raw_path (str): Path to the raw CSV file.
+            n_splits (int): Number of CV folds (for "cv"/"custom_cv" strategies).
+            eval_strategy (str): "cv" (default), "tts", or "custom_cv".
+            n_iter (int): Number of repeats (for "tts" strategy).
+            test_size (float): Held-out fraction (for "tts" strategy).
         """
         print("\n[*] Training models with baseline data (All features)...")
         try:
             X, y = self._load_data(raw_path)
-            self._train_and_evaluate(X, y, method_name="None", n_splits=n_splits)
+            self._train_and_evaluate(
+                X,
+                y,
+                method_name="None",
+                n_splits=n_splits,
+                eval_strategy=eval_strategy,
+                n_iter=n_iter,
+                test_size=test_size,
+            )
         except FileNotFoundError:
             print(f" Raw file not found: {raw_path}")
 
@@ -625,19 +663,37 @@ class ModelEvaluator:
         return fold_level_df
 
     def evaluate_custom_file(
-        self, file_path: str, method_label: str, n_splits: int = 5
+        self,
+        file_path: str,
+        method_label: str,
+        n_splits: int = 5,
+        eval_strategy: str = "cv",
+        n_iter: int = 100,
+        test_size: float = 0.3,
     ) -> None:
         """
         Hàm vạn năng để đánh giá bất kỳ file CSV nào (SFS, Sklearn, PCA, v.v.)
 
         Args:
             file_path (str): Đường dẫn trực tiếp tới file CSV cần test.
-            method_label (str): Tên bồ muốn hiển thị trên biểu đồ (VD: "Custom_SFS_Union", "Sklearn_SFS_Raw")
+            method_label (str): Tên hiển thị trên biểu đồ (VD: "Custom_SFS_Union", "Sklearn_SFS_Raw")
+            n_splits (int): Số fold (dùng cho "cv" và "custom_cv").
+            eval_strategy (str): "cv" (default), "tts", hoặc "custom_cv".
+            n_iter (int): Số lần lặp (dùng cho "tts").
+            test_size (float): Tỷ lệ dữ liệu test (dùng cho "tts").
         """
         print(f"\n[*] Training models with custom data ({method_label})...")
         try:
             X, y = self._load_data(file_path)
-            self._train_and_evaluate(X, y, method_name=method_label, n_splits=n_splits)
+            self._train_and_evaluate(
+                X,
+                y,
+                method_name=method_label,
+                n_splits=n_splits,
+                eval_strategy=eval_strategy,
+                n_iter=n_iter,
+                test_size=test_size,
+            )
         except FileNotFoundError:
             print(f" Lỗi: Không tìm thấy file tại {file_path}")
 
