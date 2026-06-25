@@ -1,6 +1,6 @@
 MODEL EVALUATION REPORT
-generated_at: 2026-06-11 23:25:34
-experiment_id: benchmark_accuracy_raw_Breast3classes_20260611
+generated_at: 2026-06-25 07:49:04
+experiment_id: benchmark_accuracy_raw_Breast3classes_20260625
 dataset: Breast3classes
 experiment_prefix: benchmark_accuracy_raw
 feature_count: 50
@@ -22,14 +22,14 @@ CROSS-VALIDATION SUMMARY (ranked)
  rank  Method  Model  mean_accuracy  std_accuracy  median_accuracy  min_accuracy  max_accuracy  n_folds  cv_stability
     1 SFS_LOG LogReg         0.8842        0.0942           0.8947        0.7895        1.0000        5        0.9058
     2 SFS_SVM LogReg         0.8316        0.1200           0.8421        0.6316        0.9474        5        0.8800
-    3  SFS_DT   Tree         0.7789        0.1079           0.7368        0.6842        0.8947        5        0.8921
+    3  SFS_DT   Tree         0.7368        0.1342           0.7895        0.5263        0.8421        5        0.8658
     4  SFS_RF LogReg         0.6632        0.1268           0.6316        0.5263        0.8421        5        0.8732
-    5  SFS_RF   Tree         0.6421        0.1412           0.5789        0.5263        0.8421        5        0.8588
-    6    None LogReg         0.6211        0.1200           0.5789        0.4737        0.7895        5        0.8800
-    7 SFS_LOG   Tree         0.6000        0.0798           0.5789        0.5263        0.6842        5        0.9202
-    8  SFS_DT LogReg         0.5158        0.1362           0.4737        0.3684        0.7368        5        0.8638
-    9 SFS_SVM   Tree         0.4947        0.0798           0.4737        0.4211        0.5789        5        0.9202
-   10    None   Tree         0.4737        0.1289           0.4737        0.2632        0.5789        5        0.8711
+    5  SFS_RF   Tree         0.6211        0.1079           0.6316        0.5263        0.7895        5        0.8921
+    5    None LogReg         0.6211        0.1200           0.5789        0.4737        0.7895        5        0.8800
+    5 SFS_LOG   Tree         0.6211        0.0686           0.6316        0.5263        0.6842        5        0.9314
+    6  SFS_DT LogReg         0.5158        0.1362           0.4737        0.3684        0.7368        5        0.8638
+    7 SFS_SVM   Tree         0.5053        0.0956           0.4737        0.4211        0.6316        5        0.9044
+    8    None   Tree         0.4737        0.1289           0.4737        0.2632        0.5789        5        0.8711
 
 FOLD-LEVEL RESULTS (for auditability)
 ------------------------------------------------------------------------------------------------------------------------
@@ -53,11 +53,11 @@ LogReg     2 0.5263
 LogReg     3 0.4737
 LogReg     4 0.4737
 LogReg     5 0.3684
-  Tree     1 0.8947
-  Tree     2 0.7368
-  Tree     3 0.8947
-  Tree     4 0.6842
-  Tree     5 0.6842
+  Tree     1 0.8421
+  Tree     2 0.6842
+  Tree     3 0.7895
+  Tree     4 0.5263
+  Tree     5 0.8421
 
  Method: SFS_LOG 
  Model  Fold    Acc
@@ -66,10 +66,10 @@ LogReg     2 0.7895
 LogReg     3 0.9474
 LogReg     4 0.7895
 LogReg     5 0.8947
-  Tree     1 0.5263
+  Tree     1 0.5789
   Tree     2 0.5263
   Tree     3 0.6842
-  Tree     4 0.5789
+  Tree     4 0.6316
   Tree     5 0.6842
 
  Method: SFS_RF 
@@ -79,11 +79,11 @@ LogReg     2 0.6316
 LogReg     3 0.7368
 LogReg     4 0.5789
 LogReg     5 0.5263
-  Tree     1 0.8421
-  Tree     2 0.7368
+  Tree     1 0.7895
+  Tree     2 0.6316
   Tree     3 0.5263
-  Tree     4 0.5263
-  Tree     5 0.5789
+  Tree     4 0.6316
+  Tree     5 0.5263
 
  Method: SFS_SVM 
  Model  Fold    Acc
@@ -93,9 +93,9 @@ LogReg     3 0.8947
 LogReg     4 0.6316
 LogReg     5 0.8421
   Tree     1 0.5789
-  Tree     2 0.5789
-  Tree     3 0.4211
-  Tree     4 0.4737
+  Tree     2 0.6316
+  Tree     3 0.4737
+  Tree     4 0.4211
   Tree     5 0.4211
 
 
