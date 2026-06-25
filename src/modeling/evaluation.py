@@ -5,11 +5,12 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple, cast
 
 import matplotlib.pyplot as plt
+import numpy
 import pandas as pd
 import seaborn as sns
 import sklearn
 from matplotlib.container import BarContainer
-from sklearn.model_selection import StratifiedKFold, cross_validate
+from sklearn.model_selection import StratifiedKFold, cross_validate, train_test_split
 
 from src.config import ProjectPath
 from src.utils.models import get_model
@@ -118,6 +119,8 @@ class ModelEvaluator:
         """
         if eval_strategy == "cv":
             self._train_and_evaluate_cv(X, y, method_name, n_splits)
+        elif eval_strategy == "tts":
+            self._train_and_evaluate_tts(X, y, method_name, n_iter, test_size)
         else:
             raise ValueError(
                 f"Unknow eval_strategy: {eval_strategy!r}."
@@ -170,6 +173,69 @@ class ModelEvaluator:
                     "min": test_accuracy.min(),
                     "max": test_accuracy.max(),
                     "n_folds": len(test_accuracy),
+                }
+            )
+
+            print(f"󰄭  [{method_name:<12}] {model_name:<8} | Acc: {mean_acc:.4f} ")
+
+    def _train_and_evaluate_tts(
+        self,
+        X: pd.DataFrame,
+        y: pd.Series,
+        method_name: str,
+        n_iter: int = 100,
+        test_size: float = 0.3,
+    ) -> None:
+        """
+                [Private] Repeated Train/Test split evaluation.
+
+                Runs `n_iter` independent 70/30 (by default) straified splits,
+                each with a differnent `random_state` (= iteration index) for reproducicility,
+                fits each model on the train protion and scores it on the held-out test portion.
+        1
+                Each iteration is recorded as one "Fold" entry in `self.fold_results`,
+                mirroring the schema produced by the CV-based strategy.
+        """
+
+        models = self._build_models()
+        accs: Dict[str, List[float]] = {name: [] for name in models}
+
+        # iter loop
+        for i in range(n_iter):
+            # split
+            X_train, y_train, X_test, y_test = train_test_split(
+                X, y, test_size=test_size, stratify=y, random_state=i
+            )
+
+            # models loop
+            for model_name, model in models.items():
+                model.fit(X_train, y_train)
+                acc = model.score(X_test, y_test)
+                accs[model_name].append(acc)
+
+                self.fold_results.append(
+                    {
+                        "Method": method_name,
+                        "Model": model_name,
+                        "Fold": i + 1,
+                        "Acc": acc,
+                    }
+                )
+
+        # accs loop
+        for model_name, acc_list in accs.items():
+            acc_arr = numpy.array(acc_list)
+            mean_acc = acc_arr.mean()
+
+            self.model_results.append(
+                {
+                    "Method": method_name,
+                    "Model": model_name,
+                    "mean_acc": mean_acc,
+                    "std": acc_arr.std(),
+                    "min": acc_arr.min(),
+                    "max": acc_arr.max(),
+                    "n_folds": len(acc_arr),
                 }
             )
 
