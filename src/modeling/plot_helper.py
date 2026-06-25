@@ -107,7 +107,7 @@ def generate_performance_chart(
                 ax.annotate(
                     f"{x:.4f}",
                     xy=(label_x, y_center),
-                    xytext=(4, 0),
+                    xytext=(6, 0),
                     textcoords="offset points",
                     va="center",
                     ha="left",
@@ -266,10 +266,24 @@ def generate_strategy_comparison_chart(
                     if not w or w != w:
                         continue
                     y_center = bar.get_y() + bar.get_height() / 2
+
+                    # Find the max x of the error bar at this y position
+                    error_max = w
+                    for line in ax.lines:
+                        y_data = line.get_ydata()
+                        x_data = line.get_xdata()
+                        if (
+                            len(y_data) == 2
+                            and len(x_data) == 2
+                            and abs(y_data[0] - y_center) < 1e-4
+                            and x_data[0] != x_data[1]
+                        ):
+                            error_max = max(error_max, max(x_data))
+
                     ax.annotate(
                         f"{w:.4f}",
-                        xy=(w, y_center),
-                        xytext=(4, 0),
+                        xy=(error_max, y_center),
+                        xytext=(6, 0),
                         textcoords="offset points",
                         va="center",
                         ha="left",
