@@ -213,8 +213,8 @@ class ModelEvaluator:
 
         save_prefix = str(experiment_prefix).replace(" ", "_").lower()
 
-        plot_name = f"{save_prefix}_{self.data_name}"
-        report_name = f"{save_prefix}_{self.data_name}"
+        plot_name = f"{save_prefix}_{self.data_name}_{self.n_features}"
+        report_name = f"{save_prefix}_{self.data_name}_{self.n_features}"
 
         plot_path = Path(self.plot_dir) / f"{plot_name}.png"
         report_path = Path(self.report_dir) / f"{report_name}.txt"
