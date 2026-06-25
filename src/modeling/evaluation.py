@@ -9,13 +9,10 @@ import pandas as pd
 import seaborn as sns
 import sklearn
 from matplotlib.container import BarContainer
-from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold, cross_validate
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.tree import DecisionTreeClassifier
 
 from src.config import ProjectPath
+from src.utils.models import get_model
 
 
 class ModelEvaluator:
@@ -83,7 +80,51 @@ class ModelEvaluator:
 
         return X, y
 
+    def _build_models(self):
+        """
+        [Private] Build the standard model dict (LogReg + Decision Tree). Used by every evaluation strategy, so all the strategy stay consistent.
+        """
+        logreg_model = get_model("log")
+        dt_model = get_model("dt")
+
+        return {
+            "LogReg": logreg_model,
+            "Tree": dt_model,
+        }
+
     def _train_and_evaluate(
+        self,
+        X: pd.DataFrame,
+        y: pd.Series,
+        method_name: str,
+        n_splits: int = 5,
+        eval_strategy: str = "cv",
+        n_iter: int = 100,
+        test_size: float = 0.3,
+    ) -> None:
+        """
+        [Private] Dispatches to the requested evaluation strategy and stores results.
+        Args:
+            X (pd.DataFrame): Feature matrix.
+            y (pd.Series): Target vector.
+            method_name (str):  Label used for reporting (e.g. method/algorithm name).
+            n_splits (int): Number of CV folds (used by "cv" and "custom_cv").
+            eval_strategy (str): Evaluation strategy.
+                "cv" (default, sklearn Cross-Validation)
+                "tts" (repeated train/test split)
+                "custom_cv" (manual CV loop)
+            n_iter (int): Number of repeats for the "tts" strategy.
+            test_size (float): Held-out fraction of the tts strategy.
+        """
+        if eval_strategy == "cv":
+            self._train_and_evaluate_cv(X, y, method_name, n_splits)
+        else:
+            raise ValueError(
+                f"Unknow eval_strategy: {eval_strategy!r}."
+                "Expected one of: 'cv','custom_cv', 'tts'."
+            )
+
+    def _train_and_evaluate_cv(
         self,
         X: pd.DataFrame,
         y: pd.Series,
@@ -101,14 +142,7 @@ class ModelEvaluator:
         scoring = ["accuracy"]
 
         # 2. Init model in a dict -> easy to add new one
-        logreg_model = LogisticRegression(max_iter=self.max_iter, random_state=42)
-        if self.use_scaler:
-            logreg_model = make_pipeline(StandardScaler(), logreg_model)
-
-        models = {
-            "LogReg": logreg_model,
-            "Tree": DecisionTreeClassifier(random_state=42),
-        }
+        models = self._build_models()
 
         # 3. Runing each model
         for model_name, model in models.items():
