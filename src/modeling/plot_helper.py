@@ -162,6 +162,146 @@ def generate_performance_chart(
     return save_path
 
 
+def generate_strategy_comparison_chart(
+    fold_level_df: pd.DataFrame,
+    chart_title: str,
+    data_name: str,
+    save_path: Path,
+    figsize: Optional[Tuple[int, int]] = None,
+    horizontal: Optional[bool] = None,
+) -> Path:
+    """Create and save a grouped bar chart comparing accuracy across evaluation strategies.
+
+    The chart shows feature-selection methods on one axis, accuracy on the other,
+    with bars grouped by Strategy (hue) and faceted by Model.
+
+    Args:
+        fold_level_df: Must contain columns ``Method``, ``Model``, ``Strategy``, ``Acc``.
+        chart_title: Title shown above the chart.
+        data_name: Dataset name (shown in title).
+        save_path: File path for the saved PNG.
+        figsize: Custom ``(width, height)``. Auto-sized if ``None``.
+        horizontal: Use horizontal bars. Auto-detect if ``None``.
+
+    Returns:
+        The ``Path`` where the plot was saved.
+    """
+    sns.set_theme(style="whitegrid")
+
+    required = {"Method", "Model", "Strategy", "Acc"}
+    if not required.issubset(fold_level_df.columns):
+        missing = required - set(fold_level_df.columns)
+        raise ValueError(f"fold_level_df is missing columns: {missing}")
+
+    n_methods = fold_level_df["Method"].nunique()
+    use_horizontal = horizontal if horizontal is not None else (n_methods > 6)
+    method_order = compute_method_order(fold_level_df)
+
+    models = sorted(fold_level_df["Model"].unique())
+    n_models = len(models)
+
+    if figsize is None:
+        if use_horizontal:
+            figsize = (12, int(max(5, 4 + n_methods * 0.9)) * n_models)
+        else:
+            figsize = (int(max(14, 7 + n_methods * 1.4)), 5 * n_models)
+
+    fig, axes = plt.subplots(n_models, 1, figsize=figsize, squeeze=False)
+    fig.suptitle(f"{chart_title} ({data_name})", fontsize=14, y=1.01)
+
+    for idx, model_name in enumerate(models):
+        ax = axes[idx, 0]
+        model_df = fold_level_df[fold_level_df["Model"] == model_name]
+
+        if use_horizontal:
+            sns.barplot(
+                data=model_df,
+                y="Method",
+                x="Acc",
+                hue="Strategy",
+                palette="Set2",
+                orient="h",
+                order=method_order,
+                ax=ax,
+            )
+            x_label = "Accuracy Score"
+            y_label = "Feature Selection Method" if idx == n_models - 1 else ""
+            ax.set_xlabel(x_label)
+            ax.set_ylabel(y_label)
+
+            acc_series = cast(pd.Series, model_df["Acc"])
+            x_min = max(0.0, float(acc_series.min()) - 0.05)
+            x_max = min(1.05, float(acc_series.max()) + 0.08)
+            ax.set_xlim(x_min, x_max)
+        else:
+            sns.barplot(
+                data=model_df,
+                x="Method",
+                y="Acc",
+                hue="Strategy",
+                palette="Set2",
+                order=method_order,
+                ax=ax,
+            )
+            x_label = "Feature Selection Method" if idx == n_models - 1 else ""
+            y_label = "Accuracy Score"
+            ax.set_xlabel(x_label)
+            ax.set_ylabel(y_label)
+            ax.tick_params(axis="x", rotation=45)
+
+            acc_series = cast(pd.Series, model_df["Acc"])
+            y_min = max(0.0, float(acc_series.min()) - 0.05)
+            y_max = min(1.1, float(acc_series.max()) + 0.12)
+            ax.set_ylim(y_min, y_max)
+
+        ax.set_title(f"Model: {model_name}", fontsize=11)
+        ax.legend(bbox_to_anchor=(1.02, 1), loc="upper left", frameon=True)
+
+        for container in ax.containers:
+            if not isinstance(container, BarContainer):
+                continue
+            for bar in container:
+                if use_horizontal:
+                    w = bar.get_width()
+                    if not w or w != w:
+                        continue
+                    y_center = bar.get_y() + bar.get_height() / 2
+                    ax.annotate(
+                        f"{w:.4f}",
+                        xy=(w, y_center),
+                        xytext=(4, 0),
+                        textcoords="offset points",
+                        va="center",
+                        ha="left",
+                        fontsize=6,
+                        color="black",
+                    )
+                else:
+                    h = bar.get_height()
+                    if not h or h != h:
+                        continue
+                    x_center = bar.get_x() + bar.get_width() / 2
+                    ax.annotate(
+                        f"{h:.4f}",
+                        xy=(x_center, h),
+                        xytext=(0, 3),
+                        textcoords="offset points",
+                        va="bottom",
+                        ha="left",
+                        fontsize=6,
+                        color="black",
+                        rotation=45,
+                        rotation_mode="anchor",
+                    )
+
+    plt.tight_layout()
+    plt.savefig(save_path, dpi=300, bbox_inches="tight")
+    plt.close()
+    print(f" Chart saved at: {save_path}")
+
+    return save_path
+
+
 def compute_summary_df(fold_level_df: pd.DataFrame) -> pd.DataFrame:
     """Aggregate fold-level accuracy into per-method/model summary stats."""
     summary_df = fold_level_df.groupby(["Method", "Model"], as_index=False).agg(
