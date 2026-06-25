@@ -251,7 +251,7 @@ class ModelEvaluator:
         n_splits: int = 5,
     ) -> None:
         """
-        [Private] Manual Cross-Validation loop (co `cross_validate`).
+        [Private] Manual Cross-Validation loop (no `cross_validate`).
 
         Uses `StratifiedKFold` purely for generating the train test index splits,
         then manually fits and scores each model per fold.
