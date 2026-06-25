@@ -144,7 +144,7 @@ class CVStrategy(EvalStrategy):
                 scoring=["accuracy"],
                 n_jobs=-1,
             )
-            accs[model_name].append(scores["test_accuracy"])
+            accs[model_name].extend(scores["test_accuracy"])
 
         return accs
 
