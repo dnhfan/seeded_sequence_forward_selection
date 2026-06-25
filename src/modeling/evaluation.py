@@ -205,7 +205,7 @@ class ModelEvaluator:
         # iter loop
         for i in range(n_iter):
             # split
-            X_train, y_train, X_test, y_test = train_test_split(
+            X_train, X_test, y_train, y_test = train_test_split(
                 X, y, test_size=test_size, stratify=y, random_state=i
             )
 
