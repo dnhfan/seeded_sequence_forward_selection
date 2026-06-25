@@ -1,0 +1,7 @@
+Source,Model,Strategy,mean_acc,std,min,max,n_fold
+seeded_sfs_log,LogReg,custom_cv,1.0,0.0,1.0,1.0,5
+seeded_sfs_log,LogReg,cv,1.0,0.0,1.0,1.0,5
+seeded_sfs_log,LogReg,tts,0.9963157894736843,0.013428790339129566,0.9473684210526315,1.0,100
+seeded_sfs_log,Tree,custom_cv,0.95,0.04082482904638632,0.9166666666666666,1.0,5
+seeded_sfs_log,Tree,cv,0.95,0.04082482904638632,0.9166666666666666,1.0,5
+seeded_sfs_log,Tree,tts,0.9536842105263156,0.05483796327423625,0.7368421052631579,1.0,100
