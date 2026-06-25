@@ -5,15 +5,25 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple, cast
 
 import matplotlib.pyplot as plt
-import numpy
 import pandas as pd
 import seaborn as sns
 import sklearn
 from matplotlib.container import BarContainer
-from sklearn.model_selection import StratifiedKFold, cross_validate, train_test_split
 
 from src.config import ProjectPath
+from src.modeling.eval_strategies import (
+    CustomCVStrategy,
+    CVStrategy,
+    EvalStrategy,
+    TTSStrategy,
+)
 from src.utils.models import get_model
+
+_STRATEGY_MAP: Dict[str, type[EvalStrategy]] = {
+    "cv": CVStrategy,
+    "tts": TTSStrategy,
+    "custom_cv": CustomCVStrategy,
+}
 
 
 class ModelEvaluator:
@@ -98,210 +108,34 @@ class ModelEvaluator:
         n_iter: int = 100,
         test_size: float = 0.3,
     ) -> None:
-        """
-        [Private] Dispatches to the requested evaluation strategy and stores results.
+        """Dispatch to the requested evaluation strategy and store results.
+
         Args:
-            X (pd.DataFrame): Feature matrix.
-            y (pd.Series): Target vector.
-            method_name (str):  Label used for reporting (e.g. method/algorithm name).
-            n_splits (int): Number of CV folds (used by "cv" and "custom_cv").
-            eval_strategy (str): Evaluation strategy.
-                "cv" (default, sklearn Cross-Validation)
-                "tts" (repeated train/test split)
-                "custom_cv" (manual CV loop)
-            n_iter (int): Number of repeats for the "tts" strategy.
-            test_size (float): Held-out fraction of the tts strategy.
+            X: Feature matrix.
+            y: Target vector.
+            method_name: Label used for reporting (e.g. method/algorithm name).
+            n_splits: Number of CV folds (used by "cv" and "custom_cv").
+            eval_strategy: One of "cv" (default), "tts", or "custom_cv".
+            n_iter: Number of repeats (used by "tts").
+            test_size: Held-out fraction (used by "tts").
         """
-        if eval_strategy == "cv":
-            self._train_and_evaluate_cv(X, y, method_name, n_splits)
-        elif eval_strategy == "tts":
-            self._train_and_evaluate_tts(X, y, method_name, n_iter, test_size)
-        elif eval_strategy == "custom_cv":
-            self._train_and_evaluate_custom_cv(X, y, method_name, n_splits)
-        else:
+        strategy_cls = _STRATEGY_MAP.get(eval_strategy)
+        if strategy_cls is None:
             raise ValueError(
                 f"Unknown eval_strategy: {eval_strategy!r}. "
-                "Expected one of: 'cv','custom_cv', 'tts'."
+                "Expected one of: 'cv', 'tts', 'custom_cv'."
             )
 
-    def _train_and_evaluate_cv(
-        self,
-        X: pd.DataFrame,
-        y: pd.Series,
-        method_name: str,
-        n_splits: int = 5,
-    ) -> None:
-        """
-        [Private] Splits the data using Cross-Validation, trains Logistic Regression and Decision Tree models,
-        evaluates their accuracy, and stores the results.
-        """
-        # 1. Init the CV
-        cv = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=42)
-
-        # scoring
-        scoring = ["accuracy"]
-
-        # 2. Init model in a dict -> easy to add new one
         models = self._build_models()
 
-        # 3. Runing each model
-        for model_name, model in models.items():
-            # cross_validate will auto fit and predict
-            scores = cross_validate(model, X, y, cv=cv, scoring=scoring, n_jobs=-1)
-            test_accuracy = scores["test_accuracy"]
-            mean_acc = test_accuracy.mean()
+        if eval_strategy == "tts":
+            strategy = strategy_cls(n_iter=n_iter, test_size=test_size)  # type: ignore[call-arg]
+        else:
+            strategy = strategy_cls(n_splits=n_splits)  # type: ignore[call-arg]
 
-            # 4. Store the result of each fold
-            for i in range(cv.get_n_splits()):
-                self.fold_results.append(
-                    {
-                        "Method": method_name,
-                        "Model": model_name,
-                        "Fold": i + 1,
-                        "Acc": scores["test_accuracy"][i],
-                    }
-                )
-            self.model_results.append(
-                {
-                    "Method": method_name,
-                    "Model": model_name,
-                    "mean_acc": mean_acc,
-                    "std": test_accuracy.std(),
-                    "min": test_accuracy.min(),
-                    "max": test_accuracy.max(),
-                    "n_folds": len(test_accuracy),
-                }
-            )
-
-            print(f"󰄭  [{method_name:<12}] {model_name:<8} | Acc: {mean_acc:.4f} ")
-
-    def _train_and_evaluate_tts(
-        self,
-        X: pd.DataFrame,
-        y: pd.Series,
-        method_name: str,
-        n_iter: int = 100,
-        test_size: float = 0.3,
-    ) -> None:
-        """
-        [Private] Repeated Train/Test split evaluation.
-
-        Runs `n_iter` independent 70/30 (by default) stratified splits,
-        each with a different `random_state` (= iteration index) for reproducibility,
-        fits each model on the train portion and scores it on the held-out test portion.
-
-        Each iteration is recorded as one "Fold" entry in `self.fold_results`,
-        mirroring the schema produced by the CV-based strategy.
-        """
-
-        models = self._build_models()
-        accs: Dict[str, List[float]] = {name: [] for name in models}
-
-        # iter loop
-        for i in range(n_iter):
-            # split
-            X_train, X_test, y_train, y_test = train_test_split(
-                X, y, test_size=test_size, stratify=y, random_state=i
-            )
-
-            # models loop
-            for model_name, model in models.items():
-                model.fit(X_train, y_train)
-                acc = model.score(X_test, y_test)
-                accs[model_name].append(acc)
-
-                self.fold_results.append(
-                    {
-                        "Method": method_name,
-                        "Model": model_name,
-                        "Fold": i + 1,
-                        "Acc": acc,
-                    }
-                )
-
-        # accs loop
-        for model_name, acc_list in accs.items():
-            acc_arr = numpy.array(acc_list)
-            mean_acc = acc_arr.mean()
-
-            self.model_results.append(
-                {
-                    "Method": method_name,
-                    "Model": model_name,
-                    "mean_acc": mean_acc,
-                    "std": acc_arr.std(),
-                    "min": acc_arr.min(),
-                    "max": acc_arr.max(),
-                    "n_folds": len(acc_arr),
-                }
-            )
-
-            print(f"󰄭  [{method_name:<12}] {model_name:<8} | Acc: {mean_acc:.4f} ")
-
-    def _train_and_evaluate_custom_cv(
-        self,
-        X: pd.DataFrame,
-        y: pd.Series,
-        method_name: str,
-        n_splits: int = 5,
-    ) -> None:
-        """
-        [Private] Manual Cross-Validation loop (no `cross_validate`).
-
-        Uses `StratifiedKFold` purely for generating the train test index splits,
-        then manually fits and scores each model per fold.
-        This is functionally equivalent to `_train_and_evaluate_cv` but gives explicit control over the
-        per-fold loop (useful for future per-fold customization/instrumentation).
-        """
-
-        # init the CV
-        skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=42)
-        # build model
-        models = self._build_models()
-        # accuracy dict
-        accs: Dict[str, List[float]] = {name: [] for name in models}
-
-        # reset_index + drop the col name
-        X_arr = X.reset_index(drop=True)
-        y_arr = y.reset_index(drop=True)
-
-        # loop through each fold and evaluate
-        for i, (train_index, test_index) in enumerate(skf.split(X_arr, y_arr)):
-            X_train, X_test = X_arr.iloc[train_index], X_arr.iloc[test_index]
-            y_train, y_test = y_arr.iloc[train_index], y_arr.iloc[test_index]
-
-            for model_name, model in models.items():
-                model.fit(X_train, y_train)
-                acc = model.score(X_test, y_test)
-                accs[model_name].append(acc)
-
-                self.fold_results.append(
-                    {
-                        "Method": method_name,
-                        "Model": model_name,
-                        "Fold": i + 1,
-                        "Acc": acc,
-                    }
-                )
-
-        # accs loop
-        for model_name, acc_list in accs.items():
-            acc_arr = numpy.array(acc_list)
-            mean_acc = acc_arr.mean()
-
-            self.model_results.append(
-                {
-                    "Method": method_name,
-                    "Model": model_name,
-                    "mean_acc": mean_acc,
-                    "std": acc_arr.std(),
-                    "min": acc_arr.min(),
-                    "max": acc_arr.max(),
-                    "n_folds": len(acc_arr),
-                }
-            )
-
-            print(f"󰄭  [{method_name:<12}] {model_name:<8} | Acc: {mean_acc:.4f} ")
+        fold_rows, model_rows = strategy.run(X, y, models, method_name)
+        self.fold_results.extend(fold_rows)
+        self.model_results.extend(model_rows)
 
     def evaluate_filtered_features(
         self,
