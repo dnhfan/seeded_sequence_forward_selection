@@ -134,7 +134,9 @@ class ModelEvaluator:
         else:
             strategy = strategy_cls(n_splits=n_splits)  # type: ignore[call-arg]
 
-        fold_rows, model_rows = strategy.run(X, y, models, method_name, strategy_name=eval_strategy)
+        fold_rows, model_rows = strategy.run(
+            X, y, models, method_name, strategy_name=eval_strategy
+        )
         self.fold_results.extend(fold_rows)
         self.model_results.extend(model_rows)
 
